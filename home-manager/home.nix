@@ -14,12 +14,11 @@
     (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
 
     # command line app
-    git 
+    git
     curl
     wget
     htop
     tmux
-    neovim
     httpie
     trashy
     exa
@@ -33,14 +32,15 @@
     gdu
     tokei
     procs
-    autojump
 
-    # shell
-    zsh
-    zplug
-    starship
+    # development
+    gcc
+    go
+    rustup
+    nodejs
+    nodePackages.pnpm
   ];
-  
+
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -79,9 +79,10 @@
         { name = "themes/robbyrussell"; tags = [ from:oh-my-zsh as:theme ]; }
       ];
     };
-    initExtra = ''
-      . ${pkgs.autojump}/share/autojump/autojump.zsh
-    '';
+  };
+
+  programs.autojump = {
+    enable = true;
   };
 
   programs.starship = {
@@ -93,5 +94,29 @@
         error_symbol = "[➜](bold red)";
       };
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    plugins = with pkgs.vimPlugins; [
+      # appearance
+      vim-airline
+      vim-devicons
+
+      # utilities
+      nerdtree
+      editorconfig-vim
+    ];
+    extraConfig = ''
+      set background=dark
+      set clipboard=unnamedplus
+      set cursorline
+      set completeopt=noinsert,menuone,noselect
+      set mouse=a
+      set number
+      set title
+    '';
   };
 }

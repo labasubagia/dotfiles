@@ -9,9 +9,9 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: 
+  outputs = { nixpkgs, home-manager, ... }@inputs:
   let
-    user = "demo"; 
+    user = "demo";
     system = "x86_64-linux";
   in {
     nixosConfigurations = {
