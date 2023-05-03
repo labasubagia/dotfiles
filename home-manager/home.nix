@@ -20,7 +20,7 @@
     htop
     tmux
     httpie
-    trashy
+    trash-cli
     exa
     bat
     fzf
@@ -62,7 +62,7 @@
       ll = "exa -l";
       mv = "mv -iv";
       cp = "cp -iv";
-      rm = "trash put";
+      rm = "trash-put -iv";
       cat = "bat";
     };
     history = {
