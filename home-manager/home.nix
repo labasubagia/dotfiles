@@ -24,7 +24,6 @@
     trashy
     exa
     bat
-    zoxide
     fzf
     ripgrep
     jq
@@ -34,6 +33,7 @@
     gdu
     tokei
     procs
+    autojump
 
     # shell
     zsh
@@ -80,7 +80,7 @@
       ];
     };
     initExtra = ''
-      eval "$(zoxide init zsh)"
+      . ${pkgs.autojump}/share/autojump/autojump.zsh
     '';
   };
 
