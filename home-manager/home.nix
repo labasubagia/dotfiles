@@ -27,6 +27,13 @@
     zoxide
     fzf
     ripgrep
+    jq
+    du-dust
+    bottom
+    fd
+    gdu
+    tokei
+    procs
 
     # shell
     zsh
