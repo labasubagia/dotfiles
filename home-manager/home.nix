@@ -14,6 +14,8 @@
     (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
 
     # command line app
+    asdf
+    ansible
     git
     curl
     wget
@@ -118,5 +120,23 @@
       set number
       set title
     '';
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        identityFile = "~/.ssh/id_rsa_github";
+      };
+      "gitlab.com" = {
+        hostname = "gitlab.com";
+        identityFile = "~/.ssh/id_rsa_gitlab";
+      };
+      "phabricator.sirclo.com" = {
+        hostname = "phabricator.sirclo.com";
+        identityFile = "~/.ssh/id_rsa_phabricator";
+      };
+    };
   };
 }
