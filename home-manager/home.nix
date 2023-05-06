@@ -34,6 +34,7 @@
     gdu
     tokei
     procs
+    tree
 
     # development
     gcc
@@ -123,20 +124,21 @@
   };
 
   programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "github.com" = {
-        hostname = "github.com";
-        identityFile = "~/.ssh/id_rsa_github";
-      };
-      "gitlab.com" = {
-        hostname = "gitlab.com";
-        identityFile = "~/.ssh/id_rsa_gitlab";
-      };
-      "phabricator.sirclo.com" = {
-        hostname = "phabricator.sirclo.com";
-        identityFile = "~/.ssh/id_rsa_phabricator";
-      };
+  enable = true;
+  # Make sure keys same as ansible/ssh.yml
+  matchBlocks = {
+    "github.com" = {
+      hostname = "github.com";
+      identityFile = "~/.ssh/id_rsa_github";
+    };
+    "gitlab.com" = {
+      hostname = "gitlab.com";
+      identityFile = "~/.ssh/id_rsa_gitlab";
+    };
+    "phabricator.sirclo.com" = {
+      hostname = "phabricator.sirclo.com";
+      identityFile = "~/.ssh/id_rsa_phabricator";
     };
   };
+};
 }

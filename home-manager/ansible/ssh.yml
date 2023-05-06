@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    dir: ~/.ssh
+
+    # Make sure configs same as ../home.nix
+    configs:
+      - host: github.com
+        hostname: github.com
+        file: id_rsa_github
+      - host: gitlab.com
+        hostname: gitlab.com
+        file: id_rsa_gitlab
+      - host: phabricator.sirclo.com
+        hostname: phabricator.sirclo.com
+        file: id_rsa_phabricator
+
+  tasks:
+    - name: ssh make dir
+      file:
+        path: "{{ dir }}"
+        state: directory
+    - name: ssh create keys
+      openssh_keypair:
+        path: "{{ dir }}/{{ item.file }}"
+        type: rsa
+        size: 4096
+        state: present
+        force: no
+      with_items: "{{ configs }}"

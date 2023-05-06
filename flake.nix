@@ -15,7 +15,7 @@
     system = "x86_64-linux";
   in {
     nixosConfigurations = {
-      "${user}" = nixpkgs.lib.nixosSystem {
+      vbox = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs user;};
         modules = [
