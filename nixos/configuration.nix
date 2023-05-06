@@ -47,27 +47,4 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   time.timeZone = "Asia/Makassar";
-
-  # Enable the OpenSSH daemon.
-  # TODO: Find other way to generate ssh key in home manager
-  # services.openssh = {
-  #   enable = true;
-  #   hostKeys = [
-  #     {
-  #       type="rsa";
-  #       bits=4096;
-  #       path = "/etc/ssh/id_github";
-  #     }
-  #     {
-  #       type="rsa";
-  #       bits=4096;
-  #       path = "/etc/ssh/id_gitlab";
-  #     }
-  #     {
-  #       type="rsa";
-  #       bits=4096;
-  #       path = "/etc/ssh/id_phabricator";
-  #     }
-  #   ];
-  # };
 }

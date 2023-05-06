@@ -14,8 +14,8 @@ Several step need to run after rebuild
 
 ### Add ssh keys (Required)
 
-Make sure settings in home-manager/ansible/ssh.yml same as home-manager/home.nix
+Make sure settings in home-manager/ssh.yml same as home-manager/home.nix
 
 ```sh
-$ ansible-playbook home-manager/ansible/ssh.yml
+$ ansible-playbook home-manager/ssh.yml
 ```

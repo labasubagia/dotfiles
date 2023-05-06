@@ -1,3 +1,4 @@
+# Ansible file
 ---
 - hosts: localhost
   connection: local

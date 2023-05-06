@@ -1,6 +1,7 @@
 { config, pkgs, inputs, user, ... }:
 
 {
+
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "${user}";
@@ -124,21 +125,21 @@
   };
 
   programs.ssh = {
-  enable = true;
-  # Make sure keys same as ansible/ssh.yml
-  matchBlocks = {
-    "github.com" = {
-      hostname = "github.com";
-      identityFile = "~/.ssh/id_rsa_github";
-    };
-    "gitlab.com" = {
-      hostname = "gitlab.com";
-      identityFile = "~/.ssh/id_rsa_gitlab";
-    };
-    "phabricator.sirclo.com" = {
-      hostname = "phabricator.sirclo.com";
-      identityFile = "~/.ssh/id_rsa_phabricator";
+    enable = true;
+    # Make sure keys same as ssh.yml
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        identityFile = "~/.ssh/id_rsa_github";
+      };
+      "gitlab.com" = {
+        hostname = "gitlab.com";
+        identityFile = "~/.ssh/id_rsa_gitlab";
+      };
+      "phabricator.sirclo.com" = {
+        hostname = "phabricator.sirclo.com";
+        identityFile = "~/.ssh/id_rsa_phabricator";
+      };
     };
   };
-};
 }
