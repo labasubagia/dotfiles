@@ -25,7 +25,7 @@
 
   in {
     nixosConfigurations = {
-      vbox = mkNixos [ ./hosts/nixos ] "x86_64-linux";
+      vbox = mkNixos [ ./hosts/vbox ] "x86_64-linux";
     };
 
     homeConfigurations = {
