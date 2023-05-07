@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./atuin.nix
     ./app-cli.nix
     ./autojump.nix
     ./development.nix
