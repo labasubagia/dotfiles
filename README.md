@@ -2,18 +2,20 @@
 
 NixOS and Nix Config using flake
 
+## Bootstrap
+
+> NOTE: run this if git, home-manager don't exists and flake not enabled yet
+
+```sh
+$ nix-shell
+```
+
 ## Run NixOS Configuration
 
 Example using vbox hostname
 
 ```sh
 $ sudo nixos-rebuild switch --flake .#vbox
-```
-
-## Bootstrap
-
-```sh
-$ nix-shell
 ```
 
 ## Run Home Manager Configuration
@@ -24,14 +26,14 @@ Example using vbox hostname and demo user
 $ home-manager switch --flake .#demo@vbox
 ```
 
-## After
+## After Run Config (Optional)
 
-Several step need to run after rebuild
+Optional step to run and it can be configured
 
-### Add ssh keys
+### Add SSH Keys
 
-Modify the file to configure ssh file
+Modify the file to meet your needs
 
 ```sh
-$ ansible-playbook extras/ansible/ssh.yml
+  $ ansible-playbook extras/ansible/ssh.yml
 ```
