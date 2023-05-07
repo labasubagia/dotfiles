@@ -22,11 +22,10 @@ $ home-manager switch --flake .#demo@vbox
 
 Several step need to run after rebuild
 
-### Add ssh keys (Required)
+### Add ssh keys
 
 Modify the file to configure ssh file
 
 ```sh
-# Set python interpreter when use additional package e.g paramiko, yaml
 $ ansible-playbook home/extras/ansible/ssh.yml
 ```
