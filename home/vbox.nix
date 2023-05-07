@@ -1,5 +1,8 @@
 { config, pkgs, inputs, user, ... }:
 
 {
-  imports =  [ ./common ];
+  imports =  [
+    ./global
+    ./config/ssh.nix
+  ];
 }

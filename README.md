@@ -27,5 +27,5 @@ Several step need to run after rebuild
 Modify the file to configure ssh file
 
 ```sh
-$ ansible-playbook home/common/modules/ssh.yml
+$ ansible-playbook home/config/ssh.yml
 ```
