@@ -1,9 +1,10 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
   imports = [
-    ./atuin.nix
+    ./ansible.nix
     ./app-cli.nix
+    ./atuin.nix
     ./autojump.nix
     ./development.nix
     ./neovim.nix

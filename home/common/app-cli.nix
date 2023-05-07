@@ -3,25 +3,29 @@
 {
   home.packages = with pkgs; [
     asdf-vm
-    ansible
+
     git
+    tmux
+
     curl
     wget
-    htop
-    tmux
     httpie
+
+    fzf
+    ripgrep
+
+    htop
+    du-dust
+    bottom
+    gdu
+    procs
+
+    tokei
     trash-cli
     exa
     bat
-    fzf
-    ripgrep
     jq
-    du-dust
-    bottom
     fd
-    gdu
-    tokei
-    procs
     tree
   ];
 }

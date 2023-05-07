@@ -1,5 +1,11 @@
 {
     "cSpell.words": [
-        "nixos"
+        "httpie",
+        "nixos",
+        "paramiko",
+        "pkgs",
+        "procs",
+        "ripgrep",
+        "tokei"
     ]
 }

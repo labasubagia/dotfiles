@@ -27,5 +27,6 @@ Several step need to run after rebuild
 Modify the file to configure ssh file
 
 ```sh
-$ ansible-playbook home/config/ssh.yml
+# Set python interpreter when use additional package e.g paramiko, yaml
+$ ansible-playbook home/extras/ansible/ssh.yml
 ```

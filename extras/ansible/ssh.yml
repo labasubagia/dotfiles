@@ -1,12 +1,10 @@
-# Ansible file
 ---
 - hosts: localhost
   connection: local
+  gather_facts: false
   vars:
     dir: ~/.ssh
-
-    # Make sure configs same as ssh.nix
-    configs:
+    keys:
       - host: github.com
         hostname: github.com
         file: id_rsa_github
@@ -17,11 +15,17 @@
         hostname: phabricator.sirclo.com
         file: id_rsa_phabricator
 
+  pre_tasks:
+    - name: ssh install requirements
+      command: |
+        ansible-galaxy collection install community.general
+
   tasks:
     - name: ssh make dir
       file:
         path: "{{ dir }}"
         state: directory
+
     - name: ssh create keys
       openssh_keypair:
         path: "{{ dir }}/{{ item.file }}"
@@ -29,4 +33,12 @@
         size: 4096
         state: present
         force: no
-      with_items: "{{ configs }}"
+      with_items: "{{ keys }}"
+
+    - name: ssh config
+      community.general.ssh_config:
+        host: "{{ item.host }}"
+        hostname: "{{ item.hostname }}"
+        identity_file: "{{ dir }}/{{ item.file }}"
+        ssh_config_file: "{{ dir }}/config"
+      with_items: "{{ keys }}"
