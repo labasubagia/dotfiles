@@ -1,11 +1,36 @@
 {
-    "cSpell.words": [
-        "httpie",
-        "nixos",
-        "paramiko",
-        "pkgs",
-        "procs",
-        "ripgrep",
-        "tokei"
-    ]
+  "cSpell.words": [
+    "atuin",
+    "autojump",
+    "completeopt",
+    "cursorline",
+    "davidde",
+    "devicons",
+    "fontconfig",
+    "httpie",
+    "menuone",
+    "nameofdevicetomount",
+    "neovim",
+    "nerdfonts",
+    "nerdtree",
+    "nixos",
+    "nixpkgs",
+    "noinsert",
+    "noselect",
+    "paramiko",
+    "phabricator",
+    "pkgs",
+    "procs",
+    "pulseaudio",
+    "ripgrep",
+    "robbyrussell",
+    "Roboto",
+    "rustup",
+    "SDDM",
+    "sirclo",
+    "tokei",
+    "unnamedplus",
+    "xfce",
+    "zplug"
+  ]
 }
