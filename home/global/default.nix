@@ -1,6 +1,13 @@
-{ config, pkgs, inputs, user, ... }:
+{ pkgs, user, ... }:
 
 {
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
+
   imports = [ ../common ];
 
   # Home Manager needs a bit of information about you and the
@@ -10,7 +17,6 @@
 
   fonts.fontconfig.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [];
 

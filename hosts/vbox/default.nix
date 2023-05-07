@@ -22,7 +22,9 @@
   services.xserver.displayManager.sddm.enable = lib.mkForce false;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.pulseaudio = true;
+
 
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
