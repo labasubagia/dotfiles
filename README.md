@@ -10,6 +10,12 @@ Example using vbox hostname
 $ sudo nixos-rebuild switch --flake .#vbox
 ```
 
+## Bootstrap
+
+```sh
+$ nix-shell
+```
+
 ## Run Home Manager Configuration
 
 Example using vbox hostname and demo user
