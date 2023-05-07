@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, user, ... }:
+{ inputs, config, pkgs, lib, ... }:
 
 {
   imports = [ (inputs.nixpkgs + "/nixos/modules/installer/virtualbox-demo.nix") ];

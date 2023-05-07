@@ -5,7 +5,7 @@
   vars:
     dir: ~/.ssh
 
-    # Make sure configs same as ../home.nix
+    # Make sure configs same as ssh.nix
     configs:
       - host: github.com
         hostname: github.com

@@ -9,26 +9,27 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
-    user = "demo";
-    system = "x86_64-linux";
+    inherit (self) outputs;
+
+    mkNixos = modules: system: nixpkgs.lib.nixosSystem {
+      inherit modules system;
+      specialArgs = { inherit inputs outputs; };
+    };
+
+    mkHome = modules: pkgs: user: home-manager.lib.homeManagerConfiguration {
+      inherit modules pkgs;
+      extraSpecialArgs = { inherit inputs outputs user; };
+    };
+
   in {
     nixosConfigurations = {
-      vbox = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs user;};
-        modules = [
-          ./nixos/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users."${user}" = import ./home-manager/home.nix;
-            home-manager.extraSpecialArgs = { inherit inputs user; };
-          }
-        ];
-      };
+      vbox = mkNixos [ ./hosts/nixos ] "x86_64-linux";
+    };
+
+    homeConfigurations = {
+      "demo@vbox" = mkHome [ ./home/vbox.nix ] nixpkgs.legacyPackages."x86_64-linux" "demo";
     };
   };
 }
