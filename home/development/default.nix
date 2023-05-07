@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    # development
     gcc
     go
     rustup
