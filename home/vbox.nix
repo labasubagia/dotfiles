@@ -1,5 +1,5 @@
 { config, pkgs, inputs, user, ... }:
 
 {
-  imports =  [ ./global ];
+  imports =  [ ./common ];
 }
