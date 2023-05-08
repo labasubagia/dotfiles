@@ -20,8 +20,10 @@
     gdu
     procs
 
-    tokei
     trash-cli
+    xcp
+
+    tokei
     exa
     bat
     jq
