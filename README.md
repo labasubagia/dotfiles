@@ -35,5 +35,5 @@ Optional step to run and it can be configured
 Modify the file to meet your needs
 
 ```sh
-  $ ansible-playbook extras/ansible/ssh.yml
+$ ansible-playbook extras/ansible/ssh.yml
 ```
