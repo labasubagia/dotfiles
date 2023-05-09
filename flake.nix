@@ -32,10 +32,12 @@
 
     nixosConfigurations = {
       vbox = mkNixos [ ./hosts/vbox ] "x86_64-linux";
+      acer-laptop = mkNixos [ ./hosts/acer-laptop ] "x86_64-linux";
     };
 
     homeConfigurations = {
       "demo@vbox" = mkHome [ ./home/vbox.nix ] nixpkgs.legacyPackages."x86_64-linux" "demo";
+      "dev@acer-laptop" = mkHome [ ./home/acer-laptop.nix ] nixpkgs.legacyPackages."x86_64-linux" "dev";
     };
   };
 }

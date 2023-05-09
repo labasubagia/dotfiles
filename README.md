@@ -35,5 +35,6 @@ Optional step to run and it can be configured
 Modify the file to meet your needs
 
 ```sh
-$ ansible-playbook extras/ansible/ssh.yml
+# set ansible_python_interpreter vars bacause nixos path sometime troublesome
+$ ansible-playbook extras/ansible/ssh.yml -e "ansible_pyhthon_interpreter=$(which python)"
 ```
