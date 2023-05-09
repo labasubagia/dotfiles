@@ -10,7 +10,8 @@
       cp = "cp -iv";
       rm = "trash-put -iv";
       cat = "bat";
-    };
+			tree = "exa --tree";
+		};
     history = {
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";

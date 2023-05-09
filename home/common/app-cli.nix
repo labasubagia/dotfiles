@@ -28,6 +28,5 @@
     bat
     jq
     fd
-    tree
   ];
 }
