@@ -4,23 +4,30 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = [ "ntfs" ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/18e14522-9ed8-4640-a9f2-14a7f1a21095";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/18e14522-9ed8-4640-a9f2-14a7f1a21095";
+    fsType = "ext4";
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/b6b695ed-d99a-4d70-988c-fd16820d01f4"; }
-    ];
+  fileSystems."/mnt/shared" = {
+    device = "/dev/disk/by-label/shared";
+    fsType = "ntfs";
+    options = [ "rw" "uid=1000"];
+  };
+
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/b6b695ed-d99a-4d70-988c-fd16820d01f4"; }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
