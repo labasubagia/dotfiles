@@ -12,17 +12,10 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.supportedFilesystems = [ "ntfs" ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/18e14522-9ed8-4640-a9f2-14a7f1a21095";
     fsType = "ext4";
-  };
-
-  fileSystems."/mnt/shared" = {
-    device = "/dev/disk/by-label/shared";
-    fsType = "ntfs";
-    options = [ "rw" "uid=1000"];
   };
 
   swapDevices = [
