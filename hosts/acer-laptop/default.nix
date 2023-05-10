@@ -7,6 +7,7 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ../common/optional/docker.nix
   ];
 
   # Bootloader.
@@ -84,7 +85,7 @@
   users.users.dev = {
     isNormalUser = true;
     description = "dev";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [];
   };
 
