@@ -20,5 +20,8 @@
     arc-icon-theme
     colloid-icon-theme
     tela-icon-theme
+
+    # fonts
+    source-sans
   ];
 }
