@@ -4,13 +4,13 @@
     enable = true;
     enableCompletion = true;
     shellAliases = {
-      ls = "exa";
-      ll = "exa -l";
+      ls = "eza";
+      ll = "eza -l";
       mv = "mv -iv";
       cp = "cp -iv";
       rm = "trash-put -iv";
       cat = "bat";
-			tree = "exa --tree";
+			tree = "eza --tree";
 		};
     history = {
       size = 10000;

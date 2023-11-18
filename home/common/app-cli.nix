@@ -25,7 +25,7 @@
     xcp
 
     tokei
-    exa
+    eza
     bat
     jq
     fd
