@@ -37,7 +37,7 @@
 
     homeConfigurations = {
       "demo@vbox" = mkHome [ ./home/vbox.nix ] nixpkgs.legacyPackages."x86_64-linux" "demo";
-      "dev@acer-laptop" = mkHome [ ./home/acer-laptop.nix ] nixpkgs.legacyPackages."x86_64-linux" "dev";
+      "user@acer-laptop" = mkHome [ ./home/acer-laptop.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
     };
   };
 }

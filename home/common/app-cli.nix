@@ -19,6 +19,7 @@
     bottom
     gdu
     procs
+    btop
 
     trash-cli
     xcp
