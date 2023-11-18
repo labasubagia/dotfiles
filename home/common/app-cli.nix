@@ -4,6 +4,11 @@
   home.packages = with pkgs; [
     asdf-vm
 
+    rar
+    zip
+    unzip
+
+    arcanist
     git
     tmux
 
