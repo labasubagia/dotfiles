@@ -16,6 +16,9 @@
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
     };
+    initExtra = ''
+      . "${pkgs.asdf-vm}/share/asdf-vm/asdf.sh"
+    '';
     zplug = {
       enable = true;
       plugins = [
