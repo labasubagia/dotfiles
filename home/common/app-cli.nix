@@ -26,6 +26,10 @@
     procs
     btop
 
+    kubectl
+    lazydocker
+    k9s
+
     trash-cli
     xcp
 
