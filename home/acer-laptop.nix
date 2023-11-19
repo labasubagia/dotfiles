@@ -2,7 +2,8 @@
 
 {
   imports =  [
-    ./global
+    ./default.nix
+
     ./gui
     ./development
 
