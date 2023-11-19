@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  pre_tasks:
+  - name: install requirements
+    command: |
+      ansible-galaxy collection install community.general
+
+  tasks:
+    - name: ensure flathub repo existed
+      community.general.flatpak_remote:
+        name: flathub
+        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+        state: present
+
+    # TODO: install manual
+    # this is stuck in nixos
+    - name: flatpak apps
+      become: true
+      community.general.flatpak:
+        name:
+          - com.getpostman.Postman
+          - com.redis.RedisInsight
