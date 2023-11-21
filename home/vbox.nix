@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports =  [
+  imports = [
     ./default.nix
 
     # Currently using ansible for create & config ssh

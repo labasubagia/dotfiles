@@ -10,34 +10,35 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
-  let
-    inherit (self) outputs;
+    let
+      inherit (self) outputs;
 
-    forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
-    forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
+      forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+      forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
 
-    mkNixos = modules: system: nixpkgs.lib.nixosSystem {
-      inherit modules system;
-      specialArgs = { inherit inputs outputs; };
+      mkNixos = modules: system: nixpkgs.lib.nixosSystem {
+        inherit modules system;
+        specialArgs = { inherit inputs outputs; };
+      };
+
+      mkHome = modules: pkgs: user: home-manager.lib.homeManagerConfiguration {
+        inherit modules pkgs;
+        extraSpecialArgs = { inherit inputs outputs user; };
+      };
+
+    in
+    {
+      devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
+      formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
+
+      nixosConfigurations = {
+        vbox = mkNixos [ ./hosts/vbox ] "x86_64-linux";
+        acer-laptop = mkNixos [ ./hosts/acer-laptop ] "x86_64-linux";
+      };
+
+      homeConfigurations = {
+        "demo@vbox" = mkHome [ ./home/vbox.nix ] nixpkgs.legacyPackages."x86_64-linux" "demo";
+        "user@acer-laptop" = mkHome [ ./home/acer-laptop.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
+      };
     };
-
-    mkHome = modules: pkgs: user: home-manager.lib.homeManagerConfiguration {
-      inherit modules pkgs;
-      extraSpecialArgs = { inherit inputs outputs user; };
-    };
-
-  in {
-    devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
-    formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
-
-    nixosConfigurations = {
-      vbox = mkNixos [ ./hosts/vbox ] "x86_64-linux";
-      acer-laptop = mkNixos [ ./hosts/acer-laptop ] "x86_64-linux";
-    };
-
-    homeConfigurations = {
-      "demo@vbox" = mkHome [ ./home/vbox.nix ] nixpkgs.legacyPackages."x86_64-linux" "demo";
-      "user@acer-laptop" = mkHome [ ./home/acer-laptop.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
-    };
-  };
 }
