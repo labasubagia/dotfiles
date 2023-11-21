@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./ansible.nix
     ./atuin.nix
     ./autojump.nix
     ./cli.nix
@@ -10,6 +9,7 @@
     ./gui.nix
     ./neovim.nix
     ./nerd-fonts.nix
+    ./python.nix
     ./starship.nix
     ./zsh.nix
   ];
