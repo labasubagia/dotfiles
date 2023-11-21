@@ -10,6 +10,7 @@
     ./hardware-configuration.nix
     ../common
     ../common/xfce.nix
+    ../common/hyprland.nix
   ];
 
   # Bootloader.
