@@ -9,6 +9,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common
+    ../common/xfce.nix
   ];
 
   # Bootloader.
@@ -101,14 +102,8 @@
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-    brave
     neovim
-    vscode
     git
-
-    # xfce plugins
-    xfce.xfce4-whiskermenu-plugin
-    xfce.xfce4-pulseaudio-plugin
   ];
 
   # enable sound

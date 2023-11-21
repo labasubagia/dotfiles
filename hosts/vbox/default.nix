@@ -1,7 +1,10 @@
 { inputs, config, pkgs, lib, ... }:
 
 {
-  imports = [ (inputs.nixpkgs + "/nixos/modules/installer/virtualbox-demo.nix") ];
+  imports = [
+    (inputs.nixpkgs + "/nixos/modules/installer/virtualbox-demo.nix")
+    ../common/xfce.nix
+  ];
 
   # Let demo build as a trusted user.
   # nix.settings.trusted-users = [ "demo" ];
