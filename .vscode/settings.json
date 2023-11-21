@@ -35,5 +35,9 @@
     "unnamedplus",
     "xfce",
     "zplug"
-  ]
+  ],
+
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "rnix-lsp",
+  "editor.formatOnSave": true
 }
