@@ -3,6 +3,6 @@
     "streetsidesoftware.code-spell-checker",
     "editorconfig.editorconfig",
     "eamodio.gitlens",
-    "bbenoist.nix"
+    "jnoortheen.nix-ide"
   ]
 }
