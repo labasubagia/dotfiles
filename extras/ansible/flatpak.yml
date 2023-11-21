@@ -3,9 +3,11 @@
   connection: local
   gather_facts: false
   pre_tasks:
+
   - name: install requirements
-    command: |
-      ansible-galaxy collection install community.general
+    command: ansible-galaxy collection install community.general
+    register: req
+    changed_when: '"Nothing to do" not in req.stdout'
 
   tasks:
     - name: ensure flathub repo existed
