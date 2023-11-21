@@ -17,8 +17,8 @@
     # TODO: install manual
     # this is stuck in nixos
     - name: flatpak apps
-      become: true
       community.general.flatpak:
         name:
           - com.getpostman.Postman
           - com.redis.RedisInsight
+          - com.slack.Slack
