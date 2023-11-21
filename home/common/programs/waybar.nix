@@ -9,6 +9,11 @@
         background: transparent;
         border-bottom: none;
       }
+
+      #workspaces button.focused {
+        background-color: #64727D;
+        box-shadow: inset 0 -3px #ffffff;
+      }
     '';
     settings = [
       {
@@ -17,6 +22,7 @@
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
         };
+        "modules-center" = [ "hyprland/window" ];
       }
     ];
   };
