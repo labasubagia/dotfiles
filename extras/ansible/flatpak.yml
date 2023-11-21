@@ -14,8 +14,6 @@
         flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
         state: present
 
-    # TODO: install manual
-    # this is stuck in nixos
     - name: flatpak apps
       community.general.flatpak:
         name:
