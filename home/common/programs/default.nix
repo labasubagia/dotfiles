@@ -13,7 +13,7 @@
     ./zsh.nix
 
     ./kitty.nix
-    ./waybar.nix
+    ./waybar
     ./wofi.nix
   ];
 }
