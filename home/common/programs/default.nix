@@ -4,6 +4,7 @@
   imports = [
     ./atuin.nix
     ./autojump.nix
+    ./alacritty.nix
     ./cli.nix
     ./development.nix
     ./gui.nix
