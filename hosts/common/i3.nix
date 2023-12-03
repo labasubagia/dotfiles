@@ -24,8 +24,9 @@
         i3blocks
         lxappearance
         nitrogen
-        thunar
         networkmanagerapplet
+        ranger
+        xfce.thunar
       ];
     };
   };
