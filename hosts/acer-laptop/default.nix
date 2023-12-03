@@ -9,8 +9,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common
-    ../common/xfce.nix
-    ../common/hyprland.nix
+    ../common/i3.nix
   ];
 
   # Bootloader.
