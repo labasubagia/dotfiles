@@ -12,6 +12,13 @@
     };
   };
 
+  programs.i3status = {
+    enable = true;
+    general = {
+      interval = 1;
+    };
+  };
+
   services.picom = {
     enable = true;
     settings = {
