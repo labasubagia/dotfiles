@@ -25,6 +25,7 @@
         lxappearance
         nitrogen
         thunar
+        networkmanagerapplet
       ];
     };
   };

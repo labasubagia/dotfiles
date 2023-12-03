@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    networkmanagerapplet
+  ];
+
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -9,6 +13,9 @@
         inner = 5;
       };
       terminal = "alacritty";
+      startup = [
+        { command = "--no-startup-id nm-applet"; }
+      ];
     };
   };
 
