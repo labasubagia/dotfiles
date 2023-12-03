@@ -3,7 +3,7 @@
 {
   imports = [
     ./default.nix
-    ./common/desktops/i3.nix
+    ./common/desktops/i3
   ];
 
   home.packages = with pkgs; [
