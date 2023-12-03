@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   imports = [
@@ -14,6 +14,16 @@
   xsession.windowManager.i3 = {
     enable = true;
     config = {
+      bars = [
+        {
+          position = "top";
+          statusCommand = "${pkgs.i3status}/bin/i3status";
+          hiddenState = "hide";
+          mode = "dock";
+          workspaceButtons = true;
+          trayOutput = "primary";
+        }
+      ];
       modifier = "Mod4";
       gaps = {
         inner = 5;
@@ -23,6 +33,15 @@
         { command = "--no-startup-id nm-applet"; }
         { command = "nitrogen --restore"; always = true; }
       ];
+      keybindings =
+        let
+          modifier = config.xsession.windowManager.i3.config.modifier;
+        in
+        lib.mkOptionDefault {
+          XF86AudioRaiseVolume = "exec \"amixer -q sset Master,0 1+ unmute\"";
+          XF86AudioLowerVolume = "exec \"amixer -q sset Master,0 1- unmute\"";
+          XF86AudioMute = "exec \"amixer -q sset Master,0 toggle\"";
+        };
     };
   };
 
