@@ -23,6 +23,7 @@
         i3lock
         i3blocks
         lxappearance
+        nitrogen
       ];
     };
   };
