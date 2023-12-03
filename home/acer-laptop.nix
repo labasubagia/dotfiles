@@ -3,9 +3,7 @@
 {
   imports = [
     ./default.nix
-
-    # Currently using ansible for create & config ssh
-    # ./config/ssh.nix
+    ./common/desktops/i3.nix
   ];
 
   home.packages = with pkgs; [
