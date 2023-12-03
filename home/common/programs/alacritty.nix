@@ -4,9 +4,15 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      opacity = 0.9;
       font = {
-        size = 10;
+        size = 7.5;
+      };
+      window = {
+        opacity = 0.9;
+        padding = {
+          x = 2;
+          y = 2;
+        };
       };
     };
   };
