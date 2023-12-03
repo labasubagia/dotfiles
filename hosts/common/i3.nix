@@ -24,6 +24,7 @@
         i3blocks
         lxappearance
         nitrogen
+        thunar
       ];
     };
   };
