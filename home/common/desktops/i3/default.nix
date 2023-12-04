@@ -10,6 +10,7 @@
     nitrogen
     ranger
     brightnessctl
+    libnotify
   ];
 
   xsession.windowManager.i3 = {
@@ -117,6 +118,16 @@
         settings = {
           format = "%Y-%m-%d %H:%M:%S";
         };
+      };
+    };
+  };
+
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        transparency = 10;
+        offset = "10x20";
       };
     };
   };
