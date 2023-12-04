@@ -9,6 +9,7 @@
     networkmanagerapplet
     nitrogen
     ranger
+    brightnessctl
   ];
 
   xsession.windowManager.i3 = {
@@ -38,9 +39,14 @@
           modifier = config.xsession.windowManager.i3.config.modifier;
         in
         lib.mkOptionDefault {
-          XF86AudioRaiseVolume = "exec \"amixer set Master 5%+ unmute\"";
-          XF86AudioLowerVolume = "exec \"amixer set Master 5%- unmute\"";
-          XF86AudioMute = "exec \"amixer set Master toggle\"";
+          # volume
+          XF86AudioRaiseVolume = "exec amixer set Master 5%+ unmute";
+          XF86AudioLowerVolume = "exec amixer set Master 5%- unmute";
+          XF86AudioMute = "exec amixer set Master toggle";
+
+          # brightness
+          XF86MonBrightnessDown = "exec brightnessctl s 5%-";
+          XF86MonBrightnessUp = "exec brightnessctl s +5%";
         };
     };
   };
