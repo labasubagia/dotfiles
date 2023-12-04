@@ -33,6 +33,9 @@
       startup = [
         { command = "--no-startup-id nm-applet"; }
         { command = "nitrogen --restore"; always = true; }
+
+        # enable this to sclae resolution
+        { command = "--no-startup-id xrandr --output $(xrandr | grep connected | grep -v disconnected | awk '{print $1}') --scale 1.2x1.2"; }
       ];
       keybindings =
         let
