@@ -38,9 +38,9 @@
           modifier = config.xsession.windowManager.i3.config.modifier;
         in
         lib.mkOptionDefault {
-          XF86AudioRaiseVolume = "exec \"amixer -q sset Master,0 1+ unmute\"";
-          XF86AudioLowerVolume = "exec \"amixer -q sset Master,0 1- unmute\"";
-          XF86AudioMute = "exec \"amixer -q sset Master,0 toggle\"";
+          XF86AudioRaiseVolume = "exec \"amixer set Master 5%+ unmute\"";
+          XF86AudioLowerVolume = "exec \"amixer set Master 5%- unmute\"";
+          XF86AudioMute = "exec \"amixer set Master toggle\"";
         };
     };
   };
@@ -96,7 +96,7 @@
         settings = {
           format = "♪: %volume";
           format_muted = "♪: muted (%volume)";
-          device = "pulse:1";
+          device = "pulse";
         };
       };
       "tztime local" = {
