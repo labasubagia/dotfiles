@@ -1,14 +1,22 @@
-{ pkgs, config, lib, ... }:
-
+{ pkgs, user, config, lib, ... }:
+let
+  colors = {
+    bg-color = "#523d64";
+    in-bgcolor = "#363636";
+    text = "#ffffff";
+    u-bgcolor = "#ff0000";
+    indicator = "#a8a3c1";
+    in-text = "#969696";
+  };
+in
 {
   imports = [
     ./nitrogen.nix
+    ./polybar.nix
   ];
 
   home.packages = with pkgs; [
-    i3status
     i3lock
-    i3blocks
     networkmanagerapplet
     nitrogen
     ranger
@@ -16,7 +24,8 @@
     dmenu
     libnotify
     lxappearance
-    xfce.thunar
+    killall
+    pulseaudio
   ];
 
   xsession.windowManager.i3 = {
@@ -26,16 +35,15 @@
       window = {
         hideEdgeBorders = "smart";
       };
-      bars = [
-        {
-          position = "top";
-          statusCommand = "${pkgs.i3status}/bin/i3status";
-          hiddenState = "hide";
-          mode = "dock";
-          workspaceButtons = true;
-          trayOutput = "primary";
-        }
-      ];
+      colors = {
+        focused = {
+          border = colors.bg-color;
+          background = colors.bg-color;
+          text = colors.indicator;
+          indicator = colors.indicator;
+          childBorder = colors.bg-color;
+        };
+      };
       modifier = "Mod4";
       gaps = {
         inner = 10;
@@ -54,80 +62,20 @@
         in
         lib.mkOptionDefault {
           # volume
-          XF86AudioRaiseVolume = "exec amixer set Master 5%+ unmute";
-          XF86AudioLowerVolume = "exec amixer set Master 5%- unmute";
-          XF86AudioMute = "exec amixer set Master toggle";
+          # XF86AudioRaiseVolume = "exec amixer set Master 5%+ unmute";
+          # XF86AudioLowerVolume = "exec amixer set Master 5%- unmute";
+          # XF86AudioMute = "exec amixer set Master toggle";
+
+          # volume
+          XF86AudioRaiseVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
+          XF86AudioLowerVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
+          XF86AudioMute = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          XF86AudioMicMute = "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
           # brightness
           XF86MonBrightnessDown = "exec brightnessctl s 5%-";
           XF86MonBrightnessUp = "exec brightnessctl s +5%";
         };
-    };
-  };
-
-  programs.i3status = {
-    enable = true;
-    general = {
-      interval = 1;
-    };
-    modules = {
-      "ipv6" = {
-        enable = false;
-      };
-      "wireless _first_" = {
-        position = 1;
-        settings = {
-          format_up = "W: (%quality at %essid) %ip";
-          format_down = "W: down";
-        };
-      };
-      "ethernet _first_" = {
-        position = 2;
-        settings = {
-          format_up = "E: %ip (%speed)";
-          format_down = "E: down";
-        };
-      };
-      "battery all" = {
-        position = 3;
-        settings = {
-          format = "%status %percentage %remaining";
-        };
-      };
-      "disk /" = {
-        position = 4;
-        settings = {
-          format = "/ %avail";
-        };
-      };
-      "load" = {
-        position = 5;
-        settings = {
-          format = "%1min";
-        };
-      };
-      "memory" = {
-        position = 6;
-        settings = {
-          format = "%used | %available";
-          threshold_degraded = "1G";
-          format_degraded = "MEMORY < %available";
-        };
-      };
-      "volume master" = {
-        position = 7;
-        settings = {
-          format = "♪: %volume";
-          format_muted = "♪: muted (%volume)";
-          device = "pulse";
-        };
-      };
-      "tztime local" = {
-        position = 8;
-        settings = {
-          format = "%Y-%m-%d %H:%M:%S";
-        };
-      };
     };
   };
 
