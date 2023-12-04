@@ -65,6 +65,9 @@
       interval = 1;
     };
     modules = {
+      "ipv6" = {
+        enable = false;
+      };
       "wireless _first_" = {
         position = 1;
         settings = {
