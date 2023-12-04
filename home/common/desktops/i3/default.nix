@@ -15,6 +15,10 @@
   xsession.windowManager.i3 = {
     enable = true;
     config = {
+      defaultWorkspace = "1";
+      window = {
+        hideEdgeBorders = "smart";
+      };
       bars = [
         {
           position = "top";
@@ -27,7 +31,7 @@
       ];
       modifier = "Mod4";
       gaps = {
-        inner = 5;
+        inner = 10;
       };
       terminal = "alacritty";
       startup = [
