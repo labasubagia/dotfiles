@@ -6,11 +6,17 @@
   ];
 
   home.packages = with pkgs; [
+    i3status
+    i3lock
+    i3blocks
     networkmanagerapplet
     nitrogen
     ranger
     brightnessctl
+    dmenu
     libnotify
+    lxappearance
+    xfce.thunar
   ];
 
   xsession.windowManager.i3 = {
