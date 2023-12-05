@@ -21,7 +21,7 @@ in
     nitrogen
     ranger
     brightnessctl
-    dmenu
+    rofi
     libnotify
     lxappearance
     killall
@@ -61,6 +61,8 @@ in
           modifier = config.xsession.windowManager.i3.config.modifier;
         in
         lib.mkOptionDefault {
+          "${modifier}+d" = "exec rofi -show drun";
+
           # volume
           # XF86AudioRaiseVolume = "exec amixer set Master 5%+ unmute";
           # XF86AudioLowerVolume = "exec amixer set Master 5%- unmute";
