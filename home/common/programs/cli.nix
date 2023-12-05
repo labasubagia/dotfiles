@@ -21,6 +21,7 @@
 
     htop
     du-dust
+    duf
     bottom
     gdu
     procs
