@@ -11,6 +11,9 @@
       rm = "trash-put -iv";
       cat = "bat";
       tree = "eza --tree";
+      grep = "rg";
+      du = "dust";
+      find = "fd";
     };
     history = {
       size = 10000;
