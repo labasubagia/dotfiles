@@ -1,13 +1,6 @@
 { pkgs, user, config, lib, ... }:
 let
-  colors = {
-    bg-color = "#523d64";
-    in-bgcolor = "#363636";
-    text = "#ffffff";
-    u-bgcolor = "#ff0000";
-    indicator = "#a8a3c1";
-    in-text = "#969696";
-  };
+  font = "Source Sans";
 in
 {
   imports = [
@@ -26,23 +19,36 @@ in
     lxappearance
     killall
     pulseaudio
+    cava
+    neofetch
   ];
+
+  gtk = {
+    font = {
+      package = pkgs.source-sans;
+      name = font;
+      size = 10;
+    };
+  };
 
   xsession.windowManager.i3 = {
     enable = true;
     config = {
       defaultWorkspace = "1";
       window = {
-        hideEdgeBorders = "smart";
+        hideEdgeBorders = "both";
+      };
+      fonts = {
+        names = [ font ];
+        size = 9.0;
       };
       colors = {
-        focused = {
-          border = colors.bg-color;
-          background = colors.bg-color;
-          text = colors.indicator;
-          indicator = colors.indicator;
-          childBorder = colors.bg-color;
-        };
+        focused = { };
+        focusedIncactive = { };
+        unfocused = { };
+        urgent = { };
+        placeholder = { };
+        background = { };
       };
       modifier = "Mod4";
       gaps = {
@@ -62,6 +68,7 @@ in
         in
         lib.mkOptionDefault {
           "${modifier}+d" = "exec rofi -show drun";
+          "Mod1+RightClick" = "mode resize";
 
           # volume
           # XF86AudioRaiseVolume = "exec amixer set Master 5%+ unmute";
@@ -79,6 +86,10 @@ in
           XF86MonBrightnessUp = "exec brightnessctl s +5%";
         };
     };
+    extraConfig = "
+      default_border pixel 3
+      default_floating_border pixel 3
+    ";
   };
 
   services.dunst = {
