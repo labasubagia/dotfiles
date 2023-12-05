@@ -1,13 +1,13 @@
-{ pkgs, user, ... }:
+{ pkgs, config, ... }:
 
 {
   home.packages = with pkgs; [
     nitrogen
   ];
 
-  home.file.".config/nitrogen/wallpaper".source = ./../../../../extras/wallpaper;
+  xdg.configFile."nitrogen/wallpaper".source = ./../../../../extras/wallpaper;
 
-  home.file.".config/nitrogen/nitrogen.cfg".text = "
+  xdg.configFile."nitrogen/nitrogen.cfg".text = "
     [geometry]
     posx=5
     posy=23
@@ -19,12 +19,12 @@
     recurse=true
     sort=alpha
     icon_caps=false
-    dirs=/home/${user}/.config/nitrogen/wallpaper;
+    dirs=${config.xdg.configHome}/nitrogen/wallpaper;
   ";
 
-  home.file.".config/nitrogen/bg-saved.cfg".text = "
+  xdg.configFile."nitrogen/bg-saved.cfg".text = "
     [xin_-1]
-    file=/home/${user}/.config/nitrogen/wallpaper/1.jpg
+    file=${config.xdg.configHome}/nitrogen/wallpaper/1.png
     mode=0
     bgcolor=#000000
   ";
