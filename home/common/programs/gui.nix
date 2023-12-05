@@ -1,9 +1,13 @@
 { pkgs, ... }:
 
 {
+
+  imports = [
+    ./vscode.nix
+  ];
+
   home.packages = with pkgs; [
     brave
-    vscode
 
     # postman has usr problem
     # postman
@@ -12,4 +16,6 @@
     # try tomorrow, if fail make an issue
     # redisinsight
   ];
+
+  programs.vscode = { };
 }
