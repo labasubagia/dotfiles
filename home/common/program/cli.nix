@@ -38,4 +38,12 @@
     jq
     fd
   ];
+
+  programs.atuin = {
+    enable = true;
+  };
+
+  programs.autojump = {
+    enable = true;
+  };
 }

@@ -12,7 +12,7 @@
     ];
   };
 
-  home.file.".config/polybar/launch.sh".text = "
+  xdg.configFile."polybar/launch.sh".text = "
     #!/usr/bin/env bash
 
     # Terminate already running bar instances
@@ -27,5 +27,5 @@
     echo \"Bars launched...\"
   ";
 
-  home.file.".config/polybar/config.ini".source = ./polybar.config.ini;
+  xdg.configFile."polybar/config.ini".source = ./polybar.config.ini;
 }
