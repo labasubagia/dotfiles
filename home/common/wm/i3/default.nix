@@ -1,11 +1,10 @@
 { pkgs, user, config, lib, ... }:
-let
-  font = "Source Sans";
-in
+
 {
   imports = [
     ./nitrogen.nix
     ./polybar.nix
+    ./gtk.nix
   ];
 
   home.packages = with pkgs; [
@@ -23,13 +22,7 @@ in
     neofetch
   ];
 
-  gtk = {
-    font = {
-      package = pkgs.source-sans;
-      name = font;
-      size = 10;
-    };
-  };
+  gtk = { };
 
   xsession.windowManager.i3 = {
     enable = true;
@@ -39,7 +32,7 @@ in
         hideEdgeBorders = "both";
       };
       fonts = {
-        names = [ font ];
+        names = [ "Source Sans" ];
         size = 9.0;
       };
       colors = {
