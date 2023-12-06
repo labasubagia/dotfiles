@@ -5,6 +5,7 @@
     ./nitrogen.nix
     ./polybar.nix
     ./gtk.nix
+    ./dunst.nix
   ];
 
   home.packages = with pkgs; [
@@ -22,7 +23,6 @@
     neofetch
   ];
 
-  gtk = { };
 
   xsession.windowManager.i3 = {
     enable = true;
@@ -32,7 +32,7 @@
         hideEdgeBorders = "both";
       };
       fonts = {
-        names = [ "Source Sans" ];
+        names = [ "Source Sans 3" ];
         size = 9.0;
       };
       colors = {
