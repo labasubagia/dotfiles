@@ -12,8 +12,8 @@
     ];
     fontconfig = {
       defaultFonts = {
-        serif = [ "Source Sans" ];
-        sansSerif = [ "Source Sans" ];
+        serif = [ "Source Sans 3" ];
+        sansSerif = [ "Source Sans 3" ];
         monospace = [ "IntoneMono Nerd Font" ];
       };
     };

@@ -18,7 +18,7 @@
     };
     font = {
       package = pkgs.source-sans;
-      name = "Source Sans";
+      name = "Source Sans 3";
       size = 10;
     };
     gtk3.extraConfig = {
