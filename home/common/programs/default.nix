@@ -12,9 +12,5 @@
     ./python.nix
     ./starship.nix
     ./zsh.nix
-
-    ./kitty.nix
-    ./waybar
-    ./wofi.nix
   ];
 }
