@@ -5,13 +5,14 @@
     enable = true;
     settings = {
       font = {
+        family = "JetBrainsMonoNL Nerd Font";
         size = 7;
       };
       window = {
         opacity = 0.85;
         padding = {
-          x = 2;
-          y = 2;
+          x = 4;
+          y = 4;
         };
       };
     };
