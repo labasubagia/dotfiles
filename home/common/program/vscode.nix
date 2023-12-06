@@ -18,6 +18,7 @@
       "workbench.colorTheme" = "Visual Studio Dark";
       "window.menuBarVisibility" = "toggle";
       "editor.fontSize" = 13;
+      "terminal.integrated.fontSize" = 13;
     };
   };
 }
