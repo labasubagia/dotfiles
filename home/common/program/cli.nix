@@ -8,6 +8,7 @@
 
     arcanist
     git
+    gh
     tmux
 
     curl

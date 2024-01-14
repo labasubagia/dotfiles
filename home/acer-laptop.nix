@@ -3,6 +3,7 @@
 {
   imports = [
     ./default.nix
+    ./common/program
     ./common/wm/i3
   ];
 
