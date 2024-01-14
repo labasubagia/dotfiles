@@ -3,7 +3,6 @@
 {
   imports = [
     ./default.nix
-    ./common/program/alacritty.nix
     ./common/program/cli.nix
     ./common/program/development.nix
     ./common/program/neovim.nix
