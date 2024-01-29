@@ -11,7 +11,7 @@
       jnoortheen.nix-ide
       editorconfig.editorconfig
       streetsidesoftware.code-spell-checker
-      ms-vscode-remote.vscode-remote-extensionpack
+      ms-vscode-remote.remote-containers
       eamodio.gitlens
       usernamehw.errorlens
       ms-azuretools.vscode-docker
