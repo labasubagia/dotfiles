@@ -11,7 +11,10 @@
       jnoortheen.nix-ide
       editorconfig.editorconfig
       streetsidesoftware.code-spell-checker
-      jnoortheen.nix-ide
+      ms-vscode-remote.vscode-remote-extensionpack
+      eamodio.gitlens
+      usernamehw.errorlens
+      ms-azuretools.vscode-docker
     ];
     userSettings = {
       "editor.fontFamily" = "'IntoneMono Nerd Font','Droid Sans Mono', 'monospace', monospace";
