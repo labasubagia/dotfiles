@@ -5,6 +5,11 @@
     ./hyprpaper.nix
   ];
 
+  home.packages = with pkgs; [
+    pulseaudio
+    brightnessctl
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -108,6 +113,16 @@
 
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
       "$mainMod" = "SUPER";
+
+      binde = [
+        ", XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        ", XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        ", XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+
+        ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+        ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
+      ];
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind =

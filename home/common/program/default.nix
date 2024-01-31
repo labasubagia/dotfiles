@@ -7,6 +7,7 @@
     ./development.nix
     ./gui.nix
     ./neovim.nix
+    ./ranger.nix
     ./starship.nix
     ./zsh.nix
   ];
