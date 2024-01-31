@@ -6,7 +6,7 @@
     settings = {
       font = {
         family = "IntoneMono Nerd Font";
-        size = 7;
+        size = 9;
       };
       window = {
         opacity = 0.8;
