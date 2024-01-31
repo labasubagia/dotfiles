@@ -8,7 +8,6 @@
     pkgs.waybar
     pkgs.eww
     pkgs.dunst
-    pkgs.swww
     (pkgs.waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
     }))
