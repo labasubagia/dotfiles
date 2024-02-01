@@ -7,8 +7,8 @@
     ./development.nix
     ./gui.nix
     ./neovim.nix
-    ./ranger.nix
     ./starship.nix
+    ./yazi.nix
     ./zsh.nix
   ];
 }
