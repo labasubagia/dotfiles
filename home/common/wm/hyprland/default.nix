@@ -3,6 +3,7 @@
 
   imports = [
     ./hyprpaper.nix
+    ./waybar.nix
   ];
 
   home.packages = with pkgs; [
