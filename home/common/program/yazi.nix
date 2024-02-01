@@ -9,11 +9,15 @@
     fd
     ripgrep
     fzf
-    zoxide
+    exiftool
 
     # for alacritty
     ueberzugpp
   ];
+
+  programs.zoxide = {
+    enable = true;
+  };
 
   programs.yazi = {
     enable = true;
