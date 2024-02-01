@@ -3,6 +3,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    autocd = true;
     shellAliases = {
       ls = "eza";
       ll = "eza -l";
