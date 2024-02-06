@@ -2,6 +2,9 @@
 
 {
   home.packages = with pkgs; [
+    devbox
+    direnv
+
     # lsp
     rnix-lsp
 

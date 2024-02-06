@@ -15,6 +15,14 @@
       eamodio.gitlens
       usernamehw.errorlens
       ms-azuretools.vscode-docker
+      ms-vscode-remote.remote-ssh
+    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      {
+        name = "devbox";
+        publisher = "jetpack-io";
+        version = "0.1.4";
+        sha256 = "BVC7hS2PNcTHV6WIsWSiPQ9tV8aRlawQRnSHqqZcx1k=";
+      }
     ];
     userSettings = {
       "editor.fontFamily" = "'IntoneMono Nerd Font','Droid Sans Mono', 'monospace', monospace";
