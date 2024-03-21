@@ -32,10 +32,14 @@
     ]))
   ];
 
+  programs.direnv = {
+    enable = true;
+  };
+
   # # asdf alternative
   # # https://github.com/jdx/rtx
   # # ! Don't use it, still have problem with several package e.g. nodejs
-  # programs.rtx = {
+  # programs.mise = {
   #   enable = true;
 
   #   settings = {

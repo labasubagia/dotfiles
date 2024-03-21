@@ -23,7 +23,7 @@
             default = "";
           };
           "persistent-workspaces" = {
-            "*" = 5;
+            "*" = 1;
           };
         };
 
