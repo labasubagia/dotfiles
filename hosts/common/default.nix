@@ -7,6 +7,5 @@
     ./docker.nix
     ./flatpak.nix
     ./fonts.nix
-    ./xfce.nix
   ];
 }
