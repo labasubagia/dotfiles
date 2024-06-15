@@ -34,7 +34,7 @@
       nixosConfigurations = {
         vbox = mkNixos [ ./hosts/vbox ] "x86_64-linux";
         acer-laptop = mkNixos [ ./hosts/acer-laptop ] "x86_64-linux";
-	      vostro = mkNixos [ ./hosts/vostro ] "x86_64-linux";
+        vostro = mkNixos [ ./hosts/vostro ] "x86_64-linux";
       };
 
       homeConfigurations = {
