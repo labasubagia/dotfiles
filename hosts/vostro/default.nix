@@ -15,7 +15,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "localhost"; # Define your hostname.
+  networking.hostName = "local"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -67,13 +67,17 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.groups.user.gid = 1000;
+
   users.users.user = {
     isNormalUser = true;
     description = "user";
+    group = "user";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       #  thunderbird
     ];
+    uid = 1000;
   };
 
   programs.zsh.enable = true;
@@ -123,9 +127,12 @@
 
   virtualisation.docker = {
     enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
+
+    # ! rootless has problem with dev containers
+    # don't use it for now
+    # rootless = {
+    #   enable = true;
+    #   setSocketVariable = true;
+    # };
   };
 }
