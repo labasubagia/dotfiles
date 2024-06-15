@@ -6,7 +6,8 @@
     direnv
 
     # lsp
-    rnix-lsp
+    # rnix-lsp
+    nil # nix language server
 
     # git hooks
     pre-commit
@@ -30,6 +31,10 @@
       ansible-core
       paramiko
     ]))
+
+
+    terraform
+    pulumi
   ];
 
   programs.direnv = {

@@ -5,8 +5,7 @@
     enable = true;
     settings = {
       font = {
-        family = "IntoneMono Nerd Font";
-        size = 9;
+        size = 10;
       };
       window = {
         opacity = 0.8;

@@ -38,6 +38,8 @@
     bat
     jq
     fd
+
+    neofetch
   ];
 
   programs.atuin = {

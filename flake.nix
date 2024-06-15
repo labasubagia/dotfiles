@@ -34,12 +34,14 @@
       nixosConfigurations = {
         vbox = mkNixos [ ./hosts/vbox ] "x86_64-linux";
         acer-laptop = mkNixos [ ./hosts/acer-laptop ] "x86_64-linux";
+	      vostro = mkNixos [ ./hosts/vostro ] "x86_64-linux";
       };
 
       homeConfigurations = {
         "demo@vbox" = mkHome [ ./home/vbox.nix ] nixpkgs.legacyPackages."x86_64-linux" "demo";
         "user@acer-laptop" = mkHome [ ./home/acer-laptop.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
         "yozy@wsl" = mkHome [ ./home/wsl.nix ] nixpkgs.legacyPackages."x86_64-linux" "yozy";
+        "user@vostro" = mkHome [ ./home/vostro.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
       };
     };
 }

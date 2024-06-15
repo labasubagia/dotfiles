@@ -36,8 +36,7 @@
     "xfce",
     "zplug"
   ],
-
   "nix.enableLanguageServer": true,
-  "nix.serverPath": "rnix-lsp",
+  "nix.serverPath": "nil",
   "editor.formatOnSave": true
 }
