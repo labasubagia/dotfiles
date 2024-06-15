@@ -32,9 +32,12 @@
       paramiko
     ]))
 
-
+    # iac
     terraform
     pulumi
+
+    # cloud
+    google-cloud-sdk
   ];
 
   programs.direnv = {
