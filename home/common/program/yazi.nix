@@ -22,5 +22,12 @@
 
   programs.yazi = {
     enable = true;
+    settings = {
+      opener = {
+        edit = [
+          { run = "${pkgs.neovim}/bin/nvim \"$@\""; block = true; }
+        ];
+      };
+    };
   };
 }
