@@ -38,10 +38,14 @@
       };
 
       homeConfigurations = {
+        # virtualbox demo ova
         "demo@vbox" = mkHome [ ./home/vbox.nix ] nixpkgs.legacyPackages."x86_64-linux" "demo";
-        "user@acer-laptop" = mkHome [ ./home/acer-laptop.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
-        "yozy@wsl" = mkHome [ ./home/wsl.nix ] nixpkgs.legacyPackages."x86_64-linux" "yozy";
-        "user@vostro" = mkHome [ ./home/vostro.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
+
+        # default user for WSL
+        "user@wsl" = mkHome [ ./home/user-wsl.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
+
+        # default user for device/GUI
+        "user" = mkHome [ ./home/user.nix ] nixpkgs.legacyPackages."x86_64-linux" "user";
       };
     };
 }
