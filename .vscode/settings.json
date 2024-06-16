@@ -24,6 +24,7 @@
     "gnumake",
     "httpie",
     "instanciate",
+    "kubectx",
     "lazydocker",
     "menuone",
     "nameofdevicetomount",

@@ -26,6 +26,7 @@
     btop
 
     kubectl
+    kubectx
     lazydocker
     k9s
 
