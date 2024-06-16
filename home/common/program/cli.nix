@@ -41,6 +41,8 @@
 
     neofetch
     xorg.xkill
+
+    openssl
   ];
 
   programs.atuin = {
