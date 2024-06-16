@@ -5,9 +5,9 @@
     devbox
     direnv
 
-    # lsp
-    # rnix-lsp
+    # nix
     nil # nix language server
+    nixpkgs-fmt
 
     # git hooks
     pre-commit
@@ -17,6 +17,7 @@
     gnumake
 
     go
+
     rustup
 
     # node
@@ -38,6 +39,9 @@
 
     # cloud
     google-cloud-sdk
+
+    arcanist
+    teleport
   ];
 
   programs.direnv = {

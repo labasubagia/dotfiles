@@ -15,7 +15,6 @@
       editorconfig-vim
     ];
     extraConfig = ''
-      set background=dark
       set clipboard=unnamedplus
       set cursorline
       set completeopt=noinsert,menuone,noselect

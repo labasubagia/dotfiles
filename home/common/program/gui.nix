@@ -8,14 +8,11 @@
 
   home.packages = with pkgs; [
     brave
+    libreoffice
 
-    # postman has usr problem
+    # NOTE: proprietary software sometimes has problem with nix packages, prefer use flatpak
     # postman
-
-    # redis insight has problem with nodejs ssl
-    # try tomorrow, if fail make an issue
+    # slack
     # redisinsight
   ];
-
-  programs.vscode = { };
 }

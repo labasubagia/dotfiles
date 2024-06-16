@@ -6,7 +6,6 @@
     zip
     unzip
 
-    arcanist
     git
     gh
     tmux
@@ -40,8 +39,6 @@
     fd
 
     neofetch
-    xorg.xkill
-
     openssl
   ];
 
