@@ -10,7 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../common
-      ../common/pantheon.nix
+      ../common/xfce.nix
     ];
 
   # Bootloader.
