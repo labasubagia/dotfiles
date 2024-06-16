@@ -40,6 +40,7 @@
     fd
 
     neofetch
+    xorg.xkill
   ];
 
   programs.atuin = {
