@@ -1,18 +1,31 @@
 {
+  "cSpell.enabledFileTypes": {
+    "nix": true
+  },
   "cSpell.words": [
     "aarch",
+    "alacritty",
+    "arcanist",
     "atuin",
+    "autocd",
     "autojump",
+    "btop",
     "builtins",
     "completeopt",
     "cursorline",
     "davidde",
+    "devbox",
     "devicons",
+    "direnv",
+    "flatpak",
     "fontconfig",
+    "gnumake",
     "httpie",
     "instanciate",
+    "lazydocker",
     "menuone",
     "nameofdevicetomount",
+    "neofetch",
     "neovim",
     "nerdfonts",
     "nerdtree",
@@ -25,18 +38,42 @@
     "pkgs",
     "procs",
     "pulseaudio",
+    "pulumi",
+    "redisinsight",
     "ripgrep",
+    "rnix",
     "robbyrussell",
     "Roboto",
     "rustup",
     "SDDM",
     "sirclo",
+    "stdenv",
+    "thunar",
     "tokei",
     "unnamedplus",
+    "volman",
+    "whiskermenu",
     "xfce",
+    "xkill",
+    "xorg",
     "zplug"
   ],
+  "editor.formatOnSave": true,
   "nix.enableLanguageServer": true,
   "nix.serverPath": "nil",
-  "editor.formatOnSave": true
+  "nix.serverSettings": {
+    "nil": {
+      "diagnostics": {
+        "ignored": [
+          "unused_binding",
+          "unused_with"
+        ]
+      },
+      "formatting": {
+        "command": [
+          "nixpkgs-fmt"
+        ]
+      },
+    }
+  }
 }
