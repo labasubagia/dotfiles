@@ -5,16 +5,16 @@
     enableCompletion = true;
     autocd = true;
     shellAliases = {
-      ls = "eza";
-      ll = "eza -l";
       mv = "mv -iv";
       cp = "cp -iv";
-      rm = "trash-put -iv";
-      cat = "bat";
-      tree = "eza --tree";
-      grep = "rg";
-      du = "dust";
-      find = "fd";
+      ls = "${pkgs.eza}/bin/eza";
+      ll = "${pkgs.eza}/bin/eza -l";
+      tree = "${pkgs.eza}/bin/eza --tree";
+      rm = "${pkgs.trash-cli}/bin/trash-put -iv";
+      cat = "${pkgs.bat}/bin/bat";
+      grep = "${pkgs.ripgrep}/bin/rg";
+      du = "${pkgs.dust}/bin/dust";
+      find = "${pkgs.fd}/bin/fd";
     };
     history = {
       size = 10000;
@@ -27,7 +27,7 @@
         { name = "zsh-users/zsh-autosuggestions"; }
         { name = "zsh-users/zsh-completions"; }
         { name = "davidde/git"; }
-        { name = "themes/robbyrussell"; tags = [ from:oh-my-zsh as:theme ]; }
+        { name = "themes/robbyrussell"; tags = [ "from:oh-my-zsh" "as:theme" ]; }
       ];
     };
   };
