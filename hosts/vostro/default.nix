@@ -9,6 +9,8 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../common
+      ../common/pantheon.nix
     ];
 
   # Bootloader.
@@ -35,8 +37,6 @@
   services.xserver.enable = true;
 
   # Enable the Pantheon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.pantheon.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -83,9 +83,6 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -124,15 +121,4 @@
   system.stateVersion = "24.05"; # Did you read the comment?
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  virtualisation.docker = {
-    enable = true;
-
-    # ! rootless has problem with dev containers
-    # don't use it for now
-    # rootless = {
-    #   enable = true;
-    #   setSocketVariable = true;
-    # };
-  };
 }
