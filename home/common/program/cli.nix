@@ -40,6 +40,9 @@
 
     neofetch
     openssl
+
+    alsa-utils
+    brightnessctl
   ];
 
   programs.atuin = {
