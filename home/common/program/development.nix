@@ -27,6 +27,8 @@
     # python
     (python3.withPackages (ps: with ps; [
       pip
+      virtualenv
+
       # ! don't use ansible from nix (pkgs.ansible),
       # ! it's become troublesome when we need to use additional packages e.g. paramiko
       ansible-core

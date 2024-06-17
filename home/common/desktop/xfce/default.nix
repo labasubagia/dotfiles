@@ -2,7 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    xed-editor
+    cinnamon.xreader # pdf
+    gnome.file-roller # archive
   ];
 
   gtk = {
