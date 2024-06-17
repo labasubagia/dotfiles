@@ -51,6 +51,8 @@
     "SDDM",
     "sirclo",
     "stdenv",
+    "terragrunt",
+    "tflint",
     "thunar",
     "tokei",
     "unnamedplus",
