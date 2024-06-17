@@ -16,6 +16,7 @@
     "completeopt",
     "cursorline",
     "davidde",
+    "dconf",
     "devbox",
     "devicons",
     "direnv",
@@ -61,7 +62,9 @@
     "xfce",
     "xkill",
     "xorg",
-    "zplug"
+    "zplug",
+    "zuki",
+    "Zukitre"
   ],
   "editor.formatOnSave": true,
   "nix.enableLanguageServer": true,
@@ -78,7 +81,7 @@
         "command": [
           "nixpkgs-fmt"
         ]
-      },
+      }
     }
   }
 }
