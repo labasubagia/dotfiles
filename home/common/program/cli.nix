@@ -48,6 +48,10 @@
 
   programs.atuin = {
     enable = true;
+    settings = {
+      enter_accept = false;
+      style = "compact";
+    };
   };
 
   programs.autojump = {
