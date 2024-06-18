@@ -4,6 +4,7 @@
   imports = [
     ./hyprpaper.nix
     ./waybar.nix
+    ../../program/alacritty.nix
   ];
 
   home.packages = with pkgs; [

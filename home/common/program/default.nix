@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./alacritty.nix
     ./cli.nix
     ./development.nix
     ./gui.nix
