@@ -4,6 +4,9 @@
     enable = true;
     enableCompletion = true;
     autocd = true;
+    initExtraFirst = ''
+      export PATH=$PATH:~/.local/bin
+    '';
     shellAliases = {
       mv = "mv -iv";
       cp = "cp -iv";
