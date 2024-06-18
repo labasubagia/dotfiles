@@ -43,3 +43,9 @@
         identity_file: "{{ dir }}/{{ item.file }}"
         ssh_config_file: "{{ dir }}/config"
       with_items: "{{ keys }}"
+
+    - name: ssh config replace /home/<user>
+      ansible.builtin.replace:
+        path: "{{ dir }}/config"
+        regexp: '\/home\/[^\/]+'
+        replace: '~'
