@@ -43,8 +43,12 @@
 
       nixosConfigurations = {
         vbox = mkNixos ./hosts/vbox "x86_64-linux";
-        acer-laptop = mkNixos ./hosts/acer-laptop "x86_64-linux";
-        vostro = mkNixos ./hosts/vostro "x86_64-linux";
+
+        # Acer Aspire E5-553G 114Q (personal)
+        sloth = mkNixos ./hosts/sloth "x86_64-linux";
+
+        # Dell Vostro 14 3000 (office)
+        eagle = mkNixos ./hosts/eagle "x86_64-linux";
       };
 
       homeConfigurations = {
