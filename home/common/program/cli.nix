@@ -2,48 +2,90 @@
 
 {
   home.packages = with pkgs; [
+    # secrets related
+    age
+    sops
+    openssl
+    gnupg
+
+    # archive
     rar
     zip
+    xz
     unzip
+    p7zip
 
+    # git
     git
     gh
-    tmux
 
+    # networking tools
+    mtr
+    iperf3
+    dnsutils # dig + dnslookup
+    ldns
+    socat
+    nmap
+    ipcalc
+    aria2
     curl
     wget
     httpie
 
+    # utils
     fzf
     ripgrep
+    jq
+    tokei
+    bat
+    fd
+    trash-cli
+    xcp
+    eza
+    yq-go
+    tmux
 
-    htop
+    # resource stat
     du-dust
     duf
-    bottom
     gdu
     procs
+    bottom
+    htop
     btop
+    iotop
+    iftop
 
+    # containerization utils
     kubectl
     kubectx
     lazydocker
     k9s
 
-    trash-cli
-    xcp
-
-    tokei
-    eza
-    bat
-    jq
-    fd
-
-    neofetch
-    openssl
-
+    # media (audio, screen, etc)
     alsa-utils
     brightnessctl
+
+    # misc
+    neofetch
+    file
+    which
+    gnused
+    gnutar
+    gawk
+    zstd
+
+    # system call monitoring
+    strace # system call monitoring
+    ltrace # library call monitoring
+    lsof # list open files
+
+    # system tools
+    sysstat
+    lm_sensors # sensors
+    ethtool
+    pciutils # lspci
+    usbutils # lsusb
   ];
 
   programs.atuin = {
@@ -56,5 +98,11 @@
 
   programs.autojump = {
     enable = true;
+  };
+
+  programs.git = {
+    enable = true;
+    userEmail = "labasubagia22@gmail.com";
+    userName = "Laba Subagia";
   };
 }
