@@ -8,9 +8,30 @@
       displayManager = {
         lightdm = {
           enable = true;
-          greeters.slick = {
+          background = ../../extras/wallpaper/1.png;
+          greeters.gtk = {
             enable = true;
-            theme.name = "Zukitre dark";
+            theme = {
+              package = pkgs.zuki-themes;
+              name = "Zukitre dark";
+            };
+            iconTheme = {
+              name = "elementary Xfce dark";
+              package = pkgs.elementary-xfce-icon-theme;
+            };
+            cursorTheme = {
+              name = "elementary";
+              package = pkgs.elementary-xfce-icon-theme;
+            };
+            indicators = [
+              "~host"
+              "~spacer"
+              "~clock"
+              "~spacer"
+              "~session"
+              "~a11y"
+              "~power"
+            ];
           };
         };
       };

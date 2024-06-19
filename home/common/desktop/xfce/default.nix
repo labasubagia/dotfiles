@@ -16,6 +16,10 @@
       name = "elementary";
       package = pkgs.elementary-xfce-icon-theme;
     };
+    font = {
+      name = "Source Sans 3";
+      package = pkgs.source-sans;
+    };
     theme = {
       name = "Zukitre";
       package = pkgs.zuki-themes;

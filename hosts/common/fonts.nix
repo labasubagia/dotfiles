@@ -14,7 +14,7 @@
       defaultFonts = {
         serif = [ "Source Sans 3" ];
         sansSerif = [ "Source Sans 3" ];
-        monospace = [ "IntoneMono Nerd Font" ];
+        monospace = [ "RobotoMono Nerd Font" ];
       };
     };
   };
