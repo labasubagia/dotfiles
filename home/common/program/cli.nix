@@ -17,6 +17,7 @@
 
     # git
     git
+    gitleaks
     gh
 
     # networking tools
