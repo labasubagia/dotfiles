@@ -3,11 +3,8 @@
 {
   imports = [
     ./default.nix
-    ./common/program/cli.nix
-    ./common/program/development.nix
-    ./common/program/neovim.nix
-    ./common/program/starship.nix
-    ./common/program/zsh.nix
+    ./common/program/shell
+    ./common/program/dev
   ];
 
   # error when home manager switch
@@ -15,7 +12,7 @@
   manual.manpages.enable = false;
 
   # in case conflict with WSL distro e.g ubuntu
-  # when zsh is installed from apt instead of nixpkgs 
+  # when zsh is installed from apt instead of nixpkgs
   programs.zsh.initExtraFirst = "
     . $HOME/.nix-profile/etc/profile.d/nix.sh
   ";
