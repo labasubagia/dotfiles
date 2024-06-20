@@ -16,7 +16,7 @@
         }
         {
           threshold = 20;
-          style = "bold orange";
+          style = "bold #FFA500";
         }
         {
           threshold = 30;
