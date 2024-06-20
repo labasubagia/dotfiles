@@ -20,7 +20,7 @@ in
           (key: {
             name = "ssh_keys/${key.name}/private";
             value = {
-              path = "${config.home.homeDirectory}/.ssh/id_rsa_${key.name}";
+              path = "${config.home.homeDirectory}/.ssh/id_ed25519_${key.name}";
             };
           })
           sshKeys
@@ -29,7 +29,7 @@ in
           (key: {
             name = "ssh_keys/${key.name}/public";
             value = {
-              path = "${config.home.homeDirectory}/.ssh/id_rsa_${key.name}.pub";
+              path = "${config.home.homeDirectory}/.ssh/id_ed25519_${key.name}.pub";
             };
           })
           sshKeys
@@ -45,7 +45,7 @@ in
           name = key.host;
           value = {
             hostname = key.host;
-            identityFile = "~/.ssh/id_rsa_${key.name}";
+            identityFile = "~/.ssh/id_ed25519_${key.name}";
           };
         })
         sshKeys
