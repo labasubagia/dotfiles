@@ -1,49 +1,49 @@
 { pkgs, config, ... }:
 
+let
+  sshKeys = [
+    { name = "github"; host = "github.com"; }
+    { name = "gitlab"; host = "gitlab.com"; }
+    { name = "phabricator"; host = "phabricator.sirclo.com"; }
+  ];
+in
 {
   sops = {
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     defaultSopsFile = ../../../secrets.yaml;
-    secrets = {
-      "ssh_keys/github/private" = {
-        path = "${config.home.homeDirectory}/.ssh/id_rsa_github";
-      };
-      "ssh_keys/github/public" = {
-        path = "${config.home.homeDirectory}/.ssh/id_rsa_github.pub";
-      };
-
-      "ssh_keys/gitlab/private" = {
-        path = "${config.home.homeDirectory}/.ssh/id_rsa_gitlab";
-      };
-      "ssh_keys/gitlab/public" = {
-        path = "${config.home.homeDirectory}/.ssh/id_rsa_gitlab.pub";
-      };
-
-      "ssh_keys/phabricator/private" = {
-        path = "${config.home.homeDirectory}/.ssh/id_rsa_phabricator";
-      };
-      "ssh_keys/phabricator/public" = {
-        path = "${config.home.homeDirectory}/.ssh/id_rsa_phabricator.pub";
-      };
-    };
-
+    secrets = builtins.listToAttrs (
+      map
+        (key: {
+          name = "ssh_keys/${key.name}/private";
+          value = {
+            path = "${config.home.homeDirectory}/.ssh/id_rsa_${key.name}";
+          };
+        })
+        sshKeys
+      ++
+      map
+        (key: {
+          name = "ssh_keys/${key.name}/public";
+          value = {
+            path = "${config.home.homeDirectory}/.ssh/id_rsa_${key.name}.pub";
+          };
+        })
+        sshKeys
+    );
   };
 
   programs.ssh = {
     enable = true;
-    matchBlocks = {
-      "github.com" = {
-        hostname = "github.com";
-        identityFile = "~/.ssh/id_rsa_github";
-      };
-      "gitlab.com" = {
-        hostname = "gitlab.com";
-        identityFile = "~/.ssh/id_rsa_gitlab";
-      };
-      "phabricator.sirclo.com" = {
-        hostname = "phabricator.sirclo.com";
-        identityFile = "~/.ssh/id_rsa_phabricator";
-      };
-    };
+    matchBlocks = builtins.listToAttrs (
+      map
+        (key: {
+          name = key.host;
+          value = {
+            hostname = key.host;
+            identityFile = "~/.ssh/id_rsa_${key.name}";
+          };
+        })
+        sshKeys
+    );
   };
 }
