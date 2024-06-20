@@ -20,8 +20,14 @@
       {
         name = "devbox";
         publisher = "jetpack-io";
-        version = "0.1.4";
-        sha256 = "BVC7hS2PNcTHV6WIsWSiPQ9tV8aRlawQRnSHqqZcx1k=";
+        version = "0.1.5";
+        sha256 = "+nIeDaz1NPYFoxFVC8GQxtU1MU/sbdFETAQWzVX6LGQ=";
+      }
+      {
+        name = "signageos-vscode-sops-beta";
+        publisher = "signageos";
+        version = "0.9.1";
+        sha256 = "p1gfMd6WgFpHJHmvBAmlpi+MH40xTnInlr6xOSFpVyI=";
       }
     ];
     # userSettings = {
