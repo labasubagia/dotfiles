@@ -58,16 +58,4 @@
   programs.direnv = {
     enable = true;
   };
-
-
-  # disable for now
-  # try learn to use nix package instead
-  programs.mise = {
-    enable = false;
-    globalConfig = {
-      tools = {
-        bun = "latest";
-      };
-    };
-  };
 }

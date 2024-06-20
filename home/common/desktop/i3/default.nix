@@ -6,7 +6,7 @@
     ./polybar.nix
     ./gtk.nix
     ./dunst.nix
-    ../../program/alacritty.nix
+    ../../program/ui/alacritty.nix
   ];
 
   home.packages = with pkgs; [

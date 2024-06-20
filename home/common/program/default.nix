@@ -2,12 +2,8 @@
 
 {
   imports = [
-    ./cli.nix
-    ./development.nix
-    ./gui.nix
-    ./neovim.nix
-    ./starship.nix
-    ./yazi.nix
-    ./zsh.nix
+    ./shell
+    ./dev
+    ./ui
   ];
 }

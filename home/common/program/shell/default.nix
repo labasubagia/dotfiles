@@ -1,6 +1,13 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./neovim.nix
+    ./starship.nix
+    ./yazi.nix
+    ./zsh.nix
+  ];
+
   home.packages = with pkgs; [
     # secrets related
     age

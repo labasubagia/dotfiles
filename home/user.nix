@@ -4,7 +4,7 @@
   imports = [
     ./default.nix
     ./common/program
-    ./common/program/distrobox.nix
+    ./common/program/dev/distrobox.nix
     ./common/desktop/xfce
   ];
 

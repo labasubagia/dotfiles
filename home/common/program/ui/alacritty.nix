@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       font = {
-        size = 10;
+        size = 8;
       };
       window = {
         opacity = 0.8;
