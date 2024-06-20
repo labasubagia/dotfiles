@@ -7,6 +7,7 @@
     sops
     openssl
     gnupg
+    ssh-to-age
 
     # archive
     rar
@@ -62,6 +63,9 @@
     kubectx
     lazydocker
     k9s
+
+    # nix
+    nix-output-monitor
 
     # media (audio, screen, etc)
     alsa-utils
