@@ -24,6 +24,12 @@
         sha256 = "+nIeDaz1NPYFoxFVC8GQxtU1MU/sbdFETAQWzVX6LGQ=";
       }
       {
+        name = "signageos-vscode-sops";
+        publisher = "signageos";
+        version = "0.9.1";
+        sha256 = "b1Gp+tL5/e97xMuqkz4EvN0PxI7cJOObusEkcp+qKfM=";
+      }
+      {
         name = "signageos-vscode-sops-beta";
         publisher = "signageos";
         version = "0.9.1";
