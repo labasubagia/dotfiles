@@ -1,0 +1,3 @@
+---
+- import_playbook: ssh-sops.yml
+- import_playbook: flatpak.yml

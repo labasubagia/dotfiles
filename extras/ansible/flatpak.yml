@@ -2,21 +2,23 @@
 - hosts: localhost
   connection: local
   gather_facts: false
-  pre_tasks:
+  vars:
+    title_prefix: FLATPAK
 
-  - name: install requirements
+  pre_tasks:
+  - name: "{{ title_prefix }} > install requirements"
     command: ansible-galaxy collection install community.general
     register: req
     changed_when: '"Nothing to do" not in req.stdout'
 
   tasks:
-    - name: ensure flathub repo existed
+    - name: "{{ title_prefix }} > ensure flathub repo existed"
       community.general.flatpak_remote:
         name: flathub
         flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
         state: present
 
-    - name: flatpak apps
+    - name: "{{ title_prefix }} > install apps"
       community.general.flatpak:
         name:
           - com.getpostman.Postman
