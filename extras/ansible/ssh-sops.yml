@@ -1,5 +1,5 @@
 # this playbook is used to load ssh keys from sops
-# make sure `age` key exists in ~/.config/sops/age/keys.txt
+# make sure `age` key exists in ~/.config/sops/age/keys.txt, sops installed
 # for new generation keys, see ./ssh.yml
 
 ---
@@ -7,6 +7,7 @@
   connection: local
   gather_facts: false
   vars:
+    age_keyfile: ~/.config/sops/age/keys.txt
     secret_file: "{{ playbook_dir }}/../../home/secrets.yaml"
     dir: ~/.ssh
     keys:
@@ -27,6 +28,7 @@
   tasks:
     - name: load secrets
       community.sops.load_vars:
+        age_keyfile: "{{ age_keyfile }}"
         file: "{{ secret_file }}"
         name: secrets
 
