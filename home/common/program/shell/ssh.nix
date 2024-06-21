@@ -1,3 +1,8 @@
+# this can use this to load ssh keys
+# the main reason this config is not used yet is because the result is using symlink
+# which don't work well when binding directory to containerization technologies e.g. dev container (I use this for development)
+# current solution is to use ansible ssh-sops.yml
+
 { pkgs, config, lib, ... }:
 
 let

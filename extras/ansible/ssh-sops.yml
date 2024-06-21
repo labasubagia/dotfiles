@@ -1,0 +1,63 @@
+# this playbook is used to load ssh keys from sops
+# make sure `age` key exists in ~/.config/sops/age/keys.txt
+# for new generation keys, see ./ssh.yml
+
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    secret_file: "{{ playbook_dir }}/../../home/secrets.yaml"
+    dir: ~/.ssh
+    keys:
+      - name: github
+        host: github.com
+      - name: gitlab
+        host: gitlab.com
+      - name: phabricator
+        host: phabricator.sirclo.com
+
+  pre_tasks:
+    - name: install requirements
+      command: |
+        ansible-galaxy collection install community.general community.sops
+      register: req
+      changed_when: '"Nothing to do" not in req.stdout'
+
+  tasks:
+    - name: load secrets
+      community.sops.load_vars:
+        file: "{{ secret_file }}"
+        name: secrets
+
+    - name: make ssh dir
+      file:
+        path: "{{ dir }}"
+        state: directory
+
+    - name: make ssh private keys
+      copy:
+        content: "{{ secrets['ssh_keys'][item.name]['private'] }}"
+        dest: "{{ dir }}/id_ed25519_{{ item.name }}"
+        mode: "0600"
+      with_items: "{{ keys }}"
+
+    - name: make ssh public keys
+      copy:
+        content: "{{ secrets['ssh_keys'][item.name]['public'] }}"
+        dest: "{{ dir }}/id_ed25519_{{ item.name }}.pub"
+      with_items: "{{ keys }}"
+
+    - name: make ssh config
+      community.general.ssh_config:
+        host: "{{ item.host }}"
+        hostname: "{{ item.host }}"
+        identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
+        ssh_config_file: "{{ dir }}/config"
+      with_items: "{{ keys }}"
+
+    - name: ssh config replace /home/<user>
+      ansible.builtin.replace:
+        path: "{{ dir }}/config"
+        regexp: '\/home\/[^\/]+'
+        replace: '~'
