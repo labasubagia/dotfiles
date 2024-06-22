@@ -16,7 +16,11 @@
     gcc
     gnumake
 
+    # golang
     go
+    gopls
+    golangci-lint
+    gosimports
 
     rustup
 
