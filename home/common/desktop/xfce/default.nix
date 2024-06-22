@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, global-config, ... }:
 
 {
   home.packages = with pkgs; [
@@ -17,7 +17,7 @@
       package = pkgs.elementary-xfce-icon-theme;
     };
     font = {
-      name = "Source Sans 3";
+      name = global-config.font.family.sans;
       package = pkgs.source-sans;
     };
     theme = {

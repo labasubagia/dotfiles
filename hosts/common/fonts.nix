@@ -11,9 +11,9 @@
     ];
     fontconfig = {
       defaultFonts = {
-        serif = [ "Source Sans 3" ];
-        sansSerif = [ "Source Sans 3" ];
-        monospace = [ "RobotoMono Nerd Font" ];
+        serif = [ global-config.font.family.sans ];
+        sansSerif = [ global-config.font.family.sans_serif ];
+        monospace = [ global-config.font.family.monospace ];
       };
     };
   };
