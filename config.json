@@ -1,0 +1,38 @@
+{
+  "age": {
+    "key_path": "~/.config/sops/age/keys.txt"
+  },
+  "ssh": {
+    "dir_path": "~/.ssh",
+    "keys": [
+      {
+        "name": "github",
+        "host": "github.com"
+      },
+      {
+        "name": "gitlab",
+        "host": "gitlab.com"
+      },
+      {
+        "name": "phabricator",
+        "host": "phabricator.sirclo.com"
+      }
+    ]
+  },
+  "font": {
+    "family": {
+      "sans": "Source Sans 3",
+      "sans_serif": "Source Sans 3",
+      "monospace": "RobotoMono Nerd Font",
+      "code": "CaskaydiaCove Nerd Font"
+    },
+    "nerdfonts": {
+      "list": [
+        "RobotoMono",
+        "CascadiaCode",
+        "JetBrainsMono",
+        "IBMPlexMono"
+      ]
+    }
+  }
+}

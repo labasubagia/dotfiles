@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, global-config, ... }:
 
 {
   home.packages = with pkgs; [
-    nerdfonts
+    (nerdfonts.override { fonts = global-config.font.nerdfonts.list; })
   ];
 
   programs.vscode = {

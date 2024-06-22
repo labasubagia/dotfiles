@@ -7,17 +7,6 @@
   gather_facts: false
   vars:
     title_prefix: SSH
-    dir: ~/.ssh
-    keys:
-      - host: github.com
-        hostname: github.com
-        file: id_ed25519_github
-      - host: gitlab.com
-        hostname: gitlab.com
-        file: id_ed25519_gitlab
-      - host: phabricator.sirclo.com
-        hostname: phabricator.sirclo.com
-        file: id_ed25519_phabricator
 
   pre_tasks:
     - name: "{{ title_prefix }} > install requirements"
@@ -26,30 +15,39 @@
       changed_when: '"Nothing to do" not in req.stdout'
 
   tasks:
-    - name: "{{ title_prefix }} > make dir"
+    - name: "{{ title_prefix }} load global config"
+      set_fact:
+        global_config: "{{ lookup('file', playbook_dir +'/../../config.json') | from_json }}"
+
+    - name: "{{ title_prefix }} > load config"
+      set_fact:
+        dir: "{{ global_config['ssh']['dir_path'] }}"
+        keys: "{{ global_config['ssh']['keys']  }}"
+
+    - name: "{{ title_prefix }} > make directory"
       file:
         path: "{{ dir }}"
         state: directory
 
-    - name: "{{ title_prefix }} > create keys"
+    - name: "{{ title_prefix }} > create key pairs"
       openssh_keypair:
-        path: "{{ dir }}/{{ item.file }}"
+        path: "{{ dir }}/id_ed25519_{{ item.name }}"
         type: ed25519
         state: present
         force: no
       with_items: "{{ keys }}"
 
-    # # ? SKIP, use ssh in home-manager to generate config or use ./ssh-sops.yml
-    # - name: "{{ title_prefix }} > make config"
-    #   community.general.ssh_config:
-    #     host: "{{ item.host }}"
-    #     hostname: "{{ item.hostname }}"
-    #     identity_file: "{{ dir }}/{{ item.file }}"
-    #     ssh_config_file: "{{ dir }}/config"
-    #   with_items: "{{ keys }}"
+    # ? SKIP, use ssh in home-manager to generate config or use ./ssh-sops.yml
+    - name: "{{ title_prefix }} > make config"
+      community.general.ssh_config:
+        host: "{{ item.host }}"
+        hostname: "{{ item.host }}"
+        identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
+        ssh_config_file: "{{ dir }}/config"
+      with_items: "{{ keys }}"
 
-    # - name: "{{ title_prefix }} > config replace /home/<user>"
-    #   ansible.builtin.replace:
-    #     path: "{{ dir }}/config"
-    #     regexp: '\/home\/[^\/]+'
-    #     replace: '~'
+    - name: "{{ title_prefix }} > config replace /home/<user>"
+      ansible.builtin.replace:
+        path: "{{ dir }}/config"
+        regexp: '\/home\/[^\/]+'
+        replace: '~'

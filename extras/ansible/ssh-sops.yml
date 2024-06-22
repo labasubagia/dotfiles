@@ -8,16 +8,7 @@
   gather_facts: false
   vars:
     title_prefix: SSH_SOPS
-    age_keyfile: ~/.config/sops/age/keys.txt
     secret_file: "{{ playbook_dir }}/../../home/secrets.yaml"
-    dir: ~/.ssh
-    keys:
-      - name: github
-        host: github.com
-      - name: gitlab
-        host: gitlab.com
-      - name: phabricator
-        host: phabricator.sirclo.com
 
   pre_tasks:
     - name: "{{ title_prefix }} > install requirements"
@@ -27,13 +18,23 @@
       changed_when: '"Nothing to do" not in req.stdout'
 
   tasks:
+    - name: "{{ title_prefix }} > load global config"
+      set_fact:
+        global_config: "{{ lookup('file', playbook_dir + '/../../config.json') | from_json }}"
+
+    - name: "{{ title_prefix }} > load config"
+      set_fact:
+        age_key: "{{ global_config['age']['key_path'] }}"
+        dir: "{{ global_config['ssh']['dir_path'] }}"
+        keys: "{{ global_config['ssh']['keys']  }}"
+
     - name: "{{ title_prefix }} > load secrets"
       community.sops.load_vars:
-        age_keyfile: "{{ age_keyfile }}"
+        age_keyfile: "{{ age_key }}"
         file: "{{ secret_file }}"
         name: secrets
 
-    - name: "{{ title_prefix }} > make dir"
+    - name: "{{ title_prefix }} > make directory"
       file:
         path: "{{ dir }}"
         state: directory

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, global-config, ... }:
 
 {
   fonts = {
@@ -7,8 +7,7 @@
       font-awesome
       ubuntu_font_family
       source-sans
-      nerdfonts
-      # (nerdfonts.override { fonts = [ "RobotoMono" "JetBrainsMono" ]; })
+      (nerdfonts.override { fonts = global-config.font.nerdfonts.list; })
     ];
     fontconfig = {
       defaultFonts = {

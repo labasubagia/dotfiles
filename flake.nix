@@ -15,6 +15,8 @@
     let
       inherit (self) outputs;
 
+      global-config = (builtins.fromJSON (builtins.readFile ./config.json));
+
       forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
       forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
 
@@ -24,7 +26,7 @@
           config
           sops-nix.nixosModules.sops
         ];
-        specialArgs = { inherit inputs outputs; };
+        specialArgs = { inherit inputs outputs global-config; };
       };
 
       mkHome = config: pkgs: user: home-manager.lib.homeManagerConfiguration {
@@ -33,7 +35,7 @@
           config
           sops-nix.homeManagerModules.sops
         ];
-        extraSpecialArgs = { inherit inputs outputs user; };
+        extraSpecialArgs = { inherit inputs outputs global-config user; };
       };
 
     in
