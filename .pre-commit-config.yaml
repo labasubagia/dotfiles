@@ -1,18 +1,16 @@
 ---
 repos:
-  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.16.0
-    hooks:
-      - id: commitlint
-        stages: [commit-msg]
+  # pre commit
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.16.1
     hooks:
       - id: gitleaks
+        stages: [pre-commit]
   - repo: https://github.com/nix-community/nixpkgs-fmt
     rev: v1.3.0
     hooks:
       - id: nixpkgs-fmt
+        stages: [pre-commit]
   - repo: local
     hooks:
       - id: ansible-lint
@@ -20,3 +18,11 @@ repos:
         entry: bash -c 'git diff --cached --name-only | rg "^extras\/ansible\/.+\.ya?ml$" | xargs ansible-lint'
         language: system
         files: ^extras\/ansible\/.+\.ya?ml$
+        stages: [pre-commit]
+
+  # commit msg
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.16.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
