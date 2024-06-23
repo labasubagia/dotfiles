@@ -179,6 +179,12 @@
       "[terraform]" = {
         "editor.formatOnSave" = true;
       };
+
+      # spell checker
+      "cSpell.enabledFileTypes" = {
+        "ansible" = true;
+        "nix" = true;
+      };
     };
   };
 }
