@@ -12,6 +12,6 @@ repos:
     hooks:
       - id: ansible-lint
         name: ansible-lint
-        entry: bash -c 'ansible-lint ./extras/ansible'
+        entry: bash -c 'git diff --cached --name-only | rg "^extras\/ansible\/.+\.ya?ml$" | xargs ansible-lint'
         language: system
-        pass_filenames: false
+        files: ^extras\/ansible\/.+\.ya?ml$
