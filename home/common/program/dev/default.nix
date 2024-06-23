@@ -41,6 +41,7 @@
 
     ]))
     ruff
+    ansible-lint
 
     # iac
     terraform

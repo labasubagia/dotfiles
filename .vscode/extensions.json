@@ -4,6 +4,14 @@
     "editorconfig.editorconfig",
     "eamodio.gitlens",
     "jnoortheen.nix-ide",
-    "jetpack-io.devbox"
+    "signageos.signageos-vscode-sops",
+    "signageos.signageos-vscode-sops-beta",
+    "redhat.ansible",
+    "aaron-bond.better-comments",
+    "usernamehw.errorlens",
+    "yzhang.markdown-all-in-one",
+    "johnpapa.vscode-peacock",
+    "gruntfuggly.todo-tree",
+    "ms-python.python"
   ]
 }

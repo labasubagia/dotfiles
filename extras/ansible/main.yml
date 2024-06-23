@@ -1,3 +1,6 @@
+# code: language=ansible
 ---
-- import_playbook: ssh-sops.yml
-- import_playbook: flatpak.yml
+- name: SSH Sops
+  ansible.builtin.import_playbook: ssh-sops.yml
+- name: Flatpak
+  ansible.builtin.import_playbook: flatpak.yml

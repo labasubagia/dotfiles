@@ -2,57 +2,59 @@
 # make sure `age` key exists in ~/.config/sops/age/keys.txt, sops installed
 # for new generation keys, see ./ssh.yml
 
+# code: language=ansible
 ---
-- hosts: localhost
+- name: Load SSH key-pairs from Sops
+  hosts: localhost
   connection: local
   gather_facts: false
   vars:
-    title_prefix: SSH_SOPS
     secret_file: "{{ playbook_dir }}/../../home/secrets.yaml"
 
   pre_tasks:
-    - name: "{{ title_prefix }} > install requirements"
-      command: |
-        ansible-galaxy collection install community.general community.sops
+    - name: Install requirements
+      ansible.builtin.command: ansible-galaxy collection install community.general community.sops
       register: req
       changed_when: '"Nothing to do" not in req.stdout'
 
   tasks:
-    - name: "{{ title_prefix }} > load global config"
-      set_fact:
+    - name: Load global config
+      ansible.builtin.set_fact:
         global_config: "{{ lookup('file', playbook_dir + '/../../config.json') | from_json }}"
 
-    - name: "{{ title_prefix }} > load config"
-      set_fact:
+    - name: Load config
+      ansible.builtin.set_fact:
         age_key: "{{ global_config['age']['key_path'] }}"
         dir: "{{ global_config['ssh']['dir_path'] }}"
-        keys: "{{ global_config['ssh']['keys']  }}"
+        keys: "{{ global_config['ssh']['keys'] }}"
 
-    - name: "{{ title_prefix }} > load secrets"
+    - name: Load secrets
       community.sops.load_vars:
         age_keyfile: "{{ age_key }}"
         file: "{{ secret_file }}"
         name: secrets
 
-    - name: "{{ title_prefix }} > make directory"
-      file:
+    - name: Make directory
+      ansible.builtin.file:
         path: "{{ dir }}"
         state: directory
+        mode: "0755"
 
-    - name: "{{ title_prefix }} > make private keys"
-      copy:
+    - name: Make private keys
+      ansible.builtin.copy:
         content: "{{ secrets['ssh_keys'][item.name]['private'] }}"
         dest: "{{ dir }}/id_ed25519_{{ item.name }}"
         mode: "0600"
       with_items: "{{ keys }}"
 
-    - name: "{{ title_prefix }} > make public keys"
-      copy:
+    - name: Make public keys
+      ansible.builtin.copy:
         content: "{{ secrets['ssh_keys'][item.name]['public'] }}"
         dest: "{{ dir }}/id_ed25519_{{ item.name }}.pub"
+        mode: "0644"
       with_items: "{{ keys }}"
 
-    - name: "{{ title_prefix }} > make config"
+    - name: Make config
       community.general.ssh_config:
         host: "{{ item.host }}"
         hostname: "{{ item.host }}"
@@ -60,8 +62,8 @@
         ssh_config_file: "{{ dir }}/config"
       with_items: "{{ keys }}"
 
-    - name: "{{ title_prefix }} > config replace /home/<user>"
+    - name: Config replace /home/<user>
       ansible.builtin.replace:
         path: "{{ dir }}/config"
-        regexp: '\/home\/[^\/]+'
-        replace: '~'
+        regexp: \/home\/[^\/]+
+        replace: "~"
