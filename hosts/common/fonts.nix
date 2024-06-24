@@ -4,6 +4,9 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
       font-awesome
       ubuntu_font_family
       source-sans
