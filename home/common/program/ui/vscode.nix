@@ -65,6 +65,7 @@
     );
     userSettings = {
       "workbench.colorTheme" = "Default Dark+";
+      "workbench.tree.indent" = 20;
 
       "window.customTitleBarVisibility" = "auto";
       "window.titleBarStyle" = "custom";
@@ -80,6 +81,10 @@
       "editor.codeActionsOnSave" = {
         "source.organizeImports" = "always";
       };
+      "editor.minimap.renderCharacters" = false;
+      "editor.minimap.size" = "fit";
+      "editor.cursorBlinking" = "smooth";
+      "editor.cursorSmoothCaretAnimation" = "on";
 
       "files.trimTrailingWhitespace" = true;
       "files.insertFinalNewline" = true;
