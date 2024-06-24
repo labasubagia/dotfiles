@@ -15,6 +15,7 @@
     # build
     gcc
     gnumake
+    zlib
 
     # golang
     go
@@ -32,8 +33,6 @@
     (python3.withPackages (ps: with ps; [
       pip
       virtualenv
-      numpy
-      pandas
       black
 
       ansible-core
