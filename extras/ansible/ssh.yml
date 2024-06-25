@@ -1,7 +1,6 @@
 # this playbook is used to generate new ssh keys
 # if looking for load ssh keys from sops, see ./ssh-sops.yml
 
-# code: language=ansible
 ---
 - name: Generate SSH key-pairs
   hosts: localhost

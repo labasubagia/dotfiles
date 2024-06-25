@@ -76,6 +76,10 @@
     "Zukitre"
   ],
   "editor.formatOnSave": true,
+  "files.associations": {
+    "**/extras/ansible/*.yaml": "ansible",
+    "**/extras/ansible/*.yml": "ansible"
+  },
   "nix.enableLanguageServer": true,
   "nix.serverPath": "nil",
   "nix.serverSettings": {
@@ -92,5 +96,5 @@
         ]
       }
     }
-  },
+  }
 }

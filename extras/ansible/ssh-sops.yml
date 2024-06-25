@@ -2,7 +2,6 @@
 # make sure `age` key exists in ~/.config/sops/age/keys.txt, sops installed
 # for new generation keys, see ./ssh.yml
 
-# code: language=ansible
 ---
 - name: Load SSH key-pairs from Sops
   hosts: localhost
