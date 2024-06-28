@@ -4,7 +4,10 @@
   services = {
     xserver = {
       enable = true;
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = with pkgs; [
+        xterm
+        xfce.parole
+      ];
       displayManager = {
         lightdm = {
           enable = true;
@@ -45,6 +48,7 @@
     xfce.thunar-archive-plugin
     xfce.thunar-media-tags-plugin
     xfce.thunar-volman
+    mpv
   ];
 
   programs = {
