@@ -98,6 +98,10 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    # android
+    android-tools
+    scrcpy
   ];
 
   programs.atuin = {
