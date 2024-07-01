@@ -61,6 +61,12 @@
           version = "0.9.1";
           sha256 = "p1gfMd6WgFpHJHmvBAmlpi+MH40xTnInlr6xOSFpVyI=";
         }
+        {
+          name = "biome";
+          publisher = "biomejs";
+          version = "2.3.0";
+          sha256 = "GrMyXn5yfxjbUi0YuioPX137P+8TWdh5V6HC0kvLFYE=";
+        }
       ]
     );
     userSettings = {
@@ -100,6 +106,14 @@
       "typescript.autoClosingTags" = true;
       "typescript.suggest.autoImports" = true;
       "typescript.updateImportsOnFileMove.enabled" = "always";
+
+      "[javascript]" = {
+        "editor.defaultFormatter" = "biomejs.biome";
+        "editor.codeActionsOnSave" = {
+          "quickfix.biome" = "explicit";
+          "source.organizeImports.biome" = "explicit";
+        };
+      };
 
       # Nix
       "nix.enableLanguageServer" = true;
