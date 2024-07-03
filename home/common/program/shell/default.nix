@@ -121,5 +121,8 @@
     enable = true;
     userEmail = "labasubagia22@gmail.com";
     userName = "Laba Subagia";
+    aliases = {
+      undo = "reset --soft HEAD~1";
+    };
   };
 }
