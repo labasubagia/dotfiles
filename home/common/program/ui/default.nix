@@ -10,6 +10,7 @@
     brave
     libreoffice
     filezilla
+    mockoon
 
     # NOTE: proprietary software sometimes has problem with nix packages, prefer use flatpak
     # postman
