@@ -3,8 +3,39 @@
   hosts: localhost
   connection: local
   gather_facts: false
+
+  vars:
+    is_remove: false
+
+    tmp_path: ~/tmp
+    script_path: "{{ tmp_path }}/mise.sh"
+    bin_path: ~/.local/bin/mise
+
   tasks:
-    - name: Install mise from URL script
-      ansible.builtin.shell: curl -sSL https://mise.run | sh
-      args:
-        creates: ~/.local/bin/mise
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Create tmp directory
+          ansible.builtin.file:
+            path: "{{ tmp_path }}"
+            state: directory
+            mode: '0755'
+
+        - name: Download installation script
+          ansible.builtin.get_url:
+            url: https://mise.run
+            dest: "{{ script_path }}"
+            mode: 'u+x'
+
+        - name: Execute script
+          ansible.builtin.command: "{{ script_path }}"
+          args:
+            creates: "{{ bin_path }}"
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Remove
+          ansible.builtin.command: mise implode --quiet --yes
+          args:
+            removes: "{{ bin_path }}"
