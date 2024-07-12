@@ -1,0 +1,80 @@
+---
+- name: Setup Docker
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  vars:
+    is_remove: false
+
+    apt_key_url: https://download.docker.com/linux/debian/gpg
+    apt_key_path: /etc/apt/keyrings/docker.asc
+    apt_repository_filename: docker
+
+    docker_pkgs:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+
+  tasks:
+    - name: Install Prerequisite
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+
+    - name: Get Architecture
+      ansible.builtin.command: dpkg --print-architecture
+      register: arch
+      changed_when: false
+
+    - name: Get Debian Codename
+      ansible.builtin.shell: . /etc/os-release && echo $VERSION_CODENAME
+      register: codename
+      changed_when: false
+
+    - name: Make Repository string
+      ansible.builtin.set_fact:
+        apt_repository: "deb [arch={{ arch.stdout }} signed-by={{ apt_key_path }}] https://download.docker.com/linux/debian {{ codename.stdout }} stable"
+
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Get APT Key
+          ansible.builtin.get_url:
+            url: "{{ apt_key_url }}"
+            dest: "{{ apt_key_path }}"
+            mode: "a+r"
+
+        - name: Add Repository
+          ansible.builtin.apt_repository:
+            repo: "{{ apt_repository }}"
+            filename: "{{ apt_repository_filename }}"
+            state: present
+
+        - name: Install package
+          ansible.builtin.apt:
+            name: "{{ docker_pkgs }}"
+            state: present
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Remove package
+          ansible.builtin.apt:
+            name: "{{ docker_pkgs }}"
+            state: absent
+
+        - name: Remove Repository
+          ansible.builtin.apt_repository:
+            repo: "{{ apt_repository }}"
+            filename: "{{ apt_repository_filename }}"
+            state: absent
+
+        - name: Remove APT Key
+          ansible.builtin.file:
+            path: "{{ apt_key_path }}"
+            state: absent
