@@ -1,5 +1,0 @@
----
-- name: SSH Sops
-  ansible.builtin.import_playbook: ssh-sops.yml
-- name: Flatpak
-  ansible.builtin.import_playbook: flatpak.yml

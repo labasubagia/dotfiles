@@ -1,0 +1,10 @@
+---
+- name: Install mise
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install mise from URL script
+      ansible.builtin.shell: curl -sSL https://mise.run | sh
+      args:
+        creates: ~/.local/bin/mise

@@ -1,0 +1,30 @@
+---
+- name: Install Visual Studio Code
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  vars:
+    apt_key_path: /etc/apt/keyrings/packages.microsoft.asc
+  tasks:
+    - name: Install Prerequisite
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+        state: latest
+
+    - name: Get APT Key
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        dest: "{{ apt_key_path }}"
+
+    - name: Add Repository
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64,arm64,armhf signed-by={{ apt_key_path }}] https://packages.microsoft.com/repos/code stable main
+        filename: vscode
+        state: present
+
+    - name: Install
+      ansible.builtin.apt:
+        name: code
+        state: latest

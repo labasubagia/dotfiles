@@ -1,0 +1,16 @@
+---
+- name: Setup all apt package
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install packages from apt
+      ansible.builtin.apt:
+        pkg:
+          - tmux
+          - htop
+          - zsh
+          - neovim
+          - age
+        state: latest

@@ -1,0 +1,12 @@
+---
+- name: install sops from repo
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install sops
+      ansible.builtin.get_url:
+        url: https://github.com/getsops/sops/releases/download/v3.9.0/sops-v3.9.0.linux.amd64
+        dest: /usr/local/bin/sops
+        mode: '0755'
