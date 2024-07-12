@@ -1,5 +1,5 @@
 ---
-- name: install sops from repo
+- name: Install sops from repo
   hosts: localhost
   connection: local
   gather_facts: false

@@ -6,10 +6,10 @@
   vars:
     is_remove: false
 
-    pkgs: 
+    pkgs:
       - podman
       - podman-compose
-    
+
     shell_file: "~/.zshrc"
     shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: PODMAN"
     shell_alias: |
@@ -21,32 +21,32 @@
       fi
 
   tasks:
-    - name: Setup Install 
+    - name: Setup Install
       when: not is_remove
       block:
-      - name: Install Packages
-        become: true
-        ansible.builtin.apt:
-          pkg: "{{ pkgs }}"
-          state: present
-      - name: Add Alias
-        ansible.builtin.blockinfile:
-          marker: "{{ shell_marker }}"
-          path: "{{ shell_file }}"
-          block: "{{ shell_alias }}"
-          state: present 
-    
+        - name: Install Packages
+          become: true
+          ansible.builtin.apt:
+            pkg: "{{ pkgs }}"
+            state: present
+        - name: Add Alias
+          ansible.builtin.blockinfile:
+            marker: "{{ shell_marker }}"
+            path: "{{ shell_file }}"
+            block: "{{ shell_alias }}"
+            state: present
+
     - name: Setup Remove
       when: is_remove
       block:
-      - name: Remove Alias
-        ansible.builtin.blockinfile:
-          marker: "{{ shell_marker }}"
-          path: "{{ shell_file }}"
-          block: "{{ shell_alias }}"
-          state: absent 
-      - name: Remove Packages
-        become: true
-        ansible.builtin.apt:
-          pkg: "{{ pkgs }}"
-          state: absent
+        - name: Remove Alias
+          ansible.builtin.blockinfile:
+            marker: "{{ shell_marker }}"
+            path: "{{ shell_file }}"
+            block: "{{ shell_alias }}"
+            state: absent
+        - name: Remove Packages
+          become: true
+          ansible.builtin.apt:
+            pkg: "{{ pkgs }}"
+            state: absent

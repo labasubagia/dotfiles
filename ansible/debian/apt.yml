@@ -13,4 +13,4 @@
           - zsh
           - neovim
           - age
-        state: latest
+        state: present

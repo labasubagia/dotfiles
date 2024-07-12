@@ -11,12 +11,13 @@
       ansible.builtin.apt:
         name:
           - apt-transport-https
-        state: latest
+        state: present
 
     - name: Get APT Key
       ansible.builtin.get_url:
         url: https://packages.microsoft.com/keys/microsoft.asc
         dest: "{{ apt_key_path }}"
+        mode: '0644'
 
     - name: Add Repository
       ansible.builtin.apt_repository:
@@ -27,4 +28,4 @@
     - name: Install
       ansible.builtin.apt:
         name: code
-        state: latest
+        state: present
