@@ -1,0 +1,53 @@
+---
+- name: Setup Node.js
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  vars:
+    is_remove: false
+
+    version: '22'
+    script_url: "https://deb.nodesource.com/setup_{{ version }}.x"
+    script_path: "/tmp/nodesource_setup.sh"
+
+    apt_repository_path: /etc/apt/sources.list.d/nodesource.list
+    apt_key_path: /etc/apt/keyrings/nodesource.gpg
+
+  tasks:
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Download installation script
+          ansible.builtin.get_url:
+            url: "{{ script_url }}"
+            dest: "{{ script_path }}"
+            mode: '0755'
+
+        - name: Execute script
+          ansible.builtin.command: "{{ script_path }}"
+          args:
+            creates: "{{ apt_repository_path }}"
+
+        - name: Install package
+          ansible.builtin.apt:
+            name: nodejs
+            state: present
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Install package
+          ansible.builtin.apt:
+            name: nodejs
+            state: absent
+
+        - name: Remove Repository
+          ansible.builtin.file:
+            path: "{{ apt_repository_path }}"
+            state: absent
+
+        - name: Remove APT Key
+          ansible.builtin.file:
+            path: "{{ apt_key_path }}"
+            state: absent
