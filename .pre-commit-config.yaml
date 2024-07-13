@@ -15,9 +15,9 @@ repos:
     hooks:
       - id: ansible-lint
         name: ansible-lint
-        entry: bash -c 'git diff --cached --name-only | rg "^extras\/ansible\/.+\.ya?ml$" | xargs ansible-lint'
+        entry: bash -c 'git diff --cached --name-only | rg "^ansible\/.+\.ya?ml$" | xargs ansible-lint'
         language: system
-        files: ^extras\/ansible\/.+\.ya?ml$
+        files: ^ansible\/.+\.ya?ml$
         stages: [pre-commit]
 
   # commit msg

@@ -86,7 +86,7 @@
           ansible.builtin.file:
             path: "{{ dir }}/config"
             state: absent
-        
+
         - name: Remove public keys
           ansible.builtin.file:
             path: "{{ dir }}/id_ed25519_{{ item.name }}.pub"

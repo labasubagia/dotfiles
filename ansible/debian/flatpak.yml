@@ -39,7 +39,7 @@
             flatpakrepo_url: "{{ item.url }}"
             state: present
           with_items: "{{ repositories }}"
-    
+
     - name: Setup Remove
       when: is_remove
       block:

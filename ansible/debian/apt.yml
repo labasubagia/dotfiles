@@ -5,14 +5,14 @@
   become: true
   vars:
     is_remove: false
-    
+
     pkgs:
       - tmux
       - htop
       - zsh
       - neovim
       - age
-  
+
   tasks:
     - name: Setup Install
       when: not is_remove
