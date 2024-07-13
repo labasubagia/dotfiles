@@ -2,15 +2,30 @@
 - name: Setup all apt package
   hosts: localhost
   connection: local
-  gather_facts: false
   become: true
+  vars:
+    is_remove: false
+    
+    pkgs:
+      - tmux
+      - htop
+      - zsh
+      - neovim
+      - age
+  
   tasks:
-    - name: Install packages from apt
-      ansible.builtin.apt:
-        pkg:
-          - tmux
-          - htop
-          - zsh
-          - neovim
-          - age
-        state: present
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Install packages
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: present
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Remove packages
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: absent
