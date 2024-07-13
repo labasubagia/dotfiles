@@ -5,11 +5,17 @@
 - name: Generate SSH key-pairs
   hosts: localhost
   connection: local
-  gather_facts: false
 
   pre_tasks:
+    - name: Check ansible-galaxy exists
+      ansible.builtin.command: which ansible-galaxy
+      register: ansible_galaxy
+      ignore_errors: true
+      changed_when: false
+
     - name: Install requirements
-      ansible.builtin.command: ansible-galaxy collection install community.general
+      when: ansible_galaxy.rc == 0
+      ansible.builtin.command: ansible-galaxy collection install community.general community.crypto
       register: req
       changed_when: '"Nothing to do" not in req.stdout'
 
@@ -23,31 +29,54 @@
         dir: "{{ global_config['ssh']['dir_path'] }}"
         keys: "{{ global_config['ssh']['keys'] }}"
 
-    - name: Make directory
-      ansible.builtin.file:
-        path: "{{ dir }}"
-        state: directory
-        mode: "0755"
+    - name: Setup Create SSH Keys
+      when: not is_remove
+      block:
+        - name: Make directory
+          ansible.builtin.file:
+            path: "{{ dir }}"
+            state: directory
+            mode: "0755"
 
-    - name: Create key pairs
-      community.crypto.openssh_keypair:
-        path: "{{ dir }}/id_ed25519_{{ item.name }}"
-        type: ed25519
-        state: present
-        force: false
-      with_items: "{{ keys }}"
+        - name: Create key pairs
+          community.crypto.openssh_keypair:
+            path: "{{ dir }}/id_ed25519_{{ item.name }}"
+            type: ed25519
+            state: present
+            force: false
+          with_items: "{{ keys }}"
 
-    # ? SKIP, use ssh in home-manager to generate config or use ./ssh-sops.yml
-    - name: Make config
-      community.general.ssh_config:
-        host: "{{ item.host }}"
-        hostname: "{{ item.host }}"
-        identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
-        ssh_config_file: "{{ dir }}/config"
-      with_items: "{{ keys }}"
+        # ? SKIP, use ssh in home-manager to generate config or use ./ssh-sops.yml
+        - name: Make config
+          community.general.ssh_config:
+            host: "{{ item.host }}"
+            hostname: "{{ item.host }}"
+            identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
+            ssh_config_file: "{{ dir }}/config"
+          with_items: "{{ keys }}"
 
-    - name: Config replace /home/<user>
-      ansible.builtin.replace:
-        path: "{{ dir }}/config"
-        regexp: \/home\/[^\/]+
-        replace: "~"
+        - name: Config replace /home/<user>
+          ansible.builtin.replace:
+            path: "{{ dir }}/config"
+            regexp: \/home\/[^\/]+
+            replace: "~"
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Remove config
+          ansible.builtin.file:
+            path: "{{ dir }}/config"
+            state: absent
+
+        - name: Remove public keys
+          ansible.builtin.file:
+            path: "{{ dir }}/id_ed25519_{{ item.name }}.pub"
+            state: absent
+          with_items: "{{ keys }}"
+
+        - name: Remove private keys
+          ansible.builtin.file:
+            path: "{{ dir }}/id_ed25519_{{ item.name }}"
+            state: absent
+          with_items: "{{ keys }}"
