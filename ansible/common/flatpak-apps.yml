@@ -1,25 +1,53 @@
 ---
-- name: Install Flatpak Apps
+- name: Setup Flatpak Apps
   hosts: localhost
   connection: local
-  gather_facts: false
+
+  vars:
+    is_remove: false
+
+    repositories:
+      - name: flathub
+        url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+    apps:
+      - com.getpostman.Postman
+      - com.redis.RedisInsight
+      - com.slack.Slack
 
   pre_tasks:
+    - name: Check ansible-galaxy exists
+      ansible.builtin.command: which ansible-galaxy
+      register: ansible_galaxy
+      ignore_errors: true
+      changed_when: false
+
     - name: Install requirements
+      when: ansible_galaxy.rc == 0
       ansible.builtin.command: ansible-galaxy collection install community.general
       register: req
       changed_when: '"Nothing to do" not in req.stdout'
 
   tasks:
-    - name: Ensure flathub repo existed
+    - name: Ensure repositories
       community.general.flatpak_remote:
-        name: flathub
-        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+        name: "{{ item.name }}"
+        flatpakrepo_url: "{{ item.url }}"
         state: present
+      with_items: "{{ repositories }}"
 
-    - name: Install apps
-      community.general.flatpak:
-        name:
-          - com.getpostman.Postman
-          - com.redis.RedisInsight
-          - com.slack.Slack
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Install
+          community.general.flatpak:
+            name: "{{ apps }}"
+            state: present
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Remove
+          community.general.flatpak:
+            name: "{{ apps }}"
+            state: absent
