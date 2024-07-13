@@ -5,7 +5,7 @@
     nitrogen
   ];
 
-  xdg.configFile."nitrogen/wallpaper".source = ./../../../../extras/wallpaper;
+  xdg.configFile."nitrogen/wallpaper".source = config.lib.file.mkOutOfStoreSymlink ../../../../../config/wallpaper;
 
   xdg.configFile."nitrogen/nitrogen.cfg".text = "
     [geometry]

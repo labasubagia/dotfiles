@@ -1,8 +1,8 @@
-{ pkgs, config, global-config, ... }:
+{ pkgs, config, globalConfig, ... }:
 {
   home.packages = with pkgs; [
     file
-    (nerdfonts.override { fonts = global-config.font.nerdfonts.list; })
+    (nerdfonts.override { fonts = globalConfig.font.nerdfonts.list; })
     ffmpegthumbnailer
     unar
     jq

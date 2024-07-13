@@ -1,4 +1,4 @@
-{ pkgs, user, config, lib, global-config, ... }:
+{ pkgs, user, config, lib, globalConfig, ... }:
 
 {
   imports = [
@@ -33,7 +33,7 @@
         hideEdgeBorders = "both";
       };
       fonts = {
-        names = [ global-config.font.family.sans ];
+        names = [ globalConfig.font.family.sans ];
         size = 9.0;
       };
       colors = {

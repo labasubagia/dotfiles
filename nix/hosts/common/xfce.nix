@@ -11,7 +11,7 @@
       displayManager = {
         lightdm = {
           enable = true;
-          background = ../../extras/wallpaper/1.png;
+          background = ../../../config/wallpaper/1.png;
           greeters.gtk = {
             enable = true;
             theme = {

@@ -36,5 +36,5 @@ Modify the file to meet your needs
 
 ```sh
 # set ansible_python_interpreter vars bacause nixos path sometime troublesome
-$ ansible-playbook extras/ansible/ssh.yml -e "ansible_pyhthon_interpreter=$(which python)"
+$ ansible-playbook ../ansible/common/ssh-sops.yml -e "ansible_pyhthon_interpreter=$(which python)"
 ```

@@ -1,4 +1,4 @@
-{ pkgs, config, global-config, ... }:
+{ pkgs, config, globalConfig, ... }:
 {
   gtk = {
     enable = true;
@@ -18,7 +18,7 @@
     };
     font = {
       package = pkgs.source-sans;
-      name = global-config.font.family.sans;
+      name = globalConfig.font.family.sans;
       size = 10;
     };
     gtk3.extraConfig = {

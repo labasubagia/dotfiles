@@ -4,7 +4,7 @@ keys:
     - &user age17r6cuxm45k76tk96cdqh6tzk3jrdmc80ecc9xck2j6mjaqrlhf4qu20xyy
   - &hosts
 creation_rules:
-  - path_regex: home/secrets.ya?ml$
+  - path_regex: config/secrets.ya?ml$
     key_groups:
       - age:
           - *user

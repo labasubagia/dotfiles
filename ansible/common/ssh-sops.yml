@@ -9,7 +9,7 @@
   vars:
     is_remove: false
 
-    secret_file: "{{ playbook_dir }}/../../home/secrets.yaml"
+    secret_file: "{{ playbook_dir }}/../../config/secrets.yaml"
 
   pre_tasks:
     - name: Check ansible-galaxy exists
@@ -27,7 +27,7 @@
   tasks:
     - name: Load global config
       ansible.builtin.set_fact:
-        global_config: "{{ lookup('file', playbook_dir + '/../../config.json') | from_json }}"
+        global_config: "{{ lookup('file', playbook_dir + '/../../config/global.json') | from_json }}"
 
     - name: Load config
       ansible.builtin.set_fact:

@@ -1,5 +1,5 @@
 { pkgs, config, ... }:
-let wallpaper1 = "${./../../../../extras/wallpaper/1.png}"; in
+let wallpaper1 = "${../../../../../config/wallpaper/1.png}"; in
 {
   home.packages = with pkgs; [
     hyprpaper

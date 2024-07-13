@@ -6,11 +6,11 @@
 # Or, saving the "profile" configuration in the project (e.g. inside .vscode/<profile-name>.code-profile), but it still needs to be imported manually.
 # When creating a new profile, all configuration is unchecked except for extensions.
 
-{ pkgs, global-config, ... }:
+{ pkgs, globalConfig, ... }:
 
 {
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = global-config.font.nerdfonts.list; })
+    (nerdfonts.override { fonts = globalConfig.font.nerdfonts.list; })
   ];
 
   programs.vscode = {
@@ -76,7 +76,7 @@
       "window.customTitleBarVisibility" = "auto";
       "window.titleBarStyle" = "custom";
 
-      "editor.fontFamily" = "'${global-config.font.family.code}', '${global-config.font.family.monospace}', 'monospace', monospace";
+      "editor.fontFamily" = "'${globalConfig.font.family.code}', '${globalConfig.font.family.monospace}', 'monospace', monospace";
       "editor.fontLigatures" = true;
       "editor.guides.bracketPairs" = true;
       "editor.guides.bracketPairsHorizontal" = true;
