@@ -1,3 +1,4 @@
+# see https://github.com/nodesource/distributions
 ---
 - name: Setup Node.js
   hosts: localhost
@@ -37,17 +38,15 @@
     - name: Setup Remove
       when: is_remove
       block:
-        - name: Install package
+        - name: Remove package
           ansible.builtin.apt:
             name: nodejs
             state: absent
 
         - name: Remove Repository
           ansible.builtin.file:
-            path: "{{ apt_repository_path }}"
+            path: "{{ item }}"
             state: absent
-
-        - name: Remove APT Key
-          ansible.builtin.file:
-            path: "{{ apt_key_path }}"
-            state: absent
+          with_items:
+            - "{{ apt_repository_path }}"
+            - "{{ apt_key_path }}"
