@@ -1,12 +1,29 @@
 ---
-- name: Install sops from repo
+- name: Setup sops
   hosts: localhost
   connection: local
-  gather_facts: false
   become: true
+  vars:
+    is_remove: true
+
+    version: v3.9.0
+    url: https://github.com/getsops/sops/releases/download/{{ version }}/sops-{{ version }}.linux.amd64
+    path: /usr/local/bin/sops
+
   tasks:
-    - name: Install sops
-      ansible.builtin.get_url:
-        url: https://github.com/getsops/sops/releases/download/v3.9.0/sops-v3.9.0.linux.amd64
-        dest: /usr/local/bin/sops
-        mode: '0755'
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Download from URL
+          ansible.builtin.get_url:
+            url: "{{ url }}"
+            dest: "{{ path }}"
+            mode: '0755'
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Remove
+          ansible.builtin.file:
+            path: "{{ path }}"
+            state: absent
