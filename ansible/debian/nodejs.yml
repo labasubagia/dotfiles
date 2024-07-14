@@ -3,8 +3,6 @@
 - name: Setup Node.js
   hosts: localhost
   connection: local
-  gather_facts: false
-  become: true
   vars:
     is_remove: false
 
@@ -20,30 +18,41 @@
       when: not is_remove
       block:
         - name: Download installation script
+          become: true
           ansible.builtin.get_url:
             url: "{{ script_url }}"
             dest: "{{ script_path }}"
             mode: '0755'
 
         - name: Execute script
+          become: true
           ansible.builtin.command: "{{ script_path }}"
           args:
             creates: "{{ apt_repository_path }}"
 
         - name: Install package
+          become: true
           ansible.builtin.apt:
             name: nodejs
             state: present
 
+        - name: Setup NPM
+          ansible.builtin.import_tasks: ../tasks/npm.yml
+
     - name: Setup Remove
       when: is_remove
       block:
+        - name: Setup NPM
+          ansible.builtin.import_tasks: ../tasks/npm.yml
+
         - name: Remove package
+          become: true
           ansible.builtin.apt:
             name: nodejs
             state: absent
 
         - name: Remove Repository
+          become: true
           ansible.builtin.file:
             path: "{{ item }}"
             state: absent

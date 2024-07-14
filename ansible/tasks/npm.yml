@@ -1,0 +1,92 @@
+---
+- name: Setup NPM
+  vars:
+    # when this task imported, and parent has same vars
+    # parent's variable will be used
+    is_remove: false
+
+    global_dirname: .npm-global
+    global_dir: "~/{{ global_dirname }}"
+    global_packages:
+      - pnpm
+
+    shell_file: ~/.zshrc
+    shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: NPM"
+    shell_bin_path: |
+      if [ -d "$HOME/{{ global_dirname }}/bin" ] ; then
+        PATH="$HOME/{{ global_dirname }}/bin:$PATH"
+      fi
+
+  block:
+    - name: Check npm exists
+      ansible.builtin.command: which npm
+      register: npm
+      ignore_errors: true
+      changed_when: false
+
+    - name: Run when npm exists
+      when: npm.rc == 0
+      block:
+        - name: Pre Setup
+          block:
+            - name: Check ansible-galaxy exists
+              ansible.builtin.command: which ansible-galaxy
+              register: ansible_galaxy
+              ignore_errors: true
+              changed_when: false
+
+            - name: Install requirements
+              when: ansible_galaxy.rc == 0
+              ansible.builtin.command: ansible-galaxy collection install community.general
+              register: req
+              changed_when: '"Nothing to do" not in req.stdout'
+
+        - name: Setup Install
+          when: not is_remove
+          block:
+            - name: Make global package dir
+              ansible.builtin.file:
+                path: "{{ global_dir }}"
+                state: directory
+                mode: '0755'
+
+            - name: Configure npm global dir
+              ansible.builtin.command: "npm config set prefix {{ global_dir }}"
+              changed_when: false
+
+            - name: Add Path
+              ansible.builtin.blockinfile:
+                marker: "{{ shell_marker }}"
+                path: "{{ shell_file }}"
+                block: "{{ shell_bin_path }}"
+                state: present
+
+            - name: Install Global Packages
+              community.general.npm:
+                name: "{{ item }}"
+                global: true
+                state: present
+              with_items: "{{ global_packages }}"
+
+        - name: Setup Remove
+          when: is_remove
+          block:
+            - name: Remove Global Packages
+              community.general.npm:
+                name: "{{ item }}"
+                global: true
+                state: absent
+              with_items: "{{ global_packages }}"
+
+            - name: Remove Path
+              ansible.builtin.blockinfile:
+                marker: "{{ shell_marker }}"
+                path: "{{ item }}"
+                block: "{{ shell_bin_path }}"
+                state: absent
+              with_items: "{{ shell_profiles }}"
+
+            - name: Remove global package dir
+              ansible.builtin.file:
+                path: "{{ global_dir }}"
+                state: absent
