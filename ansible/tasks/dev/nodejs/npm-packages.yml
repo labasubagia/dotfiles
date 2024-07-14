@@ -48,7 +48,7 @@
               ansible.builtin.file:
                 path: "{{ global_dir }}"
                 state: directory
-                mode: '0755'
+                mode: "0755"
 
             - name: Configure npm global dir
               ansible.builtin.command: "npm config set prefix {{ global_dir }}"

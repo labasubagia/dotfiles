@@ -1,0 +1,89 @@
+---
+- name: Setup Go Programming Language
+  vars:
+    is_remove: false
+
+    go_version: "1.22.5"
+    go_download_url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+    go_tarball: "go{{ go_version }}.linux-amd64.tar.gz"
+    go_extract_path: "/usr/local"
+    go_install_dir: "/usr/local/go"
+    go_bin_path: "{{ go_install_dir }}/bin"
+
+    system_profile: /etc/profile
+    shell_file: "~/.zshrc"
+    shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: GO"
+    shell_bin_path: |
+      # Add Go bin directory to PATH
+      if [ -d "{{ go_bin_path }}" ] ; then
+        export PATH="$PATH:{{ go_bin_path }}"
+      fi
+
+  block:
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Check if it is already installed
+          ansible.builtin.stat:
+            path: "{{ go_bin_path }}/go"
+          register: go_installed
+
+        - name: Install
+          become: true
+          when: not go_installed.stat.exists
+          block:
+            - name: Download
+              ansible.builtin.get_url:
+                url: "{{ go_download_url }}"
+                dest: "/tmp/{{ go_tarball }}"
+                mode: "0644"
+
+            - name: Extract to binary path
+              ansible.builtin.unarchive:
+                src: "/tmp/{{ go_tarball }}"
+                dest: "{{ go_extract_path }}"
+                creates: "{{ go_bin_path }}/go"
+
+            - name: Add bin directory to system profile PATH
+              ansible.builtin.blockinfile:
+                path: "{{ system_profile }}"
+                marker: "{{ shell_marker }}"
+                block: "{{ shell_bin_path }}"
+                state: present
+
+        - name: Add bin directory to PATH
+          ansible.builtin.blockinfile:
+            path: "{{ shell_file }}"
+            marker: "{{ shell_marker }}"
+            block: "{{ shell_bin_path }}"
+            state: present
+
+        - name: Setup Packages
+          ansible.builtin.import_tasks: ./packages.yml
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Setup Packages
+          ansible.builtin.import_tasks: ./packages.yml
+
+        - name: Remove from PATH
+          ansible.builtin.blockinfile:
+            marker: "{{ shell_marker }}"
+            path: "{{ shell_file }}"
+            block: "{{ shell_bin_path }}"
+            state: absent
+
+        - name: Remove bin directory from system profile PATH
+          become: true
+          ansible.builtin.blockinfile:
+            path: "{{ system_profile }}"
+            marker: "{{ shell_marker }}"
+            block: "{{ shell_bin_path }}"
+            state: absent
+
+        - name: Remove installation dir
+          become: true
+          ansible.builtin.file:
+            path: "{{ go_install_dir }}"
+            state: absent
