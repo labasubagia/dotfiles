@@ -1,0 +1,66 @@
+---
+- name: Setup Go Package
+  vars:
+    is_remove: false
+
+    go_path: ~/go
+    go_bin: "{{ go_path }}/bin"
+
+    pkgs:
+      - url: golang.org/x/tools/gopls
+        name: gopls
+        version: latest
+      - url: github.com/cweill/gotests/gotests
+        name: gotests
+        version: v1.6.0
+      - url: github.com/fatih/gomodifytags
+        name: gomodifytags
+        version: v1.16.0
+      - url: github.com/josharian/impl
+        name: impl
+        version: v1.1.0
+      - url: github.com/haya14busa/goplay/cmd/goplay
+        name: goplay
+        version: v1.0.0
+      - url: github.com/go-delve/delve/cmd/dlv
+        name: dlv
+        version: latest
+      - url: github.com/golangci/golangci-lint/cmd/golangci-lint
+        name: golangci-lint
+        version: latest
+      - url: honnef.co/go/tools/cmd/staticcheck
+        name: staticcheck
+        version: latest
+
+  block:
+    - name: Check go exists
+      ansible.builtin.command: which go
+      register: go
+      ignore_errors: true
+      changed_when: false
+
+    - name: Run when go exists
+      when: go.rc == 0
+      block:
+        - name: Setup Install
+          when: not is_remove
+          block:
+            - name: Install global packages
+              ansible.builtin.command: "{{ go.stdout }} install {{ item.url }}@{{ item.version | default('latest') }}"
+              args:
+                creates: "{{ go_bin }}/{{ item.name }}"
+              with_items: "{{ pkgs }}"
+
+        - name: Setup Remove
+          when: is_remove
+          block:
+            - name: Remove global packages
+              ansible.builtin.file:
+                path: "{{ go_bin }}/{{ item.name }}"
+                state: absent
+              with_items: "{{ pkgs }}"
+
+            - name: Clean
+              ansible.builtin.command: "{{ go.stdout }} clean -modcache"
+              register: go_clean
+              changed_when: go_clean.stdout != ''
