@@ -81,10 +81,9 @@
             - name: Remove Path
               ansible.builtin.blockinfile:
                 marker: "{{ shell_marker }}"
-                path: "{{ item }}"
+                path: "{{ shell_file }}"
                 block: "{{ shell_bin_path }}"
                 state: absent
-              with_items: "{{ shell_profiles }}"
 
             - name: Remove global package dir
               ansible.builtin.file:
