@@ -7,6 +7,7 @@
     go_bin: "{{ go_path }}/bin"
 
     pkgs:
+      # development
       - url: golang.org/x/tools/gopls
         name: gopls
         version: latest
@@ -32,6 +33,16 @@
         name: staticcheck
         version: latest
 
+      # optional tools
+      - url: github.com/derailed/k9s
+        name: k9s
+        version: latest
+        state: absent
+      - url: github.com/go-task/task/v3/cmd/task
+        name: task
+        version: latest
+        state: absent
+
   block:
     - name: Check go exists
       ansible.builtin.command: which go
@@ -46,9 +57,17 @@
           when: not is_remove
           block:
             - name: Install global packages
+              when: (item.state | default('present')) == 'present'
               ansible.builtin.command: "{{ go.stdout }} install {{ item.url }}@{{ item.version | default('latest') }}"
               args:
                 creates: "{{ go_bin }}/{{ item.name }}"
+              with_items: "{{ pkgs }}"
+
+            - name: Remove absent global packages
+              when: (item.state | default('present')) == 'absent'
+              ansible.builtin.file:
+                path: "{{ go_bin }}/{{ item.name }}"
+                state: absent
               with_items: "{{ pkgs }}"
 
         - name: Setup Remove
