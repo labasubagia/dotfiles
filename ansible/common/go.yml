@@ -13,6 +13,7 @@
     go_install_dir: "/usr/local/go"
     go_bin_path: "{{ go_install_dir }}/bin"
 
+    system_profile: /etc/profile
     shell_file: "~/.zshrc"
     shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: GO"
     shell_bin_path: |
@@ -46,6 +47,13 @@
                 dest: "{{ go_extract_path }}"
                 creates: "{{ go_bin_path }}/go"
 
+            - name: Add bin directory to system profile PATH
+              ansible.builtin.blockinfile:
+                path: "{{ system_profile }}"
+                marker: "{{ shell_marker }}"
+                block: "{{ shell_bin_path }}"
+                state: present
+
         - name: Add bin directory to PATH
           ansible.builtin.blockinfile:
             path: "{{ shell_file }}"
@@ -53,13 +61,27 @@
             block: "{{ shell_bin_path }}"
             state: present
 
+        - name: Setup Packages
+          ansible.builtin.import_tasks: ../tasks/go-package.yml
+
     - name: Setup Remove
       when: is_remove
       block:
+        - name: Setup Packages
+          ansible.builtin.import_tasks: ../tasks/go-package.yml
+
         - name: Remove from PATH
           ansible.builtin.blockinfile:
             marker: "{{ shell_marker }}"
             path: "{{ shell_file }}"
+            block: "{{ shell_bin_path }}"
+            state: absent
+
+        - name: Remove bin directory from system profile PATH
+          become: true
+          ansible.builtin.blockinfile:
+            path: "{{ system_profile }}"
+            marker: "{{ shell_marker }}"
             block: "{{ shell_bin_path }}"
             state: absent
 
