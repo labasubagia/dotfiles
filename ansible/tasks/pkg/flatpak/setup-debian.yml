@@ -1,9 +1,6 @@
 # for flatpak apps, it can be seen in common module (../common)
 ---
 - name: Setup Flatpak
-  hosts: localhost
-  connection: local
-  become: true
   vars:
     is_remove: false
 
@@ -11,7 +8,7 @@
       - name: flathub
         url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
-  pre_tasks:
+  block:
     - name: Check ansible-galaxy exists
       ansible.builtin.command: which ansible-galaxy
       register: ansible_galaxy
@@ -24,7 +21,6 @@
       register: req
       changed_when: '"Nothing to do" not in req.stdout'
 
-  tasks:
     - name: Setup Install
       when: not is_remove
       block:

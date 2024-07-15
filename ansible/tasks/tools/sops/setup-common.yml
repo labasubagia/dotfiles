@@ -1,7 +1,5 @@
 ---
 - name: Setup sops
-  hosts: localhost
-  connection: local
   become: true
   vars:
     is_remove: true
@@ -10,7 +8,7 @@
     url: https://github.com/getsops/sops/releases/download/{{ version }}/sops-{{ version }}.linux.amd64
     path: /usr/local/bin/sops
 
-  tasks:
+  block:
     - name: Setup Install
       when: not is_remove
       block:

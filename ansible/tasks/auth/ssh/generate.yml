@@ -1,17 +1,11 @@
-# this playbook is used to load ssh keys from sops
-# make sure `age` key exists in ~/.config/sops/age/keys.txt, sops installed
-# for new generation keys, see ./ssh.yml
+# this playbook is used to generate new ssh keys
+# if looking for load ssh keys from sops, see ./sops.yml
 
 ---
-- name: Setup SSH Keys from Sops
-  hosts: localhost
-  connection: local
+- name: Generate SSH key-pairs
   vars:
     is_remove: false
-
-    secret_file: "{{ playbook_dir }}/../../config/secrets.yaml"
-
-  pre_tasks:
+  block:
     - name: Check ansible-galaxy exists
       ansible.builtin.command: which ansible-galaxy
       register: ansible_galaxy
@@ -20,51 +14,37 @@
 
     - name: Install requirements
       when: ansible_galaxy.rc == 0
-      ansible.builtin.command: ansible-galaxy collection install community.general community.sops
+      ansible.builtin.command: ansible-galaxy collection install community.general community.crypto
       register: req
       changed_when: '"Nothing to do" not in req.stdout'
 
-  tasks:
     - name: Load global config
       ansible.builtin.set_fact:
         global_config: "{{ lookup('file', playbook_dir + '/../../config/global.json') | from_json }}"
 
     - name: Load config
       ansible.builtin.set_fact:
-        age_key: "{{ global_config['age']['key_path'] }}"
         dir: "{{ global_config['ssh']['dir_path'] }}"
         keys: "{{ global_config['ssh']['keys'] }}"
 
-    - name: Setup Load from Sops
+    - name: Setup Create SSH Keys
       when: not is_remove
       block:
-
-        - name: Load secrets
-          community.sops.load_vars:
-            age_keyfile: "{{ age_key }}"
-            file: "{{ secret_file }}"
-            name: secrets
-
         - name: Make directory
           ansible.builtin.file:
             path: "{{ dir }}"
             state: directory
             mode: "0755"
 
-        - name: Make private keys
-          ansible.builtin.copy:
-            content: "{{ secrets['ssh_keys'][item.name]['private'] }}"
-            dest: "{{ dir }}/id_ed25519_{{ item.name }}"
-            mode: "0600"
+        - name: Create key pairs
+          community.crypto.openssh_keypair:
+            path: "{{ dir }}/id_ed25519_{{ item.name }}"
+            type: ed25519
+            state: present
+            force: false
           with_items: "{{ keys }}"
 
-        - name: Make public keys
-          ansible.builtin.copy:
-            content: "{{ secrets['ssh_keys'][item.name]['public'] }}"
-            dest: "{{ dir }}/id_ed25519_{{ item.name }}.pub"
-            mode: "0644"
-          with_items: "{{ keys }}"
-
+        # ? SKIP, use ssh in home-manager to generate config or use ./ssh-sops.yml
         - name: Make config
           community.general.ssh_config:
             host: "{{ item.host }}"

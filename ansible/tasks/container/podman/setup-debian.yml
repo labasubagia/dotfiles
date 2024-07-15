@@ -1,8 +1,5 @@
 ---
 - name: Setup podman
-  hosts: localhost
-  connection: local
-  gather_facts: false
   vars:
     is_remove: false
 
@@ -20,7 +17,7 @@
         alias docker-compose="podman-compose"
       fi
 
-  tasks:
+  block:
     - name: Setup Install
       when: not is_remove
       block:
@@ -29,6 +26,7 @@
           ansible.builtin.apt:
             pkg: "{{ pkgs }}"
             state: present
+
         - name: Add Alias
           ansible.builtin.blockinfile:
             marker: "{{ shell_marker }}"
@@ -45,6 +43,7 @@
             path: "{{ shell_file }}"
             block: "{{ shell_alias }}"
             state: absent
+
         - name: Remove Packages
           become: true
           ansible.builtin.apt:

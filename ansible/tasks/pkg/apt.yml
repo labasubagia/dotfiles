@@ -1,7 +1,5 @@
 ---
-- name: Setup all apt package
-  hosts: localhost
-  connection: local
+- name: Setup apt packages
   become: true
   vars:
     is_remove: false
@@ -9,11 +7,10 @@
     pkgs:
       - tmux
       - htop
-      - zsh
       - neovim
       - age
 
-  tasks:
+  block:
     - name: Setup Install
       when: not is_remove
       block:

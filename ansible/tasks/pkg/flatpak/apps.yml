@@ -1,8 +1,5 @@
 ---
 - name: Setup Flatpak Apps
-  hosts: localhost
-  connection: local
-
   vars:
     is_remove: false
 
@@ -15,7 +12,7 @@
       - com.redis.RedisInsight
       - com.slack.Slack
 
-  pre_tasks:
+  block:
     - name: Check ansible-galaxy exists
       ansible.builtin.command: which ansible-galaxy
       register: ansible_galaxy
@@ -28,7 +25,6 @@
       register: req
       changed_when: '"Nothing to do" not in req.stdout'
 
-  tasks:
     - name: Ensure repositories
       community.general.flatpak_remote:
         name: "{{ item.name }}"

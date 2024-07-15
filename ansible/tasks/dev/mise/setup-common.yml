@@ -1,9 +1,5 @@
 ---
-- name: Install mise
-  hosts: localhost
-  connection: local
-  gather_facts: false
-
+- name: Setup mise
   vars:
     is_remove: false
 
@@ -11,7 +7,7 @@
     script_path: "{{ tmp_path }}/mise.sh"
     bin_path: ~/.local/bin/mise
 
-  tasks:
+  block:
     - name: Setup Install
       when: not is_remove
       block:

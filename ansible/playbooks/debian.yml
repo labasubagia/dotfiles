@@ -6,8 +6,25 @@
     is_remove: false
 
     task_files:
-      # UI Apps
+      # shells
+      - ../tasks/shell/zsh/setup-debian.yml
+
+      # pkg
+      - ../tasks/pkg/apt.yml
+      - ../tasks/pkg/flatpak/setup-debian.yml
+
+      # tools
+      - ../tasks/tools/sops/setup-common.yml
+
+      # container
+      - ../tasks/container/podman/setup-debian.yml
+
+      # GUI apps
       - ../tasks/ui/vscode/setup-debian.yml
+      - ../tasks/ui/brave/setup-debian.yml
+
+      # auth
+      - ../tasks/auth/ssh/sops.yml
 
   tasks:
     - name: Run Tasks
