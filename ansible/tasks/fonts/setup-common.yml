@@ -1,0 +1,53 @@
+---
+- name: Setup fonts
+  vars:
+    is_remove: false
+
+    tmp_dir: ~/tmp
+    font_dir: ~/.fonts
+    fonts:
+      - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.zip
+        archive_file: CascadiaCode.zip
+        prefix: CaskaydiaCoveNerdFont
+        state: present
+      - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/RobotoMono.zip
+        archive_file: RobotoMono.zip
+        prefix: RobotoMonoNerdFont
+        state: present
+      - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
+        archive_file: JetBrainsMono.zip
+        prefix: JetBrainsMonoNerdFont
+        state: present
+      - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/IBMPlexMono.zip
+        archive_file: IBMPlexMono.zip
+        prefix: BlexMonoNerdFont
+        state: present
+
+  block:
+    - name: Setup install
+      when: not is_remove
+      block:
+        - name: Ensure font dir
+          ansible.builtin.file:
+            path: "{{ font_dir }}"
+            state: directory
+            mode: '0755'
+
+        - name: State font
+          ansible.builtin.include_tasks: ./setup-common-item.yml
+          loop: "{{ fonts }}"
+          loop_control:
+            loop_var: font
+          vars:
+            url: "{{ font.url }}"
+            archive_file: "{{ font.archive_file }}"
+            prefix: "{{ font.prefix }}"
+            state: "{{ font.state }}"
+
+    - name: Setup remove
+      when: is_remove
+      block:
+        - name: Remove font dir
+          ansible.builtin.file:
+            path: "{{ font_dir }}"
+            state: absent

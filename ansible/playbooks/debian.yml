@@ -27,6 +27,9 @@
       # auth
       - ../tasks/auth/ssh/sops.yml
 
+      # fonts
+      - ../tasks/fonts/setup-common.yml
+
   tasks:
     - name: Run Tasks
       ansible.builtin.include_tasks: "{{ task_file }}"
