@@ -15,6 +15,7 @@
 
       # tools
       - ../tasks/tools/sops/setup-common.yml
+      - ../tasks/tools/neovim/setup-common.yml
 
       # container
       - ../tasks/container/podman/setup-debian.yml

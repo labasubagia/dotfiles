@@ -7,7 +7,6 @@
     pkgs:
       - tmux
       - htop
-      - neovim
       - age
 
   block:
