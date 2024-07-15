@@ -1,0 +1,22 @@
+---
+- name: Setup Nixos
+  hosts: localhost
+  connection: local
+  vars:
+    is_remove: false
+
+    task_files:
+      # pkg
+      - ../tasks/pkg/flatpak/apps.yml
+
+      # auth
+      # there is sops-nix, but use ansible for now
+      # due to symlink problem with dev-container
+      - ../tasks/auth/ssh/sops.yml
+
+  tasks:
+    - name: Run Tasks
+      ansible.builtin.include_tasks: "{{ task_file }}"
+      loop: "{{ task_files }}"
+      loop_control:
+        loop_var: task_file
