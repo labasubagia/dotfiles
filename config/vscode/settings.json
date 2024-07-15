@@ -1,0 +1,117 @@
+{
+  "[go]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always",
+      "source.organizeImports": "always"
+    },
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "quickfix.biome": "explicit",
+      "source.organizeImports.biome": "explicit"
+    },
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true
+  },
+  "[terraform]": {
+    "editor.formatOnSave": true
+  },
+  "cSpell.enabledFileTypes": {
+    "ansible": true,
+    "nix": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.fontFamily": "'CaskaydiaCove Nerd Font', 'RobotoMono Nerd Font', 'monospace', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": true,
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.linkedEditing": true,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.size": "fit",
+  "editor.renderWhitespace": "all",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "go.addTags": {
+    "options": "json=omitempty",
+    "promptForTags": false,
+    "tags": "json",
+    "template": "",
+    "transform": "snakecase"
+  },
+  "go.formatFlags": [
+    "-local"
+  ],
+  "go.formatTool": "goimports",
+  "go.inlayHints.assignVariableTypes": true,
+  "go.inlayHints.compositeLiteralFields": true,
+  "go.inlayHints.constantValues": true,
+  "go.inlayHints.functionTypeParameters": true,
+  "go.inlayHints.parameterNames": true,
+  "go.inlayHints.rangeVariableTypes": true,
+  "go.lintFlags": [
+    "--fast"
+  ],
+  "go.lintOnSave": "workspace",
+  "go.lintTool": "golangci-lint",
+  "gopls": {
+    "ui.completion.usePlaceholders": true,
+    "ui.semanticTokens": true
+  },
+  "html.autoClosingTags": true,
+  "javascript.autoClosingTags": true,
+  "javascript.suggest.autoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nil",
+  "nix.serverSettings": {
+    "nil": {
+      "diagnostics": {
+        "ignored": [
+          "unused_binding",
+          "unused_with"
+        ]
+      },
+      "formatting": {
+        "command": [
+          "nixpkgs-fmt"
+        ]
+      }
+    }
+  },
+  "notebook.codeActionsOnSave": {
+    "notebook.source.fixAll": "explicit",
+    "notebook.source.organizeImports": "explicit"
+  },
+  "notebook.formatOnSave.enabled": true,
+  "python.analysis.inlayHints.callArgumentNames": "all",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "terraform.codelens.referenceCount": true,
+  "terraform.experimentalFeatures.prefillRequiredFields": true,
+  "terraform.experimentalFeatures.validateOnSave": true,
+  "terraform.languageServer.enable": true,
+  "terraform.validation.enableEnhancedValidation": true,
+  "typescript.autoClosingTags": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.customTitleBarVisibility": "auto",
+  "window.titleBarStyle": "custom",
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.tree.indent": 20
+}

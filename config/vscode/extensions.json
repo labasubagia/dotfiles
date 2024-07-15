@@ -1,0 +1,100 @@
+{
+  "list": [
+    {
+      "publisher": "editorconfig",
+      "name": "editorconfig"
+    },
+    {
+      "publisher": "streetsidesoftware",
+      "name": "code-spell-checker"
+    },
+    {
+      "publisher": "ms-vscode-remote",
+      "name": "remote-containers"
+    },
+    {
+      "publisher": "aaron-bond",
+      "name": "better-comments"
+    },
+    {
+      "publisher": "eamodio",
+      "name": "gitlens"
+    },
+    {
+      "publisher": "usernamehw",
+      "name": "errorlens"
+    },
+    {
+      "publisher": "johnpapa",
+      "name": "vscode-peacock"
+    },
+    {
+      "publisher": "ms-azuretools",
+      "name": "vscode-docker"
+    },
+    {
+      "publisher": "ms-vscode-remote",
+      "name": "remote-ssh"
+    },
+    {
+      "publisher": "gruntfuggly",
+      "name": "todo-tree"
+    },
+    {
+      "publisher": "yzhang",
+      "name": "markdown-all-in-one"
+    },
+    {
+      "publisher": "jnoortheen",
+      "name": "nix-ide"
+    },
+    {
+      "publisher": "golang",
+      "name": "go"
+    },
+    {
+      "publisher": "ms-python",
+      "name": "python"
+    },
+    {
+      "publisher": "ms-python",
+      "name": "vscode-pylance"
+    },
+    {
+      "publisher": "charliermarsh",
+      "name": "ruff"
+    },
+    {
+      "publisher": "hashicorp",
+      "name": "terraform"
+    },
+    {
+      "publisher": "redhat",
+      "name": "ansible"
+    },
+    {
+      "publisher": "jetpack-io",
+      "name": "devbox",
+      "version": "0.1.5",
+      "sha256": "+nIeDaz1NPYFoxFVC8GQxtU1MU/sbdFETAQWzVX6LGQ="
+    },
+    {
+      "publisher": "signageos",
+      "name": "signageos-vscode-sops",
+      "version": "0.9.1",
+      "sha256": "b1Gp+tL5/e97xMuqkz4EvN0PxI7cJOObusEkcp+qKfM="
+    },
+    {
+      "publisher": "signageos",
+      "name": "signageos-vscode-sops-beta",
+      "version": "0.9.1",
+      "sha256": "p1gfMd6WgFpHJHmvBAmlpi+MH40xTnInlr6xOSFpVyI="
+    },
+    {
+      "publisher": "biomejs",
+      "name": "biome",
+      "version": "2.3.0",
+      "sha256": "GrMyXn5yfxjbUi0YuioPX137P+8TWdh5V6HC0kvLFYE="
+    }
+  ]
+}
