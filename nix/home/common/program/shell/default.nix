@@ -86,6 +86,7 @@
     gnutar
     gawk
     zstd
+    thefuck
 
     # system call monitoring
     strace # system call monitoring

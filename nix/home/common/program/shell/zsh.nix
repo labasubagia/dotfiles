@@ -4,6 +4,8 @@
     enable = true;
     enableCompletion = true;
     autocd = true;
+    syntaxHighlighting.enable = true;
+    autosuggestion.enable = true;
     initExtraFirst = ''
       export PATH=$PATH:~/.local/bin
 
@@ -31,15 +33,21 @@
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
     };
-    zplug = {
+    oh-my-zsh = {
       enable = true;
-      plugins = [
-        { name = "zsh-users/zsh-syntax-highlighting"; }
-        { name = "zsh-users/zsh-autosuggestions"; }
-        { name = "zsh-users/zsh-completions"; }
-        { name = "davidde/git"; }
-        { name = "themes/robbyrussell"; tags = [ "from:oh-my-zsh" "as:theme" ]; }
-      ];
+      plugins = [ "git" "thefuck" ];
+      theme = "robbyrussell";
     };
+
+    # zplug = {
+    #   enable = true;
+    #   plugins = [
+    #     { name = "zsh-users/zsh-syntax-highlighting"; }
+    #     { name = "zsh-users/zsh-autosuggestions"; }
+    #     { name = "zsh-users/zsh-completions"; }
+    #     { name = "davidde/git"; }
+    #     { name = "themes/robbyrussell"; tags = [ "from:oh-my-zsh" "as:theme" ]; }
+    #   ];
+    # };
   };
 }
