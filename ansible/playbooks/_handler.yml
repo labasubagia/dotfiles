@@ -1,0 +1,14 @@
+# this playbook to run any task dynamically based on `task_file` variable
+# use case: testing, run individual task_file, delete pkg, etc
+# example:
+# ansible-playbook ansible/playbooks/_handler.yml -e '{"task_file": "../tasks/dev/mise/setup-common.yml", "is_remove": true}' -K
+---
+- name: Handler
+  hosts: localhost
+  connection: local
+  vars:
+    is_remove: false
+    task_file: ../tasks/hello.yml
+  tasks:
+    - name: Run Tasks
+      ansible.builtin.include_tasks: "{{ task_file }}"

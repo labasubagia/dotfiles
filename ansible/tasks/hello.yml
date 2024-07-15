@@ -1,0 +1,4 @@
+---
+- name: Hello
+  ansible.builtin.debug:
+    msg: Hi Mom!
