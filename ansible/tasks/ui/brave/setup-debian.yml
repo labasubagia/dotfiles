@@ -1,8 +1,5 @@
 ---
 - name: Setup Brave Browser
-  hosts: localhost
-  connection: local
-  gather_facts: false
   become: true
   vars:
     is_remove: false
@@ -12,7 +9,7 @@
     apt_repository: deb [signed-by={{ apt_key_path }}] https://brave-browser-apt-release.s3.brave.com/ stable main
     apt_repository_filename: brave-browser-release
 
-  tasks:
+  block:
     - name: Install Prerequisite
       ansible.builtin.apt:
         name:
