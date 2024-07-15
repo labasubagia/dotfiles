@@ -1,17 +1,14 @@
 ---
 - name: Setup Visual Studio Code
-  hosts: localhost
-  connection: local
-  gather_facts: false
-  become: true
   vars:
     is_remove: false
 
     apt_key_path: /etc/apt/keyrings/packages.microsoft.asc
     apt_repository: deb [arch=amd64,arm64,armhf signed-by={{ apt_key_path }}] https://packages.microsoft.com/repos/code stable main
 
-  tasks:
+  block:
     - name: Install Prerequisite
+      become: true
       ansible.builtin.apt:
         name:
           - apt-transport-https
@@ -21,37 +18,49 @@
       when: not is_remove
       block:
         - name: Get APT Key
+          become: true
           ansible.builtin.get_url:
             url: https://packages.microsoft.com/keys/microsoft.asc
             dest: "{{ apt_key_path }}"
             mode: '0644'
 
         - name: Add Repository
+          become: true
           ansible.builtin.apt_repository:
             repo: "{{ apt_repository }}"
             filename: vscode
             state: present
 
         - name: Install package
+          become: true
           ansible.builtin.apt:
             name: code
             state: present
 
+        - name: Setup Config
+          ansible.builtin.import_tasks: ./config.yml
+
     - name: Setup Remove
       when: is_remove
       block:
+        - name: Setup Config
+          ansible.builtin.import_tasks: ./config.yml
+
         - name: Remove package
+          become: true
           ansible.builtin.apt:
             name: code
             state: absent
 
         - name: Remove Repository
+          become: true
           ansible.builtin.apt_repository:
             repo: "{{ apt_repository }}"
             filename: vscode
             state: absent
 
         - name: Remove APT Key
+          become: true
           ansible.builtin.file:
             path: "{{ apt_key_path }}"
             state: absent

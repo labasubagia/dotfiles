@@ -1,0 +1,17 @@
+---
+- name: Setup Debian
+  hosts: localhost
+  connection: local
+  vars:
+    is_remove: false
+
+    task_files:
+      # UI Apps
+      - ../tasks/ui/vscode/setup-debian.yml
+
+  tasks:
+    - name: Run Tasks
+      ansible.builtin.include_tasks: "{{ task_file }}"
+      loop: "{{ task_files }}"
+      loop_control:
+        loop_var: task_file
