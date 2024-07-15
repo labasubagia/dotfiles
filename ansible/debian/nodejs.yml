@@ -1,7 +1,0 @@
----
-- name: Setup Node.js
-  hosts: localhost
-  connection: local
-  tasks:
-    - name: Setup
-      ansible.builtin.import_tasks: ../tasks/dev/nodejs/setup-debian.yml

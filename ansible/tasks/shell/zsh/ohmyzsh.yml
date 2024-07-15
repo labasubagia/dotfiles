@@ -1,7 +1,5 @@
 ---
 - name: Setup oh my zsh
-  hosts: localhost
-  connection: local
   vars:
     is_remove: false
     is_reset_when_remove: true
@@ -13,7 +11,7 @@
 
     shell_file: ~/.zshrc
 
-  tasks:
+  block:
     - name: Setup Install
       when: not is_remove
       block:

@@ -1,7 +1,0 @@
----
-- name: Setup Go programming language
-  hosts: localhost
-  connection: local
-  tasks:
-    - name: Setup
-      ansible.builtin.import_tasks: ../tasks/dev/go/setup-common.yml
