@@ -77,8 +77,8 @@
   ],
   "editor.formatOnSave": true,
   "files.associations": {
-    "**/ansible/*.yaml": "ansible",
-    "**/ansible/*.yml": "ansible",
+    "**/ansible/**/*.yaml": "ansible",
+    "**/ansible/**/*.yml": "ansible",
   },
   "nix.enableLanguageServer": true,
   "nix.serverPath": "nil",
