@@ -1,0 +1,3 @@
+# This file contains ignores rule violations for ansible-lint
+config/secrets.yaml yaml[comments]
+config/secrets.yaml yaml[line-length]
