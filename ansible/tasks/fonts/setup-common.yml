@@ -24,6 +24,12 @@
         state: present
 
   block:
+    - name: Ensure tmp directory
+      ansible.builtin.file:
+        path: "{{ tmp_dir }}"
+        state: directory
+        mode: '0755'
+
     - name: Setup install
       when: not is_remove
       block:
