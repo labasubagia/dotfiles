@@ -1,7 +1,7 @@
 ---
 - name: Setup neovim
   vars:
-    is_remove: true
+    is_remove: false
 
     url: https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
     tmp_path: /tmp/nvim-linux64.tar.gz

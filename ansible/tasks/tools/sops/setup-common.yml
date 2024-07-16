@@ -2,7 +2,7 @@
 - name: Setup sops
   become: true
   vars:
-    is_remove: true
+    is_remove: false
 
     version: v3.9.0
     url: https://github.com/getsops/sops/releases/download/{{ version }}/sops-{{ version }}.linux.amd64
