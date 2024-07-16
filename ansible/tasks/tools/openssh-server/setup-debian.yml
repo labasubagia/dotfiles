@@ -1,0 +1,25 @@
+---
+- name: Setup openssh server
+  become: true
+  vars:
+    is_remove: false
+
+    pkgs:
+      - openssh-server
+
+  block:
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Install packages
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: present
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Remove packages
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: absent
