@@ -2,44 +2,44 @@
 # if looking for load ssh keys from sops, see ./sops.yml
 
 ---
-- name: Generate SSH key-pairs
+- name: SSH generate key-pairs
   vars:
     is_remove: false
   block:
-    - name: Pre Setup (run ansible against localhost)
+    - name: SSH generate key-pairs > Pre Setup (run ansible against localhost)
       when: ansible_host == "127.0.0.1" and ansible_connection == "local"
       block:
-        - name: Check ansible-galaxy exists
+        - name: SSH generate key-pairs > Check ansible-galaxy exists
           ansible.builtin.command: which ansible-galaxy
           register: ansible_galaxy
           ignore_errors: true
           changed_when: false
 
-        - name: Install requirements
+        - name: SSH generate key-pairs > Install requirements
           when: ansible_galaxy.rc == 0
           ansible.builtin.command: ansible-galaxy collection install community.general community.crypto
           register: req
           changed_when: '"Nothing to do" not in req.stdout'
 
-    - name: Load global config
+    - name: SSH generate key-pairs > Load global config
       ansible.builtin.set_fact:
         global_config: "{{ lookup('file', playbook_dir + '/../../config/global.json') | from_json }}"
 
-    - name: Load config
+    - name: SSH generate key-pairs > Load config
       ansible.builtin.set_fact:
         dir: "{{ global_config['ssh']['dir_path'] }}"
         keys: "{{ global_config['ssh']['keys'] }}"
 
-    - name: Setup Create SSH Keys
+    - name: SSH generate key-pairs > Setup Create SSH Keys
       when: not is_remove
       block:
-        - name: Make directory
+        - name: SSH generate key-pairs > Make directory
           ansible.builtin.file:
             path: "{{ dir }}"
             state: directory
             mode: "0755"
 
-        - name: Create key pairs
+        - name: SSH generate key-pairs > Create key pairs
           community.crypto.openssh_keypair:
             path: "{{ dir }}/id_ed25519_{{ item.name }}"
             type: ed25519
@@ -48,7 +48,7 @@
           with_items: "{{ keys }}"
 
         # ? SKIP, use ssh in home-manager to generate config or use ./ssh-sops.yml
-        - name: Make config
+        - name: SSH generate key-pairs > Make config
           community.general.ssh_config:
             host: "{{ item.host }}"
             hostname: "{{ item.host }}"
@@ -56,27 +56,27 @@
             ssh_config_file: "{{ dir }}/config"
           with_items: "{{ keys }}"
 
-        - name: Config replace /home/<user>
+        - name: SSH generate key-pairs > Config replace /home/<user>
           ansible.builtin.replace:
             path: "{{ dir }}/config"
             regexp: \/home\/[^\/]+
             replace: "~"
 
-    - name: Setup Remove
+    - name: SSH generate key-pairs > Setup Remove
       when: is_remove
       block:
-        - name: Remove config
+        - name: SSH generate key-pairs > Remove config
           ansible.builtin.file:
             path: "{{ dir }}/config"
             state: absent
 
-        - name: Remove public keys
+        - name: SSH generate key-pairs > Remove public keys
           ansible.builtin.file:
             path: "{{ dir }}/id_ed25519_{{ item.name }}.pub"
             state: absent
           with_items: "{{ keys }}"
 
-        - name: Remove private keys
+        - name: SSH generate key-pairs > Remove private keys
           ansible.builtin.file:
             path: "{{ dir }}/id_ed25519_{{ item.name }}"
             state: absent

@@ -1,5 +1,5 @@
 ---
-- name: Setup config
+- name: Setup VSCode config
   vars:
     is_remove: false
 
@@ -9,29 +9,29 @@
     vscode_config_path: "{{ ansible_env.HOME }}/.config/Code/User/settings.json"
 
   block:
-    - name: Check code executable path
+    - name: Setup VSCode config > Check code executable path
       ansible.builtin.stat:
         path: "{{ code_executable }}"
       register: vscode
 
-    - name: Code executable exists
+    - name: Setup VSCode config > Code executable exists
       when: vscode.stat.exists
       block:
-        - name: Load config
+        - name: Setup VSCode config > Load config
           ansible.builtin.set_fact:
             # when there is extensions A require other extensions B,
             # B should listed before A
             extensions: "{{ lookup('file', extension_setting_path) | from_json }}"
 
-        - name: Bash
+        - name: Setup VSCode config > Bash
           ansible.builtin.command: which bash
           register: bash
           changed_when: false
 
-        - name: Setup load
+        - name: Setup VSCode config > Setup load
           when: not is_remove
           block:
-            - name: Install extensions
+            - name: Setup VSCode config > Install extensions
               ansible.builtin.command: "{{ code_executable }} --install-extension {{ extension.publisher }}.{{ extension.name }}"
               register: req
               retries: 3
@@ -41,21 +41,21 @@
               loop_control:
                 loop_var: extension
 
-            - name: Create symlink settings.json
+            - name: Setup VSCode config > Create symlink settings.json
               ansible.builtin.file:
                 src: "{{ user_setting_path }}"
                 dest: "{{ vscode_config_path }}"
                 state: link
 
-        - name: Setup Remove
+        - name: Setup VSCode config > Setup Remove
           when: is_remove
           block:
-            - name: Remove symlink settings.json
+            - name: Setup VSCode config > Remove symlink settings.json
               ansible.builtin.file:
                 path: "{{ vscode_config_path }}"
                 state: absent
 
-            - name: Remove extensions
+            - name: Setup VSCode config > Remove extensions
               ansible.builtin.shell:
                 cmd: |
                   set -o pipefail

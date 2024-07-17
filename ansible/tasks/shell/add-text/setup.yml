@@ -1,5 +1,5 @@
 ---
-- name: Add text to shells
+- name: Text to shells
   vars:
     is_remove: false
 
@@ -13,11 +13,11 @@
     state: "{{ is_remove | ternary('absent', 'present') }}"
 
   block:
-    - name: System shell
+    - name: Text to shells > system shell
       when: _with_system
       become: true
       block:
-        - name: Add text system shells
+        - name: Text to shells > systems
           ansible.builtin.include_tasks: "./setup-item.yml"
           loop: "{{ system_files }}"
           loop_control:
@@ -25,7 +25,7 @@
           vars:
             shell_file: "{{ file }}"
 
-    - name: Add text user shells
+    - name: Text to shells > users
       when: _with_user
       ansible.builtin.include_tasks: ./setup-item.yml
       loop: "{{ user_files }}"

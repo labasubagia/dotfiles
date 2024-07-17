@@ -24,22 +24,22 @@
         state: present
 
   block:
-    - name: Ensure tmp directory
+    - name: Setup fonts > ensure tmp directory
       ansible.builtin.file:
         path: "{{ tmp_dir }}"
         state: directory
         mode: '0755'
 
-    - name: Setup install
+    - name: Setup fonts > Setup install
       when: not is_remove
       block:
-        - name: Ensure font dir
+        - name: Setup fonts > Ensure font dir
           ansible.builtin.file:
             path: "{{ font_dir }}"
             state: directory
             mode: '0755'
 
-        - name: State font
+        - name: Setup fonts > State font
           ansible.builtin.include_tasks: ./setup-common-item.yml
           loop: "{{ fonts }}"
           loop_control:
@@ -50,10 +50,10 @@
             prefix: "{{ font.prefix }}"
             state: "{{ font.state }}"
 
-    - name: Setup remove
+    - name: Setup fonts > Setup remove
       when: is_remove
       block:
-        - name: Remove font dir
+        - name: Setup fonts > Remove font dir
           ansible.builtin.file:
             path: "{{ font_dir }}"
             state: absent

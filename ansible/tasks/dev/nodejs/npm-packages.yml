@@ -18,70 +18,70 @@
       fi
 
   block:
-    - name: Check NPM executable path
+    - name: Setup NPM > Check NPM executable path
       ansible.builtin.stat:
         path: "{{ npm_executable }}"
       register: npm
 
-    - name: NPM executable exists
+    - name: Setup NPM > NPM executable exists
       when: npm.stat.exists
       block:
-        - name: Pre Setup (run ansible against localhost)
+        - name: Setup NPM > Pre Setup (run ansible against localhost)
           when: ansible_host == "127.0.0.1" and ansible_connection == "local"
           block:
-            - name: Check ansible-galaxy exists
+            - name: Setup NPM > Check ansible-galaxy exists
               ansible.builtin.command: which ansible-galaxy
               register: ansible_galaxy
               ignore_errors: true
               changed_when: false
 
-            - name: Install requirements
+            - name: Setup NPM > Install requirements
               when: ansible_galaxy.rc == 0
               ansible.builtin.command: ansible-galaxy collection install community.general
               register: req
               changed_when: '"Nothing to do" not in req.stdout'
 
-        - name: Setup Install
+        - name: Setup NPM > Setup Install
           when: not is_remove
           block:
-            - name: Make global package dir
+            - name: Setup NPM > Make global package dir
               ansible.builtin.file:
                 path: "{{ global_dir }}"
                 state: directory
                 mode: "0755"
 
-            - name: Configure npm global dir
+            - name: Setup NPM > Configure npm global dir
               ansible.builtin.command: "npm config set prefix {{ global_dir }}"
               changed_when: false
 
-            - name: Add PATH
+            - name: Setup NPM > Add PATH
               ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
               vars:
                 text: "{{ shell_bin_path }}"
 
-            - name: Install Global Packages
+            - name: Setup NPM > Install Global Packages
               community.general.npm:
                 name: "{{ item.name }}"
                 global: true
                 state: "{{ item.state }}"
               with_items: "{{ global_packages }}"
 
-        - name: Setup Remove
+        - name: Setup NPM > Setup Remove
           when: is_remove
           block:
-            - name: Remove Global Packages
+            - name: Setup NPM > Remove Global Packages
               community.general.npm:
                 name: "{{ item }}"
                 global: true
                 state: absent
               with_items: "{{ global_packages }}"
 
-            - name: Remove PATH
+            - name: Setup NPM > Remove PATH
               ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
               vars:
                 text: "{{ shell_bin_path }}"
 
-            - name: Remove global package dir
+            - name: Setup NPM > Remove global package dir
               ansible.builtin.file:
                 path: "{{ global_dir }}"
                 state: absent

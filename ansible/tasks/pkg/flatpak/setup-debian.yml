@@ -9,48 +9,48 @@
         url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
   block:
-    - name: Pre Setup (run ansible against localhost)
+    - name: Setup Flatpak > Pre Setup (run ansible against localhost)
       when: ansible_host == "127.0.0.1" and ansible_connection == "local"
       block:
-        - name: Check ansible-galaxy exists
+        - name: Setup Flatpak > Check ansible-galaxy exists
           ansible.builtin.command: which ansible-galaxy
           register: ansible_galaxy
           ignore_errors: true
           changed_when: false
 
-        - name: Install requirements
+        - name: Setup Flatpak > Install requirements
           when: ansible_galaxy.rc == 0
           ansible.builtin.command: ansible-galaxy collection install community.general
           register: req
           changed_when: '"Nothing to do" not in req.stdout'
 
-    - name: Setup Install
+    - name: Setup Flatpak > Setup Install
       when: not is_remove
       block:
-        - name: Install package
+        - name: Setup Flatpak > Install package
           become: true
           ansible.builtin.apt:
             name: flatpak
             state: present
 
-        - name: Add repositories
+        - name: Setup Flatpak > Add repositories
           community.general.flatpak_remote:
             name: "{{ item.name }}"
             flatpakrepo_url: "{{ item.url }}"
             state: present
           with_items: "{{ repositories }}"
 
-    - name: Setup Remove
+    - name: Setup Flatpak > Setup Remove
       when: is_remove
       block:
-        - name: Remove repositories
+        - name: Setup Flatpak > Remove repositories
           when: false # skip for now due to stuck
           community.general.flatpak_remote:
             name: "{{ item.name }}"
             state: absent
           with_items: "{{ repositories }}"
 
-        - name: Remove package
+        - name: Setup Flatpak > Remove package
           become: true
           ansible.builtin.apt:
             name: flatpak

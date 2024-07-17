@@ -15,39 +15,39 @@
       fi
 
   block:
-    - name: Setup Install
+    - name: Setup neovim > Setup Install
       when: not is_remove
       block:
-        - name: Download from URL
+        - name: Setup neovim > Download from URL
           become: true
           ansible.builtin.get_url:
             url: "{{ url }}"
             dest: "{{ tmp_path }}"
             mode: '0755'
 
-        - name: Extract tarball
+        - name: Setup neovim > Extract tarball
           become: true
           ansible.builtin.unarchive:
             src: "{{ tmp_path }}"
             dest: "{{ install_path }}"
             remote_src: true
 
-        - name: Add PATH
+        - name: Setup neovim > Add PATH
           ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true
 
-    - name: Setup Remove
+    - name: Setup neovim > Setup Remove
       when: is_remove
       block:
-        - name: Remove PATH
+        - name: Setup neovim > Remove PATH
           ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true
 
-        - name: Remove
+        - name: Setup neovim > Remove
           become: true
           ansible.builtin.file:
             path: "{{ bin_path }}"

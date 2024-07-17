@@ -1,12 +1,12 @@
 ---
 - name: Add text to shell
   block:
-    - name: Check shell file exists
+    - name: Text in shell > Check shell file exists
       ansible.builtin.stat:
         path: "{{ shell_file }}"
       register: current_file
 
-    - name: Add text to shell {{ shell_file }}
+    - name: "Text in shell > into {{ shell_file + ' with state: ' + state }}"
       when: current_file.stat.exists
       ansible.builtin.blockinfile:
         path: "{{ shell_file }}"

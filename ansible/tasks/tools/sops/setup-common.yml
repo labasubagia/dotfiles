@@ -9,19 +9,19 @@
     executable: /usr/local/bin/sops
 
   block:
-    - name: Setup Install
+    - name: Setup sops > Setup Install
       when: not is_remove
       block:
-        - name: Download from URL
+        - name: Setup sops > Download from URL
           ansible.builtin.get_url:
             url: "{{ url }}"
             dest: "{{ executable }}"
             mode: '0755'
 
-    - name: Setup Remove
+    - name: Setup sops > Setup Remove
       when: is_remove
       block:
-        - name: Remove
+        - name: Setup sops > Remove
           ansible.builtin.file:
             path: "{{ executable }}"
             state: absent

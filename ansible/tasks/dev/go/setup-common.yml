@@ -1,5 +1,5 @@
 ---
-- name: Setup Go Programming Language
+- name: Setup Go
   vars:
     is_remove: false
 
@@ -17,57 +17,57 @@
       fi
 
   block:
-    - name: Setup Install
+    - name: Setup Go > Setup Install
       when: not is_remove
       block:
-        - name: Check if it is already installed
+        - name: Setup Go > Check if it is already installed
           ansible.builtin.stat:
             path: "{{ go_bin_dir }}/go"
           register: go_installed
 
-        - name: Install
+        - name: Setup Go > Install
           become: true
           when: not go_installed.stat.exists
           block:
-            - name: Download
+            - name: Setup Go > Download
               ansible.builtin.get_url:
                 url: "{{ go_download_url }}"
                 dest: "/tmp/{{ go_tarball }}"
                 mode: "0644"
 
-            - name: Extract to binary path
+            - name: Setup Go > Extract to binary path
               ansible.builtin.unarchive:
                 src: "/tmp/{{ go_tarball }}"
                 dest: "{{ go_extract_dir }}"
                 creates: "{{ go_bin_dir }}/go"
                 remote_src: true
 
-        - name: Add PATH
+        - name: Setup Go > Add PATH
           ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true
 
-        - name: Setup Packages
+        - name: Setup Go > Setup Packages
           ansible.builtin.import_tasks: ./packages.yml
           vars:
             go_executable: "{{ go_bin_dir }}/go"
 
-    - name: Setup Remove
+    - name: Setup Go > Setup Remove
       when: is_remove
       block:
-        - name: Setup Packages
+        - name: Setup Go > Setup Packages
           ansible.builtin.import_tasks: ./packages.yml
           vars:
             go_executable: "{{ go_bin_dir }}/go"
 
-        - name: Remove PATH
+        - name: Setup Go > Remove PATH
           ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true
 
-        - name: Remove installation dir
+        - name: Setup Go > Remove installation dir
           become: true
           ansible.builtin.file:
             path: "{{ go_install_dir }}"

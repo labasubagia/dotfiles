@@ -13,18 +13,18 @@
       - apt-transport-https
 
   block:
-    - name: Setup Install
+    - name: Setup apt packages > Setup Install
       when: not is_remove
       block:
-        - name: Install packages
+        - name: Setup apt packages > Install packages
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: present
 
-    - name: Setup Remove
+    - name: Setup apt packages > Setup Remove
       when: is_remove
       block:
-        - name: Remove packages
+        - name: Setup apt packages > Remove packages
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: absent

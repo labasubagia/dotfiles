@@ -10,47 +10,47 @@
     apt_repository_filename: brave-browser-release
 
   block:
-    - name: Install Prerequisite
+    - name: Setup Brave Browser > Install Prerequisite
       ansible.builtin.apt:
         name:
           - apt-transport-https
         state: present
 
-    - name: Setup Install
+    - name: Setup Brave Browser > Setup Install
       when: not is_remove
       block:
-        - name: Get APT Key
+        - name: Setup Brave Browser > Get APT Key
           ansible.builtin.get_url:
             url: "{{ apt_key_url }}"
             dest: "{{ apt_key_path }}"
             mode: "0644"
 
-        - name: Add Repository
+        - name: Setup Brave Browser > Add Repository
           ansible.builtin.apt_repository:
             repo: "{{ apt_repository }}"
             filename: "{{ apt_repository_filename }}"
             state: present
 
-        - name: Install package
+        - name: Setup Brave Browser > Install package
           ansible.builtin.apt:
             name: brave-browser
             state: present
 
-    - name: Setup Remove
+    - name: Setup Brave Browser > Setup Remove
       when: is_remove
       block:
-        - name: Remove package
+        - name: Setup Brave Browser > Remove package
           ansible.builtin.apt:
             name: brave-browser
             state: absent
 
-        - name: Remove Repository
+        - name: Setup Brave Browser > Remove Repository
           ansible.builtin.apt_repository:
             repo: "{{ apt_repository }}"
             filename: "{{ apt_repository_filename }}"
             state: absent
 
-        - name: Remove APT Key
+        - name: Setup Brave Browser > Remove APT Key
           ansible.builtin.file:
             path: "{{ apt_key_path }}"
             state: absent

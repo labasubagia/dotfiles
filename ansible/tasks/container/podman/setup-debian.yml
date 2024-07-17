@@ -17,31 +17,31 @@
       fi
 
   block:
-    - name: Setup Install
+    - name: Setup podman > Setup Install
       when: not is_remove
       block:
-        - name: Install Packages
+        - name: Setup podman > Install Packages
           become: true
           ansible.builtin.apt:
             pkg: "{{ pkgs }}"
             state: present
 
-        - name: Add Alias
+        - name: Setup podman > Add Alias
           ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_alias }}"
             with_system: true
 
-    - name: Setup Remove
+    - name: Setup podman > Setup Remove
       when: is_remove
       block:
-        - name: Remove Alias
+        - name: Setup podman > Remove Alias
           ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_alias }}"
             with_system: true
 
-        - name: Remove Packages
+        - name: Setup podman > Remove Packages
           become: true
           ansible.builtin.apt:
             pkg: "{{ pkgs }}"

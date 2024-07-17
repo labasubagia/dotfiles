@@ -8,18 +8,18 @@
       - openssh-server
 
   block:
-    - name: Setup Install
+    - name: Setup openssh server > Setup Install
       when: not is_remove
       block:
-        - name: Install packages
+        - name: Setup openssh server > Install packages
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: present
 
-    - name: Setup Remove
+    - name: Setup openssh server > Setup Remove
       when: is_remove
       block:
-        - name: Remove packages
+        - name: Setup openssh server > Remove packages
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: absent

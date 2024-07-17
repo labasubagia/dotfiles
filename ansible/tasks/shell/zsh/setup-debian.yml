@@ -1,30 +1,30 @@
 ---
-- name: Setup apt package
+- name: Setup zsh
   vars:
     is_remove: false
 
     pkgs:
       - zsh
   block:
-    - name: Setup Install
+    - name: Setup zsh > Setup Install
       when: not is_remove
       block:
-        - name: Install packages
+        - name: Setup zsh > install package
           become: true
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: present
 
-        - name: Setup oh my zsh
+        - name: Setup zsh > Setup oh my zsh
           ansible.builtin.import_tasks: ./ohmyzsh.yml
 
-    - name: Setup Remove
+    - name: Setup zsh > Setup Remove
       when: is_remove
       block:
-        - name: Setup oh my zsh
+        - name: Setup zsh > Setup oh my zsh
           ansible.builtin.import_tasks: ./ohmyzsh.yml
 
-        - name: Remove packages
+        - name: Setup zsh > remove package
           become: true
           ansible.builtin.apt:
             name: "{{ pkgs }}"

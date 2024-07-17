@@ -1,30 +1,30 @@
 - name: Setup font
   block:
-    - name: Check if exists
+    - name: Setup font > Check if exists
       ansible.builtin.shell: ls {{ font_dir }} | grep {{ prefix }}
       register: exists
       changed_when: false
       ignore_errors: true
 
-    - name: Present font
+    - name: Setup font > Present font
       when: exists.rc != 0 and (state | default('present')) == 'present'
       block:
-        - name: Download font
+        - name: Setup font > Download font from {{ url }}
           ansible.builtin.get_url:
             url: "{{ url }}"
             dest: "{{ tmp_dir }}/{{ archive_file }}"
             mode: '0644'
 
-        - name: Unarchive font
+        - name: Setup font > Unarchive font {{ prefix }}
           ansible.builtin.unarchive:
             src: "{{ tmp_dir }}/{{ archive_file }}"
             dest: "{{ font_dir }}"
             remote_src: true
 
-    - name: Absent font
+    - name: Setup font > Absent font
       when: exists.rc == 0 and (state | default('present')) == 'absent'
       block:
-        - name: Remove font
+        - name: Setup font > Remove font {{ prefix }}
           ansible.builtin.shell: "rm {{ font_dir }}/{{ prefix }}*"
           args:
             removes: "{{ font_dir }}/{{ prefix }}*"

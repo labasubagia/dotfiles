@@ -44,41 +44,41 @@
         state: absent
 
   block:
-    - name: Check go executable path
+    - name: Setup Go Package > Check go executable path
       ansible.builtin.stat:
         path: "{{ go_executable }}"
       register: go
 
-    - name: Go executable exists
+    - name: Setup Go Package > Go executable exists
       when: go.stat.exists
       block:
-        - name: Setup Install
+        - name: Setup Go Package > Setup Install
           when: not is_remove
           block:
-            - name: Install global packages
+            - name: Setup Go Package > Install global packages
               when: (item.state | default('present')) == 'present'
               ansible.builtin.command: "{{ go_executable }} install {{ item.url }}@{{ item.version | default('latest') }}"
               args:
                 creates: "{{ go_package_bin_dir }}/{{ item.name }}"
               with_items: "{{ pkgs }}"
 
-            - name: Remove absent global packages
+            - name: Setup Go Package > Remove absent global packages
               when: (item.state | default('present')) == 'absent'
               ansible.builtin.file:
                 path: "{{ go_package_bin_dir }}/{{ item.name }}"
                 state: absent
               with_items: "{{ pkgs }}"
 
-        - name: Setup Remove
+        - name: Setup Go Package > Setup Remove
           when: is_remove
           block:
-            - name: Remove global packages
+            - name: Setup Go Package > Remove global packages
               ansible.builtin.file:
                 path: "{{ go_package_bin_dir }}/{{ item.name }}"
                 state: absent
               with_items: "{{ pkgs }}"
 
-            - name: Clean
+            - name: Setup Go Package > Clean
               ansible.builtin.command: "{{ go_executable }} clean -modcache"
               register: go_clean
               changed_when: go_clean.stdout != ''
