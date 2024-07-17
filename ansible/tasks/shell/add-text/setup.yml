@@ -1,0 +1,35 @@
+---
+- name: Add text to shells
+  vars:
+    is_remove: false
+
+    _with_system: "{{ with_system | default(false) }}"
+    _with_user: "{{ with_user | default(true) }}"
+    system_files:
+      - /etc/profile
+    user_files:
+      - "{{ ansible_env.HOME }}/.zshrc"
+      - "{{ ansible_env.HOME }}/.bashrc"
+    state: "{{ is_remove | ternary('absent', 'present') }}"
+
+  block:
+    - name: System shell
+      when: _with_system
+      become: true
+      block:
+        - name: Add text system shells
+          ansible.builtin.include_tasks: "./setup-item.yml"
+          loop: "{{ system_files }}"
+          loop_control:
+            loop_var: file
+          vars:
+            shell_file: "{{ file }}"
+
+    - name: Add text user shells
+      when: _with_user
+      ansible.builtin.include_tasks: ./setup-item.yml
+      loop: "{{ user_files }}"
+      loop_control:
+        loop_var: file
+      vars:
+        shell_file: "{{ file }}"

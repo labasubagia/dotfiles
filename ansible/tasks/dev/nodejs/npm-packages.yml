@@ -11,8 +11,7 @@
       - name: pnpm
         state: present
 
-    shell_file: "{{ ansible_env.HOME }}/.zshrc"
-    shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: NPM"
+    shell_indicator: "NPM"
     shell_bin_path: |
       if [ -d "$HOME/{{ global_dirname }}/bin" ] ; then
         PATH="$HOME/{{ global_dirname }}/bin:$PATH"
@@ -55,12 +54,10 @@
               ansible.builtin.command: "npm config set prefix {{ global_dir }}"
               changed_when: false
 
-            - name: Add Path
-              ansible.builtin.blockinfile:
-                marker: "{{ shell_marker }}"
-                path: "{{ shell_file }}"
-                block: "{{ shell_bin_path }}"
-                state: present
+            - name: Add PATH
+              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              vars:
+                text: "{{ shell_bin_path }}"
 
             - name: Install Global Packages
               community.general.npm:
@@ -79,12 +76,10 @@
                 state: absent
               with_items: "{{ global_packages }}"
 
-            - name: Remove Path
-              ansible.builtin.blockinfile:
-                marker: "{{ shell_marker }}"
-                path: "{{ shell_file }}"
-                block: "{{ shell_bin_path }}"
-                state: absent
+            - name: Remove PATH
+              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              vars:
+                text: "{{ shell_bin_path }}"
 
             - name: Remove global package dir
               ansible.builtin.file:

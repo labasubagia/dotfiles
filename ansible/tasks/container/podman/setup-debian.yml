@@ -7,8 +7,7 @@
       - podman
       - podman-compose
 
-    shell_file: "~/.zshrc"
-    shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: PODMAN"
+    shell_indicator: "PODMAN"
     shell_alias: |
       if command -v podman &> /dev/null; then
         alias docker="podman"
@@ -28,21 +27,19 @@
             state: present
 
         - name: Add Alias
-          ansible.builtin.blockinfile:
-            marker: "{{ shell_marker }}"
-            path: "{{ shell_file }}"
-            block: "{{ shell_alias }}"
-            state: present
+          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          vars:
+            text: "{{ shell_alias }}"
+            with_system: true
 
     - name: Setup Remove
       when: is_remove
       block:
         - name: Remove Alias
-          ansible.builtin.blockinfile:
-            marker: "{{ shell_marker }}"
-            path: "{{ shell_file }}"
-            block: "{{ shell_alias }}"
-            state: absent
+          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          vars:
+            text: "{{ shell_alias }}"
+            with_system: true
 
         - name: Remove Packages
           become: true

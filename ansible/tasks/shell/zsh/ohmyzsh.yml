@@ -4,12 +4,12 @@
     is_remove: false
     is_reset_when_remove: true
 
-    tmp_path: ~/tmp
+    tmp_dir: "{{ ansible_env.HOME }}/tmp"
     script_url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    script_path: "{{ tmp_path }}/ohmyzsh-install.sh"
-    installed_path: ~/.oh-my-zsh
+    script_path: "{{ tmp_dir }}/ohmyzsh-install.sh"
+    installed_path: "{{ ansible_env.HOME }}/.oh-my-zsh"
 
-    shell_file: ~/.zshrc
+    shell_file: "{{ ansible_env.HOME }}/.zshrc"
 
   block:
     - name: Setup Install
@@ -17,7 +17,7 @@
       block:
         - name: Create tmp directory
           ansible.builtin.file:
-            path: "{{ tmp_path }}"
+            path: "{{ tmp_dir }}"
             state: directory
             mode: '0755'
 

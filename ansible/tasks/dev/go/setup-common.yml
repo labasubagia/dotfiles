@@ -10,11 +10,8 @@
     go_install_dir: "/usr/local/go"
     go_bin_dir: "{{ go_install_dir }}/bin"
 
-    system_profile: /etc/profile
-    shell_file: "{{ ansible_env.HOME }}/.zshrc"
-    shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: GO"
+    shell_indicator: "GO"
     shell_bin_path: |
-      # Add Go bin directory to PATH
       if [ -d "{{ go_bin_dir }}" ] ; then
         export PATH="$PATH:{{ go_bin_dir }}"
       fi
@@ -45,19 +42,11 @@
                 creates: "{{ go_bin_dir }}/go"
                 remote_src: true
 
-            - name: Add bin directory to system profile PATH
-              ansible.builtin.blockinfile:
-                path: "{{ system_profile }}"
-                marker: "{{ shell_marker }}"
-                block: "{{ shell_bin_path }}"
-                state: present
-
-        - name: Add bin directory to PATH
-          ansible.builtin.blockinfile:
-            path: "{{ shell_file }}"
-            marker: "{{ shell_marker }}"
-            block: "{{ shell_bin_path }}"
-            state: present
+        - name: Add PATH
+          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          vars:
+            text: "{{ shell_bin_path }}"
+            with_system: true
 
         - name: Setup Packages
           ansible.builtin.import_tasks: ./packages.yml
@@ -72,20 +61,11 @@
           vars:
             go_executable: "{{ go_bin_dir }}/go"
 
-        - name: Remove from PATH
-          ansible.builtin.blockinfile:
-            marker: "{{ shell_marker }}"
-            path: "{{ shell_file }}"
-            block: "{{ shell_bin_path }}"
-            state: absent
-
-        - name: Remove bin directory from system profile PATH
-          become: true
-          ansible.builtin.blockinfile:
-            path: "{{ system_profile }}"
-            marker: "{{ shell_marker }}"
-            block: "{{ shell_bin_path }}"
-            state: absent
+        - name: Remove PATH
+          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          vars:
+            text: "{{ shell_bin_path }}"
+            with_system: true
 
         - name: Remove installation dir
           become: true

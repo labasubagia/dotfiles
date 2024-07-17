@@ -8,10 +8,7 @@
     install_path: /opt
     bin_path: "{{ install_path }}/nvim-linux64"
 
-    shell_files:
-      - "{{ ansible_env.HOME }}/.bashrc"
-      - "{{ ansible_env.HOME }}/.zshrc"
-    shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: NEOVIM"
+    shell_indicator: "NEOVIM"
     shell_bin_path: |
       if [ -d "{{ bin_path }}/bin" ] ; then
         export PATH="$PATH:{{ bin_path }}/bin"
@@ -35,28 +32,20 @@
             dest: "{{ install_path }}"
             remote_src: true
 
-        - name: Add to PATH
-          ansible.builtin.blockinfile:
-            path: "{{ shell_file }}"
-            marker: "{{ shell_marker }}"
-            block: "{{ shell_bin_path }}"
-            state: present
-          loop: "{{ shell_files }}"
-          loop_control:
-            loop_var: shell_file
+        - name: Add PATH
+          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          vars:
+            text: "{{ shell_bin_path }}"
+            with_system: true
 
     - name: Setup Remove
       when: is_remove
       block:
-        - name: Remove from PATH
-          ansible.builtin.blockinfile:
-            path: "{{ shell_file }}"
-            marker: "{{ shell_marker }}"
-            block: "{{ shell_bin_path }}"
-            state: absent
-          loop: "{{ shell_files }}"
-          loop_control:
-            loop_var: shell_file
+        - name: Remove PATH
+          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          vars:
+            text: "{{ shell_bin_path }}"
+            with_system: true
 
         - name: Remove
           become: true

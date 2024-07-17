@@ -8,7 +8,7 @@
   connection: "{{ _connection | default('ssh') }}"
   vars:
     is_remove: false
-    task_file: ../tasks/hello.yml
+    _task_file: "{{ workdir }}/{{ task_file | default('ansible/tasks/hello.yml') }}"
   tasks:
     - name: Run Tasks
-      ansible.builtin.include_tasks: "{{ task_file }}"
+      ansible.builtin.include_tasks: "{{ _task_file }}"
