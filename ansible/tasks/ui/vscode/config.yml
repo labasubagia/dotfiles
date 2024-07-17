@@ -6,7 +6,7 @@
     user_setting_path: "{{ playbook_dir }}/../../config/vscode/settings.json"
     extension_setting_path: "{{ playbook_dir }}/../../config/vscode/extensions.json"
 
-    vscode_config_path: ~/.config/Code/User/settings.json
+    vscode_config_path: "{{ ansible_env.HOME }}/.config/Code/User/settings.json"
 
   block:
     - name: Load config
@@ -24,7 +24,7 @@
       when: not is_remove
       block:
         - name: Install extensions
-          ansible.builtin.command: code --install-extension {{ extension.publisher }}.{{ extension.name }}
+          ansible.builtin.command: "{{ code_executable }} --install-extension {{ extension.publisher }}.{{ extension.name }}"
           register: req
           retries: 3
           until: req.rc == 0
@@ -52,8 +52,8 @@
             cmd: |
               set -o pipefail
               EXTENSION_ID='{{ extension.publisher }}.{{ extension.name }}'
-              if code --list-extensions | grep -q "^$EXTENSION_ID$"; then
-                code --uninstall-extension $EXTENSION_ID
+              if {{ code_executable }} --list-extensions | grep -q "^$EXTENSION_ID$"; then
+                {{ code_executable }} --uninstall-extension $EXTENSION_ID
               fi
             executable: "{{ bash.stdout }}"
           register: req

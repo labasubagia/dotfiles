@@ -1,7 +1,7 @@
 ---
 - name: Setup Debian
-  hosts: localhost
-  connection: local
+  hosts: "{{ _hosts | default('debian') }}"
+  connection: "{{ _connection | default('ssh') }}"
   vars:
     is_remove: false
 

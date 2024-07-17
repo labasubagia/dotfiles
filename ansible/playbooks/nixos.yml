@@ -1,7 +1,7 @@
 ---
 - name: Setup Nixos
-  hosts: localhost
-  connection: local
+  hosts: "{{ _hosts | default('nixos') }}"
+  connection: "{{ _connection | default('ssh') }}"
   vars:
     is_remove: false
 

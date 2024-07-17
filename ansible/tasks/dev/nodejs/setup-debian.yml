@@ -4,12 +4,12 @@
   vars:
     is_remove: false
 
-    version: '22'
-    script_url: "https://deb.nodesource.com/setup_{{ version }}.x"
+    version: '22.x'
+    script_url: "https://deb.nodesource.com/setup_{{ version }}"
     script_path: "/tmp/nodesource_setup.sh"
 
     apt_repository_path: /etc/apt/sources.list.d/nodesource.list
-    apt_key_path: /etc/apt/keyrings/nodesource.gpg
+    apt_key_path: /usr/share/keyrings/nodesource.gpg
 
   block:
     - name: Setup Install
@@ -34,14 +34,28 @@
             name: nodejs
             state: present
 
+        - name: Check npm exists
+          ansible.builtin.command: which npm
+          register: npm
+          changed_when: false
+
         - name: Setup NPM
           ansible.builtin.import_tasks: ./npm-packages.yml
+          vars:
+            npm_executable: "{{ npm.stdout }}"
 
     - name: Setup Remove
       when: is_remove
       block:
+        - name: Check npm exists
+          ansible.builtin.command: which npm
+          register: npm
+          changed_when: false
+
         - name: Setup NPM
           ansible.builtin.import_tasks: ./npm-packages.yml
+          vars:
+            npm_executable: "{{ npm.stdout }}"
 
         - name: Remove package
           become: true

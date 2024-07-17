@@ -1,3 +1,4 @@
 .devbox
 *.decrypted~*
 node_modules
+ansible/inventory.yml

@@ -6,7 +6,7 @@
 
     version: v3.9.0
     url: https://github.com/getsops/sops/releases/download/{{ version }}/sops-{{ version }}.linux.amd64
-    path: /usr/local/bin/sops
+    executable: /usr/local/bin/sops
 
   block:
     - name: Setup Install
@@ -15,7 +15,7 @@
         - name: Download from URL
           ansible.builtin.get_url:
             url: "{{ url }}"
-            dest: "{{ path }}"
+            dest: "{{ executable }}"
             mode: '0755'
 
     - name: Setup Remove
@@ -23,5 +23,5 @@
       block:
         - name: Remove
           ansible.builtin.file:
-            path: "{{ path }}"
+            path: "{{ executable }}"
             state: absent

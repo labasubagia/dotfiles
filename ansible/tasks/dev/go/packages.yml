@@ -3,8 +3,8 @@
   vars:
     is_remove: false
 
-    go_path: ~/go
-    go_bin: "{{ go_path }}/bin"
+    go_package_dir: "{{ ansible_env.HOME }}/go"
+    go_package_bin_dir: "{{ go_package_dir }}/bin"
 
     pkgs:
       # development
@@ -44,29 +44,28 @@
         state: absent
 
   block:
-    - name: Check go exists
-      ansible.builtin.command: which go
+    - name: Check go executable path
+      ansible.builtin.stat:
+        path: "{{ go_executable }}"
       register: go
-      ignore_errors: true
-      changed_when: false
 
-    - name: Run when go exists
-      when: go.rc == 0
+    - name: Go executable exists
+      when: go.stat.exists and go.stat.executable
       block:
         - name: Setup Install
           when: not is_remove
           block:
             - name: Install global packages
               when: (item.state | default('present')) == 'present'
-              ansible.builtin.command: "{{ go.stdout }} install {{ item.url }}@{{ item.version | default('latest') }}"
+              ansible.builtin.command: "{{ go_executable }} install {{ item.url }}@{{ item.version | default('latest') }}"
               args:
-                creates: "{{ go_bin }}/{{ item.name }}"
+                creates: "{{ go_package_bin_dir }}/{{ item.name }}"
               with_items: "{{ pkgs }}"
 
             - name: Remove absent global packages
               when: (item.state | default('present')) == 'absent'
               ansible.builtin.file:
-                path: "{{ go_bin }}/{{ item.name }}"
+                path: "{{ go_package_bin_dir }}/{{ item.name }}"
                 state: absent
               with_items: "{{ pkgs }}"
 
@@ -75,11 +74,11 @@
           block:
             - name: Remove global packages
               ansible.builtin.file:
-                path: "{{ go_bin }}/{{ item.name }}"
+                path: "{{ go_package_bin_dir }}/{{ item.name }}"
                 state: absent
               with_items: "{{ pkgs }}"
 
             - name: Clean
-              ansible.builtin.command: "{{ go.stdout }} clean -modcache"
+              ansible.builtin.command: "{{ go_executable }} clean -modcache"
               register: go_clean
               changed_when: go_clean.stdout != ''

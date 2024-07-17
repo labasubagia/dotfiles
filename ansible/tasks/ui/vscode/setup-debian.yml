@@ -37,14 +37,28 @@
             name: code
             state: present
 
+        - name: Get code executable
+          ansible.builtin.command: which code
+          register: code
+          changed_when: false
+
         - name: Setup Config
           ansible.builtin.import_tasks: ./config.yml
+          vars:
+            code_executable: "{{ code.stdout }}"
 
     - name: Setup Remove
       when: is_remove
       block:
+        - name: Get code executable
+          ansible.builtin.command: which code
+          register: code
+          changed_when: false
+
         - name: Setup Config
           ansible.builtin.import_tasks: ./config.yml
+          vars:
+            code_executable: "{{ code.stdout }}"
 
         - name: Remove package
           become: true

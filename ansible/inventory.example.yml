@@ -1,0 +1,19 @@
+# copy this file into ./inventory.yml and custom the properties
+
+debian:
+  hosts:
+    snail:
+      ansible_host: 192.168.1.100
+      ansible_user: user
+      ansible_become_pass: password
+      connection: ssh
+      ansible_ssh_pass: password
+
+nixos:
+  hosts:
+    eagle:
+      ansible_host: 192.168.1.101
+      ansible_user: user
+      ansible_become_pass: password
+      connection: ssh
+      ansible_ssh_pass: password

@@ -1,4 +1,9 @@
 ---
-- name: Hello
+- name: Show env
   ansible.builtin.debug:
-    msg: Hi Mom!
+    msg: "{{ ansible_env }}"
+- name: Show machine
+  ansible.builtin.debug:
+    msg:
+      host: "{{ ansible_host }}"
+      connection: "{{ ansible_connection }}"

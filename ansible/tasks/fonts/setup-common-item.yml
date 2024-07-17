@@ -19,6 +19,7 @@
           ansible.builtin.unarchive:
             src: "{{ tmp_dir }}/{{ archive_file }}"
             dest: "{{ font_dir }}"
+            remote_src: true
 
     - name: Absent font
       when: exists.rc == 0 and (state | default('present')) == 'absent'

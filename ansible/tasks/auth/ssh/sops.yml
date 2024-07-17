@@ -10,17 +10,20 @@
     secret_file: "{{ playbook_dir }}/../../config/secrets.yaml"
 
   block:
-    - name: Check ansible-galaxy exists
-      ansible.builtin.command: which ansible-galaxy
-      register: ansible_galaxy
-      ignore_errors: true
-      changed_when: false
+    - name: Pre Setup (run ansible against localhost)
+      when: ansible_host == "127.0.0.1" and ansible_connection == "local"
+      block:
+        - name: Check ansible-galaxy exists
+          ansible.builtin.command: which ansible-galaxy
+          register: ansible_galaxy
+          ignore_errors: true
+          changed_when: false
 
-    - name: Install requirements
-      when: ansible_galaxy.rc == 0
-      ansible.builtin.command: ansible-galaxy collection install community.general community.sops
-      register: req
-      changed_when: '"Nothing to do" not in req.stdout'
+        - name: Install requirements
+          when: ansible_galaxy.rc == 0
+          ansible.builtin.command: ansible-galaxy collection install community.general community.sops
+          register: req
+          changed_when: '"Nothing to do" not in req.stdout'
 
     - name: Load global config
       ansible.builtin.set_fact:

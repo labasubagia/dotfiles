@@ -4,8 +4,8 @@
 # ansible-playbook ansible/playbooks/_handler.yml -e '{"task_file": "../tasks/dev/mise/setup-common.yml", "is_remove": true}' -K
 ---
 - name: Handler
-  hosts: localhost
-  connection: local
+  hosts: "{{ _hosts | default('debian') }}"
+  connection: "{{ _connection | default('ssh') }}"
   vars:
     is_remove: false
     task_file: ../tasks/hello.yml

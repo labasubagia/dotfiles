@@ -6,11 +6,12 @@
     is_remove: false
 
     global_dirname: .npm-global
-    global_dir: "~/{{ global_dirname }}"
+    global_dir: "{{ ansible_env.HOME }}/{{ global_dirname }}"
     global_packages:
-      - pnpm
+      - name: pnpm
+        state: present
 
-    shell_file: ~/.zshrc
+    shell_file: "{{ ansible_env.HOME }}/.zshrc"
     shell_marker: "# {mark} ANSIBLE MANAGED BLOCK: NPM"
     shell_bin_path: |
       if [ -d "$HOME/{{ global_dirname }}/bin" ] ; then
@@ -18,16 +19,16 @@
       fi
 
   block:
-    - name: Check npm exists
-      ansible.builtin.command: which npm
+    - name: Check NPM executable path
+      ansible.builtin.stat:
+        path: "{{ npm_executable }}"
       register: npm
-      ignore_errors: true
-      changed_when: false
 
-    - name: Run when npm exists
-      when: npm.rc == 0
+    - name: NPM executable exists
+      when: npm.stat.exists and npm.stat.executable
       block:
-        - name: Pre Setup
+        - name: Pre Setup (run ansible against localhost)
+          when: ansible_host == "127.0.0.1" and ansible_connection == "local"
           block:
             - name: Check ansible-galaxy exists
               ansible.builtin.command: which ansible-galaxy
@@ -63,9 +64,9 @@
 
             - name: Install Global Packages
               community.general.npm:
-                name: "{{ item }}"
+                name: "{{ item.name }}"
                 global: true
-                state: present
+                state: "{{ item.state }}"
               with_items: "{{ global_packages }}"
 
         - name: Setup Remove
