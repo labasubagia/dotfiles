@@ -38,6 +38,7 @@
           ansible.builtin.command: which npm
           register: npm
           changed_when: false
+          ignore_errors: true
 
         - name: Setup NPM
           ansible.builtin.import_tasks: ./npm-packages.yml
@@ -51,6 +52,7 @@
           ansible.builtin.command: which npm
           register: npm
           changed_when: false
+          ignore_errors: true
 
         - name: Setup NPM
           ansible.builtin.import_tasks: ./npm-packages.yml

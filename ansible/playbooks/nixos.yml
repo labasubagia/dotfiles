@@ -15,8 +15,20 @@
       - ../tasks/auth/ssh/sops.yml
 
   tasks:
-    - name: Run Tasks
-      ansible.builtin.include_tasks: "{{ task_file }}"
-      loop: "{{ task_files }}"
-      loop_control:
-        loop_var: task_file
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Run Tasks
+          ansible.builtin.include_tasks: "{{ task_file }}"
+          loop: "{{ task_files }}"
+          loop_control:
+            loop_var: task_file
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Run Tasks
+          ansible.builtin.include_tasks: "{{ task_file }}"
+          loop: "{{ task_files | reverse | list }}"
+          loop_control:
+            loop_var: task_file

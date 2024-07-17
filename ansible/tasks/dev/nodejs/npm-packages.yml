@@ -24,7 +24,7 @@
       register: npm
 
     - name: NPM executable exists
-      when: npm.stat.exists and npm.stat.executable
+      when: npm.stat.exists
       block:
         - name: Pre Setup (run ansible against localhost)
           when: ansible_host == "127.0.0.1" and ansible_connection == "local"

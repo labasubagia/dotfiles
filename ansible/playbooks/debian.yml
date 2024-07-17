@@ -6,39 +6,51 @@
     is_remove: false
 
     task_files:
-      # shells
-      - ../tasks/shell/zsh/setup-debian.yml
+      - ../tasks/pkg/apt.yml
 
-      # dev
+      - ../tasks/pkg/flatpak/setup-debian.yml
+
       - ../tasks/dev/go/setup-common.yml
       - ../tasks/dev/nodejs/setup-debian.yml
 
-      # pkg
-      - ../tasks/pkg/apt.yml
-      - ../tasks/pkg/flatpak/setup-debian.yml
-
-      # tools
       - ../tasks/tools/sops/setup-common.yml
       - ../tasks/tools/neovim/setup-common.yml
-      - ../tasks/tools/openssh-server/setup-debian.yml
 
-
-      # container
       - ../tasks/container/podman/setup-debian.yml
 
-      # GUI apps
       - ../tasks/ui/vscode/setup-debian.yml
       - ../tasks/ui/brave/setup-debian.yml
 
-      # auth
       - ../tasks/auth/ssh/sops.yml
 
-      # fonts
       - ../tasks/fonts/setup-common.yml
 
+    # ! do remove this task in debian, remove operation will revoke ssh access
+    only_install_task_files:
+      - ../tasks/shell/zsh/setup-debian.yml
+      - ../tasks/tools/openssh-server/setup-debian.yml
+
   tasks:
-    - name: Run Tasks
-      ansible.builtin.include_tasks: "{{ task_file }}"
-      loop: "{{ task_files }}"
-      loop_control:
-        loop_var: task_file
+    - name: Setup Install
+      when: not is_remove
+      block:
+        - name: Run Install Tasks
+          ansible.builtin.include_tasks: "{{ task_file }}"
+          loop: "{{ task_files }}"
+          loop_control:
+            loop_var: task_file
+
+        - name: Run Only Install Tasks
+          ansible.builtin.include_tasks: "{{ task_file }}"
+          loop: "{{ only_install_task_files }}"
+          loop_control:
+            loop_var: task_file
+
+    - name: Setup Remove
+      when: is_remove
+      block:
+        - name: Run Remove Tasks
+          ansible.builtin.include_tasks: "{{ task_file }}"
+          loop: "{{ task_files | reverse | list }}"
+          loop_control:
+            loop_var: task_file

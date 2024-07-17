@@ -28,6 +28,7 @@
       when: not is_remove
       block:
         - name: Install package
+          become: true
           ansible.builtin.apt:
             name: flatpak
             state: present
@@ -43,13 +44,14 @@
       when: is_remove
       block:
         - name: Remove repositories
+          when: false # skip for now due to stuck
           community.general.flatpak_remote:
             name: "{{ item.name }}"
-            flatpakrepo_url: "{{ item.url }}"
             state: absent
           with_items: "{{ repositories }}"
 
         - name: Remove package
+          become: true
           ansible.builtin.apt:
             name: flatpak
             state: absent

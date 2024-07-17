@@ -15,6 +15,7 @@
     openssl
     gnupg
     ssh-to-age
+    sshpass
 
     # archive
     rar

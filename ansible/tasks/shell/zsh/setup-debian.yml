@@ -10,6 +10,7 @@
       when: not is_remove
       block:
         - name: Install packages
+          become: true
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: present
@@ -24,6 +25,7 @@
           ansible.builtin.import_tasks: ./ohmyzsh.yml
 
         - name: Remove packages
+          become: true
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: absent

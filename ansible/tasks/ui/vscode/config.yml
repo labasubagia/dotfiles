@@ -9,55 +9,63 @@
     vscode_config_path: "{{ ansible_env.HOME }}/.config/Code/User/settings.json"
 
   block:
-    - name: Load config
-      ansible.builtin.set_fact:
-        # when there is extensions A require other extensions B,
-        # B should listed before A
-        extensions: "{{ lookup('file', extension_setting_path) | from_json }}"
+    - name: Check code executable path
+      ansible.builtin.stat:
+        path: "{{ code_executable }}"
+      register: vscode
 
-    - name: Bash
-      ansible.builtin.command: which bash
-      register: bash
-      changed_when: false
-
-    - name: Setup load
-      when: not is_remove
+    - name: Code executable exists
+      when: vscode.stat.exists
       block:
-        - name: Install extensions
-          ansible.builtin.command: "{{ code_executable }} --install-extension {{ extension.publisher }}.{{ extension.name }}"
-          register: req
-          retries: 3
-          until: req.rc == 0
-          changed_when: '"was successfully installed" in req.stdout'
-          loop: "{{ extensions['list'] }}"
-          loop_control:
-            loop_var: extension
+        - name: Load config
+          ansible.builtin.set_fact:
+            # when there is extensions A require other extensions B,
+            # B should listed before A
+            extensions: "{{ lookup('file', extension_setting_path) | from_json }}"
 
-        - name: Create symlink settings.json
-          ansible.builtin.file:
-            src: "{{ user_setting_path }}"
-            dest: "{{ vscode_config_path }}"
-            state: link
+        - name: Bash
+          ansible.builtin.command: which bash
+          register: bash
+          changed_when: false
 
-    - name: Setup Remove
-      when: is_remove
-      block:
-        - name: Remove symlink settings.json
-          ansible.builtin.file:
-            path: "{{ vscode_config_path }}"
-            state: absent
+        - name: Setup load
+          when: not is_remove
+          block:
+            - name: Install extensions
+              ansible.builtin.command: "{{ code_executable }} --install-extension {{ extension.publisher }}.{{ extension.name }}"
+              register: req
+              retries: 3
+              until: req.rc == 0
+              changed_when: '"was successfully installed" in req.stdout'
+              loop: "{{ extensions['list'] }}"
+              loop_control:
+                loop_var: extension
 
-        - name: Remove extensions
-          ansible.builtin.shell:
-            cmd: |
-              set -o pipefail
-              EXTENSION_ID='{{ extension.publisher }}.{{ extension.name }}'
-              if {{ code_executable }} --list-extensions | grep -q "^$EXTENSION_ID$"; then
-                {{ code_executable }} --uninstall-extension $EXTENSION_ID
-              fi
-            executable: "{{ bash.stdout }}"
-          register: req
-          changed_when: '"was successfully uninstalled" in req.stdout'
-          loop: "{{ extensions['list'] | reverse | list }}"
-          loop_control:
-            loop_var: extension
+            - name: Create symlink settings.json
+              ansible.builtin.file:
+                src: "{{ user_setting_path }}"
+                dest: "{{ vscode_config_path }}"
+                state: link
+
+        - name: Setup Remove
+          when: is_remove
+          block:
+            - name: Remove symlink settings.json
+              ansible.builtin.file:
+                path: "{{ vscode_config_path }}"
+                state: absent
+
+            - name: Remove extensions
+              ansible.builtin.shell:
+                cmd: |
+                  set -o pipefail
+                  EXTENSION_ID='{{ extension.publisher }}.{{ extension.name }}'
+                  if {{ code_executable }} --list-extensions | grep -q "^$EXTENSION_ID$"; then
+                    {{ code_executable }} --uninstall-extension $EXTENSION_ID
+                  fi
+                executable: "{{ bash.stdout }}"
+              register: req
+              changed_when: '"was successfully uninstalled" in req.stdout'
+              loop: "{{ extensions['list'] | reverse | list }}"
+              loop_control:
+                loop_var: extension

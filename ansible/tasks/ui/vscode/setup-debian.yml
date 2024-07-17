@@ -41,6 +41,7 @@
           ansible.builtin.command: which code
           register: code
           changed_when: false
+          ignore_errors: true
 
         - name: Setup Config
           ansible.builtin.import_tasks: ./config.yml
@@ -54,6 +55,7 @@
           ansible.builtin.command: which code
           register: code
           changed_when: false
+          ignore_errors: true
 
         - name: Setup Config
           ansible.builtin.import_tasks: ./config.yml

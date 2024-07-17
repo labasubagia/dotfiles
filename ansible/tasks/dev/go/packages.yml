@@ -50,7 +50,7 @@
       register: go
 
     - name: Go executable exists
-      when: go.stat.exists and go.stat.executable
+      when: go.stat.exists
       block:
         - name: Setup Install
           when: not is_remove

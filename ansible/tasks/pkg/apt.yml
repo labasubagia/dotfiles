@@ -8,6 +8,9 @@
       - tmux
       - htop
       - age
+      - curl
+      - wget
+      - apt-transport-https
 
   block:
     - name: Setup Install
