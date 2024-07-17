@@ -10,8 +10,8 @@ This project aims to manage and configure a Linux environment using a combinatio
   - [Getting Started](#getting-started)
     - [Ansible](#ansible)
       - [Prerequisite](#prerequisite)
-      - [Known Limitations](#known-limitations)
       - [Configure system](#configure-system)
+      - [Known Limitations](#known-limitations)
     - [Nix](#nix)
       - [Prerequisite](#prerequisite-1)
       - [Configure system](#configure-system-1)
@@ -31,12 +31,6 @@ In this project, you have the flexibility to use Ansible, Nix, or a combination 
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html), configuration management
 - [Paramiko](https://www.paramiko.org/installing.html) for ssh
 > Note: Example can be seen in [Makefile](./Makefile)
-
-#### Known Limitations
-- Ansible task currently not support for reading current path from task file, only accessible from `playbook_dir`. Workaround for this is using root of this project as `workdir`  variable that passed to all task-file.
-- It's not as robust as nix, installation and deletion sometime break
-- Linter sometime giving false positive message (some cases with path/directory related problem).
-- PATH in shell often not updated while using ssh, so better develop using ssh for testing.
 
 #### Configure system
 - Copy inventory file
@@ -62,7 +56,6 @@ In this project, you have the flexibility to use Ansible, Nix, or a combination 
     -e '{"is_remove": false}' \
     -i ansible/inventory.yml
   ```
-  > Note: leave `workdir` environment as it is
 - Option 2, Run specific playbook for specific system
   ```bash
   # run by default using ssh
@@ -79,7 +72,13 @@ In this project, you have the flexibility to use Ansible, Nix, or a combination 
     -e '{"is_remove": false}' \
     -i ansible/inventory.yml
   ```
-  > Note: leave `workdir` environment as it is
+> Note: leave `workdir` environment as it is, make sure to run ansible from root project directory (to see it, run `git rev-parse --show-toplevel`)
+
+#### Known Limitations
+- Ansible task currently not support for reading current path from task file, only accessible from `playbook_dir`. Workaround for this is using root of this project as `workdir`  variable that passed to all task-file.
+- It's not as robust as nix, installation and deletion sometime break
+- Linter sometime giving false positive message (some cases with path/directory related problem).
+- PATH in shell often not updated while using ssh, so better develop using ssh for testing.
 
 ### Nix
 
