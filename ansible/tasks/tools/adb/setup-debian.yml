@@ -1,0 +1,26 @@
+---
+- name: Setup adb
+  vars:
+    is_remove: false
+
+    pkgs:
+      - adb
+
+  block:
+    - name: Setup adb > Setup Install
+      when: not is_remove
+      block:
+        - name: Setup adb > Install packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: present
+
+    - name: Setup adb > Setup Remove
+      when: is_remove
+      block:
+        - name: Setup adb > Remove packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: absent
