@@ -15,6 +15,9 @@
       - ../tasks/auth/ssh/sops.yml
 
   tasks:
+    - name: Pre ansible galaxy
+      ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
+
     - name: Setup Install
       when: not is_remove
       block:

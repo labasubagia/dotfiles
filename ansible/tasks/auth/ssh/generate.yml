@@ -6,21 +6,6 @@
   vars:
     is_remove: false
   block:
-    - name: SSH generate key-pairs > Pre Setup (run ansible against localhost)
-      when: ansible_host == "127.0.0.1" and ansible_connection == "local"
-      block:
-        - name: SSH generate key-pairs > Check ansible-galaxy exists
-          ansible.builtin.command: which ansible-galaxy
-          register: ansible_galaxy
-          ignore_errors: true
-          changed_when: false
-
-        - name: SSH generate key-pairs > Install requirements
-          when: ansible_galaxy.rc == 0
-          ansible.builtin.command: ansible-galaxy collection install community.general community.crypto
-          register: req
-          changed_when: '"Nothing to do" not in req.stdout'
-
     - name: SSH generate key-pairs > Load global config
       ansible.builtin.set_fact:
         global_config: "{{ lookup('file', playbook_dir + '/../../config/global.json') | from_json }}"

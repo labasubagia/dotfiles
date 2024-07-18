@@ -10,5 +10,8 @@
     is_remove: false
     _task_file: "{{ workdir }}/{{ task_file | default('ansible/tasks/hello.yml') }}"
   tasks:
+    - name: Pre ansible galaxy
+      ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
+
     - name: Run Tasks
       ansible.builtin.include_tasks: "{{ _task_file }}"

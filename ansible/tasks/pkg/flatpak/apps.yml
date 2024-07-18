@@ -13,21 +13,6 @@
       - com.slack.Slack
 
   block:
-    - name: Setup Flatpak Apps > Pre Setup (run ansible against localhost)
-      when: ansible_host == "127.0.0.1" and ansible_connection == "local"
-      block:
-        - name: Setup Flatpak Apps > Check ansible-galaxy exists
-          ansible.builtin.command: which ansible-galaxy
-          register: ansible_galaxy
-          ignore_errors: true
-          changed_when: false
-
-        - name: Setup Flatpak Apps > Install requirements
-          when: ansible_galaxy.rc == 0
-          ansible.builtin.command: ansible-galaxy collection install community.general
-          register: req
-          changed_when: '"Nothing to do" not in req.stdout'
-
     - name: Setup Flatpak Apps > Ensure repositories
       community.general.flatpak_remote:
         name: "{{ item.name }}"
@@ -46,7 +31,7 @@
     - name: Setup Flatpak Apps > Setup Remove
       when: is_remove
       block:
-        - name: Remove
+        - name: Setup Flatpak Apps > Remove
           community.general.flatpak:
             name: "{{ apps }}"
             state: absent
