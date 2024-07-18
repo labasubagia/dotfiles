@@ -1,0 +1,25 @@
+---
+- name: Setup age
+  become: true
+  vars:
+    is_remove: false
+
+    pkgs:
+      - age
+
+  block:
+    - name: Setup age > Setup Install
+      when: not is_remove
+      block:
+        - name: Setup age > Install packages
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: present
+
+    - name: Setup age > Setup Remove
+      when: is_remove
+      block:
+        - name: Setup age > Remove packages
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: absent

@@ -13,6 +13,7 @@
       - ../tasks/dev/go/setup-common.yml
       - ../tasks/dev/nodejs/setup-debian.yml
 
+      - ../tasks/tools/age/setup-debian.yml
       - ../tasks/tools/sops/setup-common.yml
       - ../tasks/tools/neovim/setup-common.yml
       - ../tasks/tools/ripgrep/setup-debian.yml
