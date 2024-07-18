@@ -17,6 +17,8 @@
       - ../tasks/tools/sops/setup-common.yml
       - ../tasks/tools/neovim/setup-common.yml
       - ../tasks/tools/ripgrep/setup-debian.yml
+      - ../tasks/tools/adb/setup-debian.yml
+      - ../tasks/tools/scrcpy/setup-debian.yml
 
       - ../tasks/container/podman/setup-debian.yml
 
