@@ -29,7 +29,7 @@
             mode: 'u+x'
 
         - name: Setup oh my zsh > Execute script
-          ansible.builtin.command: "{{ script_path }}"
+          ansible.builtin.command: "{{ script_path }} --unattended"
           args:
             creates: "{{ installed_path }}"
 
@@ -39,13 +39,13 @@
               ansible.builtin.git:
                 repo: https://github.com/zsh-users/zsh-autosuggestions
                 dest: "{{ installed_path }}/custom/plugins/zsh-autosuggestions"
-                version: a411ef3e0992d4839f0732ebeb9823024afaaaa8
+                version: v0.7.0
 
             - name: Setup oh my zsh > Plugin get zsh-syntax-highlighting
               ansible.builtin.git:
                 repo: https://github.com/zsh-users/zsh-syntax-highlighting
                 dest: "{{ installed_path }}/custom/plugins/zsh-syntax-highlighting"
-                version: db085e4661f6aafd24e5acb5b2e17e4dd5dddf3e
+                version: '0.8.0'
 
             - name: Setup oh my zsh > Update plugin
               ansible.builtin.replace:
