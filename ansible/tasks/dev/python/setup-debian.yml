@@ -30,9 +30,29 @@
           vars:
             pipx_executable: "{{ python_pipx.stdout }}"
 
+        - name: Setup Python > Check pip executable exists
+          ansible.builtin.command: which pip
+          register: python_pip
+          changed_when: false
+
+        - name: Setup Python > setup pip
+          ansible.builtin.import_tasks: ./pip-packages.yml
+          vars:
+            pip_executable: "{{ python_pip.stdout }}"
+
     - name: Setup Python > Setup Remove
       when: is_remove
       block:
+        - name: Setup Python > Check pip executable exists
+          ansible.builtin.command: which pip
+          register: python_pip
+          changed_when: false
+
+        - name: Setup Python > setup pip
+          ansible.builtin.import_tasks: ./pip-packages.yml
+          vars:
+            pip_executable: "{{ python_pip.stdout }}"
+
         - name: Setup Python > Check pipx executable exists
           ansible.builtin.command: which pipx
           register: python_pipx

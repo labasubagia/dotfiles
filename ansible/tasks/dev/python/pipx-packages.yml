@@ -1,3 +1,4 @@
+# isolated python apps
 ---
 - name: Setup pipx
   vars:
@@ -10,8 +11,6 @@
         state: present
       - name: ansible
         state: present
-        inject_deps:
-          - paramiko
         inject_apps:
           - ansible-lint
       - name: harlequin

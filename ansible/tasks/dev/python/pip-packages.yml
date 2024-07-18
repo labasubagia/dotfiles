@@ -1,0 +1,39 @@
+# global python deps
+---
+- name: Setup pip
+  vars:
+    is_remove: false
+
+    pip_pkgs:
+      - paramiko
+      - pandas
+      - numpy
+
+  block:
+    - name: Setup pip > Check executable path
+      ansible.builtin.stat:
+        path: "{{ pip_executable }}"
+      register: pip
+
+    - name: Setup pip > executable exists
+      when: pip.stat.exists
+      block:
+        - name: Setup pip > Setup Install
+          when: not is_remove
+          block:
+            - name: Setup pip > Install packages
+              ansible.builtin.pip:
+                name: "{{ pip_pkgs }}"
+                # break_system_packages: true # only ansible >=v2.17
+                extra_args: --break-system-packages
+                state: present
+
+        - name: Setup pip > Setup Remove
+          when: is_remove
+          block:
+            - name: Setup pip > Remove packages
+              ansible.builtin.pip:
+                name: "{{ pip_pkgs }}"
+                # break_system_packages: true # only ansible >=v2.17
+                extra_args: --break-system-packages
+                state: absent
