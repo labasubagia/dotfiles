@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       ../common
       ../common/xfce.nix
+      ../common/laptop.nix
     ];
 
   # Bootloader.
