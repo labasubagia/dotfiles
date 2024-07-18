@@ -1,0 +1,86 @@
+---
+- name: Setup scrcpy
+  vars:
+    is_remove: false
+
+    required_pkgs:
+      - ffmpeg
+      - adb
+      - wget
+      - gcc
+      - git
+      - pkg-config
+      - meson
+      - libsdl2-2.0-0
+      - ninja-build
+      - libsdl2-dev
+      - libavcodec-dev
+      - libavdevice-dev
+      - libavformat-dev
+      - libavutil-dev
+      - libswresample-dev
+      - libusb-1.0-0
+      - libusb-1.0-0-dev
+
+    user_app_dir: "{{ ansible_env.HOME }}/app"
+    scrcpy_dir: "{{ user_app_dir }}/scrcpy"
+    scrcpy_executable: /usr/local/bin/scrcpy
+
+  block:
+    - name: Setup scrcpy > Ensure user directory
+      ansible.builtin.file:
+        path: "{{ user_app_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Setup scrcpy > Setup Install
+      when: not is_remove
+      block:
+        - name: Setup scrcpy > Install required deps
+          become: true
+          ansible.builtin.apt:
+            name: "{{ required_pkgs }}"
+            state: present
+
+        - name: Setup scrcpy > Clone repo
+          ansible.builtin.git:
+            repo: https://github.com/Genymobile/scrcpy
+            dest: "{{ scrcpy_dir }}"
+            version: v2.5
+
+        - name: Setup scrcpy > Install
+          become: true
+          ansible.builtin.shell: |
+            cd {{ scrcpy_dir }}
+            ./install_release.sh
+          args:
+            creates: "{{ scrcpy_executable }}"
+
+    - name: Setup scrcpy > Setup Remove
+      when: is_remove
+      block:
+        - name: Setup scrcpy > uninstall package
+          become: true
+          ansible.builtin.shell: |
+            cd {{ scrcpy_dir }}
+            sudo ninja -Cbuild-auto uninstall
+          args:
+            removes: "{{ scrcpy_executable }}"
+
+        - name: Setup scrcpy > remove git dir
+          become: true
+          ansible.builtin.file:
+            path: "{{ scrcpy_dir }}"
+            state: absent
+
+        # ! DO NOT USE THIS, this can break other packages that require same deps
+        # - name: Setup scrcpy > Remove required packages
+        #   become: true
+        #   ansible.builtin.apt:
+        #     name: "{{ required_pkgs }}"
+        #     state: absent
+
+        - name: Setup scrcpy > remove unecessary deps
+          become: true
+          ansible.builtin.apt:
+            autoremove: true
