@@ -12,6 +12,7 @@
 
       - ../tasks/dev/go/setup-common.yml
       - ../tasks/dev/nodejs/setup-debian.yml
+      - ../tasks/dev/python/setup-debian.yml
 
       - ../tasks/tools/age/setup-debian.yml
       - ../tasks/tools/sops/setup-common.yml

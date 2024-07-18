@@ -1,0 +1,50 @@
+# see https://github.com/nodesource/distributions
+---
+- name: Setup Python
+  vars:
+    is_remove: false
+
+    python_pkgs:
+      - python3
+      - python3-pip
+      - virtualenv
+      - pipx
+
+  block:
+    - name: Setup Python > Setup Install
+      when: not is_remove
+      block:
+        - name: Setup Python > Install packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ python_pkgs }}"
+            state: present
+
+        - name: Setup Python > Check pipx executable exists
+          ansible.builtin.command: which pipx
+          register: python_pipx
+          changed_when: false
+
+        - name: Setup Python > setup pipx
+          ansible.builtin.import_tasks: ./pipx-packages.yml
+          vars:
+            pipx_executable: "{{ python_pipx.stdout }}"
+
+    - name: Setup Python > Setup Remove
+      when: is_remove
+      block:
+        - name: Setup Python > Check pipx executable exists
+          ansible.builtin.command: which pipx
+          register: python_pipx
+          changed_when: false
+
+        - name: Setup Python > setup pipx
+          ansible.builtin.import_tasks: ./pipx-packages.yml
+          vars:
+            pipx_executable: "{{ python_pipx.stdout }}"
+
+        - name: Setup Python > Remove packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ python_pkgs }}"
+            state: absent

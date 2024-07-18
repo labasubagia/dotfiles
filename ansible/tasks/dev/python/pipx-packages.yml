@@ -1,0 +1,104 @@
+---
+- name: Setup pipx
+  vars:
+    is_remove: false
+
+    pipx_pkgs:
+      - name: black
+        state: present
+      - name: ruff
+        state: present
+      - name: ansible
+        state: present
+        inject_deps:
+          - paramiko
+        inject_apps:
+          - ansible-lint
+      - name: harlequin
+        state: present
+        inject_deps:
+          - harlequin-mysql
+          - harlequin-postgres
+
+    shell_indicator: "PIPX"
+    shell_bin_path: |
+      if [ -d "{{ ansible_env.HOME }}/.local/bin" ] ; then
+        PATH="{{ ansible_env.HOME }}/.local/bin:$PATH"
+      fi
+
+  block:
+    - name: Setup pipx > Check executable path
+      ansible.builtin.stat:
+        path: "{{ pipx_executable }}"
+      register: pipx
+
+    - name: Setup pipx > executable exists
+      when: pipx.stat.exists
+      block:
+        - name: Setup pipx > Pre Setup (run ansible against localhost)
+          when: ansible_host == "127.0.0.1" and ansible_connection == "local"
+          block:
+            - name: Setup pipx > Check ansible-galaxy exists
+              ansible.builtin.command: which ansible-galaxy
+              register: ansible_galaxy
+              ignore_errors: true
+              changed_when: false
+
+            - name: Setup pipx > Install requirements
+              when: ansible_galaxy.rc == 0
+              ansible.builtin.command: ansible-galaxy collection install community.general
+              register: req
+              changed_when: '"Nothing to do" not in req.stdout'
+
+        - name: Setup pipx > Setup Install
+          when: not is_remove
+          block:
+            - name: Setup pipx > Add PATH
+              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              vars:
+                text: "{{ shell_bin_path }}"
+
+            - name: Setup pipx > Install packages
+              community.general.pipx:
+                name: "{{ pkg.name }}"
+                state: "{{ pkg.state | default('present') }}"
+              loop: "{{ pipx_pkgs }}"
+              loop_control:
+                loop_var: pkg
+
+            - name: Setup pipx > Inject deps
+              when: (pkg.state | default('present')) == 'present' and (pkg.inject_deps | default([]) | length) > 0
+              community.general.pipx:
+                name: "{{ pkg.name }}"
+                inject_packages: "{{ pkg.inject_deps }}"
+                state: inject
+              loop: "{{ pipx_pkgs }}"
+              loop_control:
+                loop_var: pkg
+
+            - name: Setup pipx > Inject apps
+              when: (pkg.state | default('present')) == 'present' and (pkg.inject_apps | default([]) | length) > 0
+              community.general.pipx:
+                name: "{{ pkg.name }}"
+                inject_packages: "{{ pkg.inject_apps | default([]) }}"
+                install_apps: true
+                state: inject
+              loop: "{{ pipx_pkgs }}"
+              loop_control:
+                loop_var: pkg
+
+        - name: Setup pipx > Setup Remove
+          when: is_remove
+          block:
+            - name: Setup pipx > Remove packages
+              community.general.pipx:
+                name: "{{ pkg.name }}"
+                state: absent
+              loop: "{{ pipx_pkgs }}"
+              loop_control:
+                loop_var: pkg
+
+            - name: Setup pipx > Remove PATH
+              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              vars:
+                text: "{{ shell_bin_path }}"
