@@ -100,6 +100,7 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+    dmidecode
 
     # android
     android-tools

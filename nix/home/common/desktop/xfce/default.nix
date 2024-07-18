@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     cinnamon.xreader # pdf
     gnome.file-roller # archive
+    galculator # calculator
   ];
 
   gtk = {
