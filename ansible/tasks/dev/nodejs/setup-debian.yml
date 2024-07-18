@@ -41,7 +41,7 @@
           ignore_errors: true
 
         - name: Setup Node.js > Setup NPM
-          ansible.builtin.import_tasks: ./npm-packages.yml
+          ansible.builtin.include_tasks: ./npm-packages.yml
           vars:
             npm_executable: "{{ npm.stdout }}"
 
@@ -55,7 +55,7 @@
           ignore_errors: true
 
         - name: Setup Node.js > Setup NPM
-          ansible.builtin.import_tasks: ./npm-packages.yml
+          ansible.builtin.include_tasks: ./npm-packages.yml
           vars:
             npm_executable: "{{ npm.stdout }}"
 

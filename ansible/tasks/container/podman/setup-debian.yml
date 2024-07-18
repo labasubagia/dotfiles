@@ -27,7 +27,7 @@
             state: present
 
         - name: Setup podman > Add Alias
-          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_alias }}"
             with_system: true
@@ -36,7 +36,7 @@
       when: is_remove
       block:
         - name: Setup podman > Remove Alias
-          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_alias }}"
             with_system: true

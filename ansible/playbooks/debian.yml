@@ -4,61 +4,70 @@
   connection: "{{ _connection | default('ssh') }}"
   vars:
     is_remove: false
-
-    task_files:
-      - "{{ workdir }}/ansible/tasks/pkg/apt.yml"
-
-      - "{{ workdir }}/ansible/tasks/pkg/flatpak/setup-debian.yml"
-
-      - "{{ workdir }}/ansible/tasks/dev/go/setup-common.yml"
-      - "{{ workdir }}/ansible/tasks/dev/nodejs/setup-debian.yml"
-      - "{{ workdir }}/ansible/tasks/dev/python/setup-debian.yml"
-
-      - "{{ workdir }}/ansible/tasks/tools/age/setup-debian.yml"
-      - "{{ workdir }}/ansible/tasks/tools/sops/setup-common.yml"
-      - "{{ workdir }}/ansible/tasks/tools/neovim/setup-common.yml"
-      - "{{ workdir }}/ansible/tasks/tools/ripgrep/setup-debian.yml"
-      - "{{ workdir }}/ansible/tasks/tools/adb/setup-debian.yml"
-      - "{{ workdir }}/ansible/tasks/tools/scrcpy/setup-debian.yml"
-
-      - "{{ workdir }}/ansible/tasks/container/podman/setup-debian.yml"
-
-      - "{{ workdir }}/ansible/tasks/ui/vscode/setup-debian.yml"
-      - "{{ workdir }}/ansible/tasks/ui/brave/setup-debian.yml"
-
-      - "{{ workdir }}/ansible/tasks/auth/ssh/sops.yml"
-
-      - "{{ workdir }}/ansible/tasks/fonts/setup-common.yml"
-
-    # ! do remove this task in debian, remove operation will revoke ssh access
-    only_install_task_files:
-      - "{{ workdir }}/ansible/tasks/shell/zsh/setup-debian.yml"
-      - "{{ workdir }}/ansible/tasks/tools/openssh-server/setup-debian.yml"
-
   tasks:
-    - name: Pre ansible galaxy
-      ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
+    - name: Get project root path
+      ansible.builtin.command: "git rev-parse --show-toplevel"
+      register: root_project
+      delegate_to: localhost
+      changed_when: false
 
-    - name: Setup Install
-      when: not is_remove
+    - name: Setup
+      vars:
+        workdir: "{{ root_project.stdout }}"
+
+        only_install_task_files:
+          # ! do remove these task in debian, remove operation will revoke ssh access
+          - "{{ workdir }}/ansible/tasks/shell/zsh/setup-debian.yml"
+          - "{{ workdir }}/ansible/tasks/tools/openssh-server/setup-debian.yml"
+
+        task_files:
+          - "{{ workdir }}/ansible/tasks/pkg/apt.yml"
+
+          - "{{ workdir }}/ansible/tasks/pkg/flatpak/setup-debian.yml"
+
+          - "{{ workdir }}/ansible/tasks/dev/go/setup-common.yml"
+          - "{{ workdir }}/ansible/tasks/dev/nodejs/setup-debian.yml"
+          - "{{ workdir }}/ansible/tasks/dev/python/setup-debian.yml"
+
+          - "{{ workdir }}/ansible/tasks/tools/age/setup-debian.yml"
+          - "{{ workdir }}/ansible/tasks/tools/sops/setup-common.yml"
+          - "{{ workdir }}/ansible/tasks/tools/neovim/setup-common.yml"
+          - "{{ workdir }}/ansible/tasks/tools/ripgrep/setup-debian.yml"
+          - "{{ workdir }}/ansible/tasks/tools/adb/setup-debian.yml"
+          - "{{ workdir }}/ansible/tasks/tools/scrcpy/setup-debian.yml"
+
+          - "{{ workdir }}/ansible/tasks/container/podman/setup-debian.yml"
+
+          - "{{ workdir }}/ansible/tasks/ui/vscode/setup-debian.yml"
+          - "{{ workdir }}/ansible/tasks/ui/brave/setup-debian.yml"
+
+          - "{{ workdir }}/ansible/tasks/auth/ssh/sops.yml"
+
+          - "{{ workdir }}/ansible/tasks/fonts/setup-common.yml"
       block:
-        - name: Run Install Tasks
-          ansible.builtin.include_tasks: "{{ task_file }}"
-          loop: "{{ task_files }}"
-          loop_control:
-            loop_var: task_file
+        - name: Pre ansible galaxy
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
 
-        - name: Run Only Install Tasks
-          ansible.builtin.include_tasks: "{{ task_file }}"
-          loop: "{{ only_install_task_files }}"
-          loop_control:
-            loop_var: task_file
+        - name: Setup Install
+          when: not is_remove
+          block:
+            - name: Run Only Install Tasks
+              ansible.builtin.include_tasks: "{{ task_file }}"
+              loop: "{{ only_install_task_files }}"
+              loop_control:
+                loop_var: task_file
 
-    - name: Setup Remove
-      when: is_remove
-      block:
-        - name: Run Remove Tasks
-          ansible.builtin.include_tasks: "{{ task_file }}"
-          loop: "{{ task_files | reverse | list }}"
-          loop_control:
-            loop_var: task_file
+            - name: Run Install Tasks
+              ansible.builtin.include_tasks: "{{ task_file }}"
+              loop: "{{ task_files }}"
+              loop_control:
+                loop_var: task_file
+
+        - name: Setup Remove
+          when: is_remove
+          block:
+            - name: Run Remove Tasks
+              ansible.builtin.include_tasks: "{{ task_file }}"
+              loop: "{{ task_files | reverse | list }}"
+              loop_control:
+                loop_var: task_file

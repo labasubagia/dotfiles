@@ -16,13 +16,13 @@
             state: present
 
         - name: Setup zsh > Setup oh my zsh
-          ansible.builtin.import_tasks: ./ohmyzsh.yml
+          ansible.builtin.include_tasks: ./ohmyzsh.yml
 
     - name: Setup zsh > Setup Remove
       when: is_remove
       block:
         - name: Setup zsh > Setup oh my zsh
-          ansible.builtin.import_tasks: ./ohmyzsh.yml
+          ansible.builtin.include_tasks: ./ohmyzsh.yml
 
         - name: Setup zsh > remove package
           become: true

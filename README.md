@@ -51,28 +51,24 @@ In this project, you have the flexibility to use Ansible, Nix, or a combination 
 - Option 1, Run specific task
   ```bash
   ansible-playbook ansible/playbooks/_handler.yml \
-    -e workdir="$(git rev-parse --show-toplevel)" \
+    -i ansible/inventory.yml \
     -e task_file="ansible/tasks/tools/neovim/setup-common.yml" \
-    -e '{"is_remove": false}' \
-    -i ansible/inventory.yml
+    -e '{"is_remove": false}'
   ```
 - Option 2, Run specific playbook for specific system
   ```bash
   # run by default using ssh
   ansible-playbook ansible/playbooks/debian.yml \
-    -e workdir="$(git rev-parse --show-toplevel)" \
-    -e '{"is_remove": false}' \
-    -i ansible/inventory.yml
+    -i ansible/inventory.yml \
+    -e '{"is_remove": false}'
 
   # or run ansible against localhost
   ansible-playbook ansible/playbooks/nixos.yml \
-    -e workdir="$(git rev-parse --show-toplevel)" \
+    -i ansible/inventory.yml \
     -e _hosts="localhost" \
     -e _connection="local" \
-    -e '{"is_remove": false}' \
-    -i ansible/inventory.yml
+    -e '{"is_remove": false}'
   ```
-> Note: leave `workdir` environment as it is, make sure to run ansible from root project directory (to see it, run `git rev-parse --show-toplevel`)
 
 #### Known Limitations
 - Ansible task currently not support for reading current path from task file, only accessible from `playbook_dir`. Workaround for this is using root of this project as `workdir`  variable that passed to all task-file.

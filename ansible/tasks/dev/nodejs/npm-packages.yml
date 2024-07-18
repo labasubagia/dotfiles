@@ -13,8 +13,8 @@
 
     shell_indicator: "NPM"
     shell_bin_path: |
-      if [ -d "$HOME/{{ global_dirname }}/bin" ] ; then
-        PATH="$HOME/{{ global_dirname }}/bin:$PATH"
+      if [ -d "{{ ansible_env.HOME }}/{{ global_dirname }}/bin" ] ; then
+        PATH="{{ ansible_env.HOME }}/{{ global_dirname }}/bin:$PATH"
       fi
 
   block:
@@ -40,7 +40,7 @@
               changed_when: false
 
             - name: Setup NPM > Add PATH
-              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
               vars:
                 text: "{{ shell_bin_path }}"
 
@@ -62,7 +62,7 @@
               with_items: "{{ global_packages }}"
 
             - name: Setup NPM > Remove PATH
-              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
               vars:
                 text: "{{ shell_bin_path }}"
 

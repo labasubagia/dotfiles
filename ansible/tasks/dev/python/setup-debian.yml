@@ -26,7 +26,7 @@
           changed_when: false
 
         - name: Setup Python > setup pipx
-          ansible.builtin.import_tasks: ./pipx-packages.yml
+          ansible.builtin.include_tasks: ./pipx-packages.yml
           vars:
             pipx_executable: "{{ python_pipx.stdout }}"
 
@@ -36,7 +36,7 @@
           changed_when: false
 
         - name: Setup Python > setup pip
-          ansible.builtin.import_tasks: ./pip-packages.yml
+          ansible.builtin.include_tasks: ./pip-packages.yml
           vars:
             pip_executable: "{{ python_pip.stdout }}"
 
@@ -49,7 +49,7 @@
           changed_when: false
 
         - name: Setup Python > setup pip
-          ansible.builtin.import_tasks: ./pip-packages.yml
+          ansible.builtin.include_tasks: ./pip-packages.yml
           vars:
             pip_executable: "{{ python_pip.stdout }}"
 
@@ -59,7 +59,7 @@
           changed_when: false
 
         - name: Setup Python > setup pipx
-          ansible.builtin.import_tasks: ./pipx-packages.yml
+          ansible.builtin.include_tasks: ./pipx-packages.yml
           vars:
             pipx_executable: "{{ python_pipx.stdout }}"
 

@@ -8,10 +8,20 @@
   connection: "{{ _connection | default('ssh') }}"
   vars:
     is_remove: false
-    _task_file: "{{ workdir }}/{{ task_file | default('ansible/tasks/hello.yml') }}"
   tasks:
-    - name: Pre ansible galaxy
-      ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
 
-    - name: Run Tasks
-      ansible.builtin.include_tasks: "{{ _task_file }}"
+    - name: Get project root path
+      ansible.builtin.command: "git rev-parse --show-toplevel"
+      register: root_project
+      delegate_to: localhost
+      changed_when: false
+
+    - name: Setup
+      vars:
+        workdir: "{{ root_project.stdout }}"
+      block:
+        - name: Pre ansible galaxy
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
+
+        - name: Run Tasks
+          ansible.builtin.include_tasks: "{{ workdir }}/{{ task_file | default('ansible/tasks/hello.yml') }}"

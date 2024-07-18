@@ -4,34 +4,44 @@
   connection: "{{ _connection | default('ssh') }}"
   vars:
     is_remove: false
-
-    task_files:
-      # pkg
-      - "{{ workdir }}/ansible/tasks/pkg/flatpak/apps.yml"
-
-      # auth
-      # there is sops-nix, but use ansible for now
-      # due to symlink problem with dev-container
-      - "{{ workdir }}/ansible/tasks/auth/ssh/sops.yml"
-
   tasks:
-    - name: Pre ansible galaxy
-      ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
+    - name: Get project root path
+      ansible.builtin.command: "git rev-parse --show-toplevel"
+      register: root_project
+      delegate_to: localhost
+      changed_when: false
 
-    - name: Setup Install
-      when: not is_remove
-      block:
-        - name: Run Tasks
-          ansible.builtin.include_tasks: "{{ task_file }}"
-          loop: "{{ task_files }}"
-          loop_control:
-            loop_var: task_file
+    - name: Setup
+      vars:
+        workdir: "{{ root_project.stdout }}"
 
-    - name: Setup Remove
-      when: is_remove
+        task_files:
+          # pkg
+          - "{{ workdir }}/ansible/tasks/pkg/flatpak/apps.yml"
+
+          # auth
+          # there is sops-nix, but use ansible for now
+          # due to symlink problem with dev-container
+          - "{{ workdir }}/ansible/tasks/auth/ssh/sops.yml"
+
       block:
-        - name: Run Tasks
-          ansible.builtin.include_tasks: "{{ task_file }}"
-          loop: "{{ task_files | reverse | list }}"
-          loop_control:
-            loop_var: task_file
+        - name: Pre ansible galaxy
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/tools/ansible/pre-galaxy.yml"
+
+        - name: Setup Install
+          when: not is_remove
+          block:
+            - name: Run Tasks
+              ansible.builtin.include_tasks: "{{ task_file }}"
+              loop: "{{ task_files }}"
+              loop_control:
+                loop_var: task_file
+
+        - name: Setup Remove
+          when: is_remove
+          block:
+            - name: Run Tasks
+              ansible.builtin.include_tasks: "{{ task_file }}"
+              loop: "{{ task_files | reverse | list }}"
+              loop_control:
+                loop_var: task_file

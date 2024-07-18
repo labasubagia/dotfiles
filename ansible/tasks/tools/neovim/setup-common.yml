@@ -33,7 +33,7 @@
             remote_src: true
 
         - name: Setup neovim > Add PATH
-          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true
@@ -42,7 +42,7 @@
       when: is_remove
       block:
         - name: Setup neovim > Remove PATH
-          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true

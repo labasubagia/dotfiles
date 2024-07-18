@@ -43,13 +43,13 @@
                 remote_src: true
 
         - name: Setup Go > Add PATH
-          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true
 
         - name: Setup Go > Setup Packages
-          ansible.builtin.import_tasks: ./packages.yml
+          ansible.builtin.include_tasks: ./packages.yml
           vars:
             go_executable: "{{ go_bin_dir }}/go"
 
@@ -57,12 +57,12 @@
       when: is_remove
       block:
         - name: Setup Go > Setup Packages
-          ansible.builtin.import_tasks: ./packages.yml
+          ansible.builtin.include_tasks: ./packages.yml
           vars:
             go_executable: "{{ go_bin_dir }}/go"
 
         - name: Setup Go > Remove PATH
-          ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+          ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
           vars:
             text: "{{ shell_bin_path }}"
             with_system: true

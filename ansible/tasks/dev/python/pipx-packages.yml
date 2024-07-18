@@ -38,7 +38,7 @@
           when: not is_remove
           block:
             - name: Setup pipx > Add PATH
-              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
               vars:
                 text: "{{ shell_bin_path }}"
 
@@ -64,7 +64,7 @@
               when: (pkg.state | default('present')) == 'present' and (pkg.inject_apps | default([]) | length) > 0
               community.general.pipx:
                 name: "{{ pkg.name }}"
-                inject_packages: "{{ pkg.inject_apps | default([]) }}"
+                inject_packages: "{{ pkg.inject_apps }}"
                 install_apps: true
                 state: inject
               loop: "{{ pipx_pkgs }}"
@@ -83,6 +83,6 @@
                 loop_var: pkg
 
             - name: Setup pipx > Remove PATH
-              ansible.builtin.import_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
+              ansible.builtin.include_tasks: "{{ workdir }}/ansible/tasks/shell/add-text/setup.yml"
               vars:
                 text: "{{ shell_bin_path }}"

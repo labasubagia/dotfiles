@@ -44,7 +44,7 @@
           ignore_errors: true
 
         - name: Setup Visual Studio Code > Setup Config
-          ansible.builtin.import_tasks: ./config.yml
+          ansible.builtin.include_tasks: ./config.yml
           vars:
             code_executable: "{{ code.stdout }}"
 
@@ -58,7 +58,7 @@
           ignore_errors: true
 
         - name: Setup Visual Studio Code > Setup Config
-          ansible.builtin.import_tasks: ./config.yml
+          ansible.builtin.include_tasks: ./config.yml
           vars:
             code_executable: "{{ code.stdout }}"
 
