@@ -3,8 +3,8 @@
   vars:
     is_remove: false
 
-    user_setting_path: "{{ playbook_dir }}/../../config/vscode/settings.json"
-    extension_setting_path: "{{ playbook_dir }}/../../config/vscode/extensions.json"
+    user_setting_path: "{{ workdir }}/config/vscode/settings.json"
+    extension_setting_path: "{{ workdir }}/config/vscode/extensions.json"
 
     vscode_config_path: "{{ ansible_env.HOME }}/.config/Code/User/settings.json"
 

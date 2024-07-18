@@ -7,12 +7,12 @@
   vars:
     is_remove: false
 
-    secret_file: "{{ playbook_dir }}/../../config/secrets.yaml"
+    secret_file: "{{ workdir }}/config/secrets.yaml"
 
   block:
     - name: SSH Keys from Sops > Load global config
       ansible.builtin.set_fact:
-        global_config: "{{ lookup('file', playbook_dir + '/../../config/global.json') | from_json }}"
+        global_config: "{{ lookup('file', workdir + '/config/global.json') | from_json }}"
 
     - name: SSH Keys from Sops > Load config
       ansible.builtin.set_fact:
