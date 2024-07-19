@@ -16,6 +16,7 @@
     gnupg
     ssh-to-age
     sshpass
+    libsecret
 
     # archive
     rar
