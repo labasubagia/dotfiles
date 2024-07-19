@@ -46,6 +46,7 @@
               community.general.pipx:
                 name: "{{ pkg.name }}"
                 state: "{{ pkg.state | default('present') }}"
+                executable: "{{ pipx_executable }}"
               loop: "{{ pipx_pkgs }}"
               loop_control:
                 loop_var: pkg
@@ -56,6 +57,7 @@
                 name: "{{ pkg.name }}"
                 inject_packages: "{{ pkg.inject_deps }}"
                 state: inject
+                executable: "{{ pipx_executable }}"
               loop: "{{ pipx_pkgs }}"
               loop_control:
                 loop_var: pkg
@@ -67,6 +69,7 @@
                 inject_packages: "{{ pkg.inject_apps }}"
                 install_apps: true
                 state: inject
+                executable: "{{ pipx_executable }}"
               loop: "{{ pipx_pkgs }}"
               loop_control:
                 loop_var: pkg
@@ -78,6 +81,7 @@
               community.general.pipx:
                 name: "{{ pkg.name }}"
                 state: absent
+                executable: "{{ pipx_executable }}"
               loop: "{{ pipx_pkgs }}"
               loop_control:
                 loop_var: pkg

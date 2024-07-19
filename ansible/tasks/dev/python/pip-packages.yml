@@ -27,6 +27,7 @@
                 # break_system_packages: true # only ansible >=v2.17
                 extra_args: --break-system-packages
                 state: present
+                executable: "{{ pip_executable }}"
 
         - name: Setup pip > Setup Remove
           when: is_remove
@@ -37,3 +38,4 @@
                 # break_system_packages: true # only ansible >=v2.17
                 extra_args: --break-system-packages
                 state: absent
+                executable: "{{ pip_executable }}"
