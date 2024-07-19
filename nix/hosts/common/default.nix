@@ -9,6 +9,7 @@
     ./fonts.nix
     ./firewall.nix
     ./nix-ld.nix
+    ./networking.nix
     ./vm.nix
   ];
 }
