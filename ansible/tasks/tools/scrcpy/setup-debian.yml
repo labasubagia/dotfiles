@@ -3,7 +3,10 @@
   vars:
     is_remove: false
 
-    required_pkgs:
+    # ! do not remove it
+    # some packages might required by other system packages
+    # in the end of installation, just run `apt autoremove`
+    scrcpy_build_deps:
       - ffmpeg
       - adb
       - wget
@@ -39,7 +42,7 @@
         - name: Setup scrcpy > Install required deps
           become: true
           ansible.builtin.apt:
-            name: "{{ required_pkgs }}"
+            name: "{{ scrcpy_build_deps }}"
             state: present
 
         - name: Setup scrcpy > Clone repo
@@ -77,10 +80,10 @@
         # - name: Setup scrcpy > Remove required packages
         #   become: true
         #   ansible.builtin.apt:
-        #     name: "{{ required_pkgs }}"
+        #     name: "{{ scrcpy_build_deps }}"
         #     state: absent
 
-        - name: Setup scrcpy > remove unecessary deps
-          become: true
-          ansible.builtin.apt:
-            autoremove: true
+    - name: Setup scrcpy > remove unnecessary deps
+      become: true
+      ansible.builtin.apt:
+        autoremove: true

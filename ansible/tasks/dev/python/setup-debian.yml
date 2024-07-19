@@ -4,8 +4,12 @@
   vars:
     is_remove: false
 
-    python_pkgs:
+    python_only_install_pkgs:
+      # debian system depends on python3
+      # removing this possibly break the system
       - python3
+
+    python_pkgs:
       - python3-pip
       - virtualenv
       - pipx
@@ -17,7 +21,7 @@
         - name: Setup Python > Install packages
           become: true
           ansible.builtin.apt:
-            name: "{{ python_pkgs }}"
+            name: "{{ python_only_install_pkgs + python_pkgs }}"
             state: present
 
         - name: Setup Python > Check pipx executable exists
@@ -68,3 +72,8 @@
           ansible.builtin.apt:
             name: "{{ python_pkgs }}"
             state: absent
+
+    - name: Setup scrcpy > remove unnecessary deps
+      become: true
+      ansible.builtin.apt:
+        autoremove: true
