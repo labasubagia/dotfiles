@@ -15,6 +15,11 @@
         path: "{{ pip_executable }}"
       register: pip
 
+    - name: Setup pip > set facts
+      ansible.builtin.set_fact:
+        pip_extra_args:
+          - "{{ '--break-system-packages' if ansible_distribution == 'Debian' else '' }}"
+
     - name: Setup pip > executable exists
       when: pip.stat.exists
       block:
@@ -25,8 +30,9 @@
               ansible.builtin.pip:
                 name: "{{ pip_pkgs }}"
                 # break_system_packages: true # only ansible >=v2.17
-                extra_args: --break-system-packages
+                extra_args: "{{ pip_extra_args | join(' ') }}"
                 state: present
+                executable: "{{ pip_executable }}"
 
         - name: Setup pip > Setup Remove
           when: is_remove
@@ -35,5 +41,6 @@
               ansible.builtin.pip:
                 name: "{{ pip_pkgs }}"
                 # break_system_packages: true # only ansible >=v2.17
-                extra_args: --break-system-packages
+                extra_args: "{{ pip_extra_args | join(' ') }}"
                 state: absent
+                executable: "{{ pip_executable }}"

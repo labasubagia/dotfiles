@@ -1,29 +1,25 @@
 ---
-- name: Setup apt packages
-  become: true
+- name: Setup htop
   vars:
     is_remove: false
 
     pkgs:
       - htop
-      - age
-      - curl
-      - wget
-      - apt-transport-https
-
   block:
-    - name: Setup apt packages > Setup Install
+    - name: Setup htop > Setup Install
       when: not is_remove
       block:
-        - name: Setup apt packages > Install packages
+        - name: Setup htop > Install packages
+          become: true
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: present
 
-    - name: Setup apt packages > Setup Remove
+    - name: Setup htop > Setup Remove
       when: is_remove
       block:
-        - name: Setup apt packages > Remove packages
+        - name: Setup htop > Remove packages
+          become: true
           ansible.builtin.apt:
             name: "{{ pkgs }}"
             state: absent
