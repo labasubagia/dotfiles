@@ -1,0 +1,25 @@
+---
+- name: Setup htop
+  vars:
+    is_remove: false
+
+    pkgs:
+      - htop
+  block:
+    - name: Setup htop > Setup Install
+      when: not is_remove
+      block:
+        - name: Setup htop > Install packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: present
+
+    - name: Setup htop > Setup Remove
+      when: is_remove
+      block:
+        - name: Setup htop > Remove packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: absent
