@@ -19,6 +19,7 @@
             state: present
 
         - name: Setup Flatpak > Add repositories
+          become: true
           community.general.flatpak_remote:
             name: "{{ item.name }}"
             flatpakrepo_url: "{{ item.url }}"
@@ -29,7 +30,7 @@
       when: is_remove
       block:
         - name: Setup Flatpak > Remove repositories
-          when: false # skip for now due to stuck
+          become: true
           community.general.flatpak_remote:
             name: "{{ item.name }}"
             state: absent
