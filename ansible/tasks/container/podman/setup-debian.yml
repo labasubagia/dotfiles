@@ -4,7 +4,7 @@
     is_remove: false
 
     # in debian, podman need separate podman-compose (due to old pkg)
-    pkgs: "{{ ['podman'] + ['podman-compose' if ansible_distribution == 'Debian' else ''] }}"
+    pkgs: "{{ ['podman', 'podman-compose'] if ansible_distribution == 'Debian' else ['podman'] }}"
 
     shell_indicator: "PODMAN"
     shell_alias: |
