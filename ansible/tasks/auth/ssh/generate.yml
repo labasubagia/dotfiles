@@ -32,20 +32,27 @@
             force: false
           with_items: "{{ keys }}"
 
-        # ? SKIP, use ssh in home-manager to generate config or use ./ssh-sops.yml
-        - name: SSH generate key-pairs > Make config
-          community.general.ssh_config:
-            host: "{{ item.host }}"
-            hostname: "{{ item.host }}"
-            identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
-            ssh_config_file: "{{ dir }}/config"
-          with_items: "{{ keys }}"
-
-        - name: SSH generate key-pairs > Config replace /home/<user>
-          ansible.builtin.replace:
+        - name: SSH generate key-pairs > Check config exists
+          ansible.builtin.stat:
             path: "{{ dir }}/config"
-            regexp: \/home\/[^\/]+
-            replace: "~"
+          register: current_config
+
+        - name: SSH generate key-pairs > Setup config
+          when: not current_config.stat.exists
+          block:
+            - name: SSH generate key-pairs > Make config
+              community.general.ssh_config:
+                host: "{{ item.host }}"
+                hostname: "{{ item.host }}"
+                identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
+                ssh_config_file: "{{ dir }}/config"
+              with_items: "{{ keys }}"
+
+            - name: SSH generate key-pairs > Config replace /home/<user>
+              ansible.builtin.replace:
+                path: "{{ dir }}/config"
+                regexp: \/home\/[^\/]+
+                replace: "~"
 
     - name: SSH generate key-pairs > Setup Remove
       when: is_remove

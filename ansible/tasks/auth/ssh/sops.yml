@@ -50,19 +50,27 @@
             mode: "0644"
           with_items: "{{ keys }}"
 
-        - name: SSH Keys from Sops > Make config
-          community.general.ssh_config:
-            host: "{{ item.host }}"
-            hostname: "{{ item.host }}"
-            identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
-            ssh_config_file: "{{ dir }}/config"
-          with_items: "{{ keys }}"
-
-        - name: SSH Keys from Sops > Config replace /home/<user>
-          ansible.builtin.replace:
+        - name: SSH Keys from Sops > Check config exists
+          ansible.builtin.stat:
             path: "{{ dir }}/config"
-            regexp: \/home\/[^\/]+
-            replace: "~"
+          register: current_config
+
+        - name: SSH Keys from Sops > Setup config
+          when: not current_config.stat.exists
+          block:
+            - name: SSH Keys from Sops > Make config
+              community.general.ssh_config:
+                host: "{{ item.host }}"
+                hostname: "{{ item.host }}"
+                identity_file: "{{ dir }}/id_ed25519_{{ item.name }}"
+                ssh_config_file: "{{ dir }}/config"
+              with_items: "{{ keys }}"
+
+            - name: SSH Keys from Sops > Config replace /home/<user>
+              ansible.builtin.replace:
+                path: "{{ dir }}/config"
+                regexp: \/home\/[^\/]+
+                replace: "~"
 
     - name: SSH Keys from Sops > Setup Remove
       when: is_remove
