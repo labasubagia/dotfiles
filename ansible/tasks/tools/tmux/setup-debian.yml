@@ -1,0 +1,25 @@
+---
+- name: Setup tmux
+  vars:
+    is_remove: false
+
+    pkgs:
+      - tmux
+  block:
+    - name: Setup tmux > Setup Install
+      when: not is_remove
+      block:
+        - name: Setup tmux > Install packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: present
+
+    - name: Setup tmux > Setup Remove
+      when: is_remove
+      block:
+        - name: Setup tmux > Remove packages
+          become: true
+          ansible.builtin.apt:
+            name: "{{ pkgs }}"
+            state: absent

@@ -35,6 +35,7 @@
           - "{{ workdir }}/ansible/tasks/tools/ripgrep/setup-debian.yml"
           - "{{ workdir }}/ansible/tasks/tools/adb/setup-debian.yml"
           - "{{ workdir }}/ansible/tasks/tools/scrcpy/setup-debian.yml"
+          - "{{ workdir }}/ansible/tasks/tools/tmux/setup-debian.yml"
 
           - "{{ workdir }}/ansible/tasks/container/podman/setup-debian.yml"
 

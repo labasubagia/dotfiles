@@ -3,7 +3,7 @@ on:
   pull_request:
     paths: ansible/**
   push:
-      paths: ansible/**
+    paths: ansible/**
   workflow_dispatch:
 
 jobs:
