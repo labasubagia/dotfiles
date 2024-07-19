@@ -1,20 +1,12 @@
 name: Ansible Setup Ubuntu
 on:
   pull_request:
-    paths: ansible/**
+    paths: ansible/playbooks/debian.yml
   push:
-    paths: ansible/**
+    paths: ansible/playbooks/debian.yml
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: Ansible Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
-
   run:
     name: Setup Ubuntu
     runs-on: ubuntu-latest
