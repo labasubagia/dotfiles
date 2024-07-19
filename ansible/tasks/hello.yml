@@ -7,3 +7,4 @@
     msg:
       host: "{{ ansible_host }}"
       connection: "{{ ansible_connection }}"
+      distribution: "{{ ansible_distribution }}"
