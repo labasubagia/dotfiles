@@ -13,7 +13,7 @@ jobs:
 
       - name: install deps
         run: |
-          sudo apt install -y ansible age python3-paramiko
+          sudo apt install -y age python3-paramiko
 
       - name: install sops
         run: |
