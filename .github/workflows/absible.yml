@@ -15,8 +15,6 @@ jobs:
         run: |
           sudo apt install -y age python3-paramiko
 
-      - name: install sops
-        run: |
           curl -LO https://github.com/getsops/sops/releases/download/v3.9.0/sops-v3.9.0.linux.amd64
           sudo mv sops-v3.9.0.linux.amd64 /usr/local/bin/sops
           sudo chmod +x /usr/local/bin/sops
@@ -32,4 +30,5 @@ jobs:
           ansible-playbook ansible/playbooks/debian.yml \
             -i ansible/inventory.yml \
             -e _hosts="localhost" \
-            -e _connection="local"
+            -e _connection="local" \
+            -e "ansible_python_interpreter=$(which python3)"
