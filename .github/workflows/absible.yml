@@ -1,0 +1,31 @@
+name: ansible
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run:
+    name: ansible
+    runs-on: ubuntu-22
+    steps:
+      - uses: actions/checkout@v4
+      - name: add user
+        run: |
+          adduser user
+          usermod -aG user user
+      - name: install deps
+        run: |
+          apt install age bash ansible python3-paramiko
+
+          curl -LO https://github.com/getsops/sops/releases/download/v3.9.0/sops-v3.9.0.linux.amd64
+          mv sops-v3.9.0.linux.amd64 /usr/local/bin/sops
+          chmod +x /usr/local/bin/sops
+      - name: add key
+        run: |
+          mkdir -p ~/.config/sops/age
+          echo "${{ secrets.AGE_KEY }}" > ~/.config/sops/age/keys.txt
+      - name: run ansible
+        run: |
+          cp ansible/inventory.example.yml ansible/inventory.yml
+          ansible-galaxy -i ansible/inventory.yml
