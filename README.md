@@ -30,7 +30,6 @@ In this project, you have the flexibility to use Ansible, Nix, or a combination 
 - [Pip](https://pip.pypa.io/en/stable/installation) package manager required by Ansible
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html), configuration management
 - [Paramiko](https://www.paramiko.org/installing.html) for ssh
-> Note: Example can be seen in [Makefile](./Makefile)
 
 #### Configure system
 - Copy inventory file
