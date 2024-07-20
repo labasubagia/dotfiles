@@ -108,25 +108,31 @@
     scrcpy
   ];
 
-  programs.atuin = {
-    enable = true;
-    settings = {
-      enter_accept = false;
-      style = "compact";
+  programs = {
+    atuin = {
+      enable = true;
+      settings = {
+        enter_accept = false;
+        style = "compact";
+      };
+    };
+    zoxide = {
+      enable = true;
+      options = [ "--cmd j" ];
+    };
+    git = {
+      enable = true;
+      userEmail = "labasubagia22@gmail.com";
+      userName = "Laba Subagia";
+      aliases = {
+        undo = "reset --soft HEAD~1";
+      };
     };
   };
 
-  programs.zoxide = {
-    enable = true;
-    options = [ "--cmd j" ];
-  };
-
-  programs.git = {
-    enable = true;
-    userEmail = "labasubagia22@gmail.com";
-    userName = "Laba Subagia";
-    aliases = {
-      undo = "reset --soft HEAD~1";
+  services = {
+    gnome-keyring = {
+      enable = true;
     };
   };
 }
