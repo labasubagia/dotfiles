@@ -35,9 +35,11 @@
       virtualenv
       black
 
-      ansible-core
+      ansible
       paramiko
-
+      molecule
+      docker
+      requests
     ]))
     ruff
     ansible-lint
