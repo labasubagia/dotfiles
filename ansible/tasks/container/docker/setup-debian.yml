@@ -28,14 +28,26 @@
       register: arch
       changed_when: false
 
-    - name: Setup Docker > Get Debian Codename
+    - name: Setup Docker > Get Codename
       ansible.builtin.shell: . /etc/os-release && echo $VERSION_CODENAME
+      register: codename
+      changed_when: false
+
+    # for ubuntu derivative distro e.g Linux Mint
+    - name: Setup Docker > Get Parent Ubuntu Codename
+      when: ansible_distribution in ['Linux Mint']
+      ansible.builtin.shell: . /etc/os-release && echo $UBUNTU_CODENAME
       register: codename
       changed_when: false
 
     - name: Setup Docker > Make Repository string
       ansible.builtin.set_fact:
         apt_repository: "deb [arch={{ arch.stdout }} signed-by={{ apt_key_path }}] https://download.docker.com/linux/debian {{ codename.stdout }} stable"
+
+    - name: Setup Docker > Make Repository string Ubuntu
+      when: ansible_distribution in ['Ubuntu', 'Linux Mint']
+      ansible.builtin.set_fact:
+        apt_repository: "deb [arch={{ arch.stdout }} signed-by={{ apt_key_path }}] https://download.docker.com/linux/ubuntu {{ codename.stdout }} stable"
 
     - name: Setup Docker > Setup Install
       when: not is_remove
