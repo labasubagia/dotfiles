@@ -97,6 +97,5 @@
         ]
       }
     }
-  },
-  "ansible.python.interpreterPath": "/home/user/.nix-profile/bin/python"
+  }
 }
