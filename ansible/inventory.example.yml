@@ -8,6 +8,7 @@ debian:
       ansible_become_pass: password
       connection: ssh
       ansible_ssh_pass: password
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
 
 nixos:
   hosts:
@@ -17,3 +18,4 @@ nixos:
       ansible_become_pass: password
       connection: ssh
       ansible_ssh_pass: password
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
