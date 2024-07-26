@@ -15,6 +15,17 @@
             name: "{{ pkgs }}"
             state: present
 
+        - name: Setup zsh > Get zsh
+          ansible.builtin.command: which zsh
+          register: zsh_executable
+          changed_when: false
+
+        - name: Setup zsh > Set user to use zsh
+          become: true
+          ansible.builtin.user:
+            name: "{{ ansible_user }}"
+            shell: "{{ zsh_executable.stdout }}"
+
         - name: Setup zsh > Setup oh my zsh
           ansible.builtin.include_tasks: ./ohmyzsh.yml
 
@@ -23,6 +34,17 @@
       block:
         - name: Setup zsh > Setup oh my zsh
           ansible.builtin.include_tasks: ./ohmyzsh.yml
+
+        - name: Setup zsh > Get bash (default)
+          ansible.builtin.command: which bash
+          register: bash_executable
+          changed_when: false
+
+        - name: Setup zsh > Set user to use bash
+          become: true
+          ansible.builtin.user:
+            name: "{{ ansible_user }}"
+            shell: "{{ bash_executable.stdout }}"
 
         - name: Setup zsh > remove package
           become: true
