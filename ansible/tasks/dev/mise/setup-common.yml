@@ -3,17 +3,11 @@
   vars:
     is_remove: false
 
-    tmp_dir: "{{ ansible_env.HOME }}/tmp"
+    tmp_dir: "/tmp"
     script_path: "{{ tmp_dir }}/mise.sh"
     mise_executable: "{{ ansible_env.HOME }}/.local/bin/mise"
 
   block:
-    - name: Setup mise > Ensure tmp directory
-      ansible.builtin.file:
-        path: "{{ tmp_dir }}"
-        state: directory
-        mode: '0755'
-
     - name: Setup mise > Setup Install
       when: not is_remove
       block:

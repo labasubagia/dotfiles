@@ -3,7 +3,7 @@
   vars:
     is_remove: false
 
-    tmp_dir: "{{ ansible_env.HOME }}/tmp"
+    tmp_dir: "/tmp"
     font_dir: "{{ ansible_env.HOME }}/.fonts"
     fonts:
       - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.zip
@@ -24,12 +24,6 @@
         state: present
 
   block:
-    - name: Setup fonts > ensure tmp directory
-      ansible.builtin.file:
-        path: "{{ tmp_dir }}"
-        state: directory
-        mode: '0755'
-
     - name: Setup fonts > Setup install
       when: not is_remove
       block:
