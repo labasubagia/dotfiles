@@ -1,4 +1,10 @@
 ---
+- name: Assert font input
+  ansible.builtin.assert:
+    that:
+      - font_url is defined
+      - font_state in ['present', 'absent']
+
 - name: Add font
   vars:
     font_dir: "{{ ansible_env.HOME }}/.fonts"
@@ -8,12 +14,6 @@
     _font_state: "{{ font_state | default('present') }}"
 
   block:
-    - name: Assert font input
-      ansible.builtin.assert:
-        that:
-          - font_url is defined
-          - font_state in ['present', 'absent']
-
     - name: Ensure font directory
       ansible.builtin.file:
         path: "{{ font_dir }}"

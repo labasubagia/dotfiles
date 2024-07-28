@@ -97,5 +97,6 @@
         ]
       }
     }
-  }
+  },
+  "ansible.python.interpreterPath": "/bin/python3"
 }
