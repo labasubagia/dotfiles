@@ -1,0 +1,22 @@
+---
+- name: Install font
+  vars:
+    fonts:
+      - url: https://github.com/adobe-fonts/source-sans/releases/download/3.052R/TTF-source-sans-3.052R.zip
+        state: present
+      - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.zip
+        state: present
+      - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
+        state: present
+      - url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/RobotoMono.zip
+        state: present
+  block:
+    - name: Add font
+      ansible.builtin.include_tasks: ./setup-item.yml
+      vars:
+        font_dir: "{{ ansible_env.HOME }}/.fonts"
+        font_url: "{{ font.url }}"
+        font_state: "{{ font.state }}"
+      loop: "{{ fonts }}"
+      loop_control:
+        loop_var: font
