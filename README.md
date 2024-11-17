@@ -97,6 +97,17 @@ In this project, you have the flexibility to use Ansible, Nix, or a combination 
   home-manager switch --flake .#demo@vbox
   ```
 
+### Stow
+
+#### Prerequisite
+- [GNU Stow](https://www.gnu.org/software/stow/)
+
+#### Load configuration
+```bash
+stow -t ~/ stow
+```
+
+
 #### Known Limitations
 - Challenging to setup programming language development environment (sometime need to take a look to project like npm2nix, poetry2nix, etc)
 - Nix mostly use symlink, which is difficult for binding into containerized apps (docker, dev-container)
