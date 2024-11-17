@@ -1,0 +1,36 @@
+[general]
+import = [
+  "./catppuccin-mocha.toml"
+]
+
+[keyboard]
+bindings = [
+  # { key = "Backspace", mods = "Control", chars = "\u0017" }, # delete a word
+]
+
+[env]
+TERM = "xterm-256color"
+EDITOR = "nvim"
+
+[window.padding]
+x = 5
+y = 5
+
+[font]
+size = 9
+
+[font.bold]
+family = "Agave Nerd Font Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = ""
+style = "Agave Nerd Font Mono"
+
+[font.italic]
+family = "Agave Nerd Font Mono"
+style = "Italic"
+
+[font.normal]
+family = "Agave Nerd Font Mono"
+style = "Regular"
