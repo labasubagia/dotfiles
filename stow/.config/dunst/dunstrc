@@ -2,7 +2,7 @@
 frame_color = "#89b4fa"
 separator_color= frame
 frame_width = 2
-font = Roboto 11
+font = Roboto 12
 transparency = 20
 origin = top-right
 offset = 20x20

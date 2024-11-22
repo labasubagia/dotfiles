@@ -18,7 +18,7 @@ gaps inner 10px
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # font pango:MesloLGM Nerd Font 10
-font pango: Roboto 9
+font pango: Roboto 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -26,12 +26,12 @@ font pango: Roboto 9
 
 # exec --no-startup-id brightnessctl set 10%
 # exec --no-startup-id xrandr --output $(xrandr | grep connected | grep -v disconnected | awk '{print $1}') --scale 1.3x1.3
-# exec --no-startup-id xrandr --output $(xrandr | grep connected | grep -v disconnected | awk '{print $1}') --scale 1.4055x1.406
+exec --no-startup-id xrandr --output $(xrandr | grep connected | grep -v disconnected | awk '{print $1}') --scale 1.4055x1.406
 exec --no-startup-id blueman-applet
-exec_always --no-startup-id pactl list modules | grep -q 'module-switch-on-connect' || pactl load-module module-switch-on-connect 
+exec_always --no-startup-id pactl list modules | grep -q 'module-switch-on-connect' || pactl load-module module-switch-on-connect
 
 exec --no-startup-id picom -b
-exec_always --no-startup-id feh --bg-scale ~/.config/backgrounds/woody_plant_mountain_purple.jpg 
+exec_always --no-startup-id feh --bg-scale ~/.config/backgrounds/woody_plant_mountain_purple.jpg
 exec --no-startup-id redshift
 
 # kill any hanging polybar processes
@@ -72,18 +72,18 @@ set $audio_lower amixer set Master 5%- && ~/.config/dunst/volume_notify.sh
 set $brightness_up brightnessctl set +5% && ~/.config/dunst/brightness_notify.sh
 set $brightness_down brightnessctl set 5%- && ~/.config/dunst/brightness_notify.sh
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id $audio_raise 
+bindsym XF86AudioRaiseVolume exec --no-startup-id $audio_raise
 bindsym XF86AudioLowerVolume exec --no-startup-id $audio_lower
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle  
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Shortcut for keyboard that don't have fn key
-# bindsym Ctrl+KP_Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% 
+# bindsym Ctrl+KP_Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
 bindsym Ctrl+KP_Up exec --no-startup-id $audio_raise
-# bindsym Ctrl+KP_Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% 
+# bindsym Ctrl+KP_Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym Ctrl+KP_Down exec --no-startup-id $audio_lower
 bindsym Ctrl+KP_Left exec --no-startup-id $brightness_down
-bindsym Ctrl+KP_Right exec --no-startup-id $brightness_up 
+bindsym Ctrl+KP_Right exec --no-startup-id $brightness_up
 
 # Key bindings for Media control keys
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
@@ -108,7 +108,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec alacritty 
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
