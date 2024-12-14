@@ -19,18 +19,5 @@ y = 5
 [font]
 size = 8
 
-[font.bold]
-family = "Agave Nerd Font Mono"
-style = "Bold"
-
-[font.bold_italic]
-family = ""
-style = "Agave Nerd Font Mono"
-
-[font.italic]
-family = "Agave Nerd Font Mono"
-style = "Italic"
-
 [font.normal]
 family = "Agave Nerd Font Mono"
-style = "Regular"
