@@ -26,7 +26,7 @@ font pango: Roboto 11
 
 # exec --no-startup-id brightnessctl set 10%
 # exec --no-startup-id xrandr --output $(xrandr | grep connected | grep -v disconnected | awk '{print $1}') --scale 1.3x1.3
-exec --no-startup-id xrandr --output $(xrandr | grep connected | grep -v disconnected | awk '{print $1}') --scale 1.4055x1.406
+exec_always --no-startup-id xrandr --output $(xrandr | grep connected | grep -v disconnected | awk '{print $1}') --scale 1.4055x1.406
 exec --no-startup-id blueman-applet
 exec_always --no-startup-id pactl list modules | grep -q 'module-switch-on-connect' || pactl load-module module-switch-on-connect
 

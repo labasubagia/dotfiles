@@ -119,3 +119,4 @@ bindkey '^H' backward-kill-word
 
 # Created by `pipx` on 2024-11-17 14:28:40
 export PATH="$PATH:/home/yozy/.local/bin"
+export EDITOR="nvim"
