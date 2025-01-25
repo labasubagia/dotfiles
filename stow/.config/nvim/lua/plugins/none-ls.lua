@@ -9,6 +9,11 @@ return {
         null_ls.builtins.formatting.biome,
         null_ls.builtins.formatting.gofmt,
         null_ls.builtins.formatting.goimports,
+        null_ls.builtins.diagnostics.ansiblelint,
+        null_ls.builtins.formatting.yamlfmt.with({
+          filetypes = { "yaml", "yml" },
+        }),
+        null_ls.builtins.diagnostics.yamllint,
         -- null_ls.builtins.completion.spell,
       },
       on_attach = function(client, bufnr)

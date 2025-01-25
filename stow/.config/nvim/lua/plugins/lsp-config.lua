@@ -3,7 +3,7 @@ return {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup({
-        ensure_installed = { "stylua", "goimports" },
+        ensure_installed = { "stylua", "goimports", "ansible-lint", "yamlfmt", "yamlint" },
       })
     end,
   },
@@ -12,7 +12,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         auto_install = true,
-        ensure_installed = { "lua_ls", "ts_ls", "gopls", "biome" },
+        ensure_installed = { "lua_ls", "ts_ls", "gopls", "biome", "ansiblels" },
       })
     end,
   },
@@ -32,6 +32,9 @@ return {
         capabilities = capabilities,
       })
       lspconfig.biome.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.ansiblels.setup({
         capabilities = capabilities,
       })
 
