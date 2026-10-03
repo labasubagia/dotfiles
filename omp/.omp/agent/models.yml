@@ -1,0 +1,16 @@
+# OMP custom provider configuration
+# Docs: https://omp.sh/docs/models, https://omp.sh/docs/env
+# apiKey names an env var (resolved at startup: shell env, then
+# $PWD/.env, ~/.omp/agent/.env, ~/.omp/.env, ~/.env). Never a literal key.
+
+providers:
+  # 9Router — local OpenAI-compatible router (npm i -g 9router, default port 20128)
+  9router:
+    baseUrl: http://127.0.0.1:20128/v1
+    api: openai-completions
+    auth: apiKey
+    authHeader: true # injects Authorization: Bearer <apiKey>
+    apiKey: NINE_ROUTER_API_KEY
+    discovery:
+      type: openai-models-list # refresh the roster from GET /v1/models
+      timeoutMs: 10000
