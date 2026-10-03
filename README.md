@@ -6,7 +6,7 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | package | provides |
 |---|---|
 | `zsh` | `~/.zshrc` (oh-my-zsh + autosuggestions/highlighting + fnm) |
-| `helix` | `~/.config/helix/languages.toml` |
+| `helix` | `~/.config/helix/{config,languages}.toml` (theme: tokyonight) |
 | `npm` | `~/.npmrc` (`allow-scripts=9router`) |
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
 
