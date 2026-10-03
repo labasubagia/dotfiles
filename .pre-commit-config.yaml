@@ -1,0 +1,40 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files # README excludes binaries (helix grammars, herdr socks, ~/.local/bin)
+      - id: detect-private-key
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1-1
+    hooks:
+      - id: shellcheck # skips .zshrc via exclude_types: [zsh]; lints install.sh
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.14.1-1
+    hooks:
+      - id: shfmt
+        # .zshrc is zsh, not POSIX sh — shfmt would mangle it. install.sh only.
+        files: (^|/)install\.sh$
+        args: [-i=2, --write]
+  - repo: local
+    hooks:
+      - id: taplo-lint
+        name: taplo-lint
+        entry: taplo lint
+        language: system
+        types: [toml]
+      - id: taplo-format
+        name: taplo-format
+        entry: taplo format
+        language: system
+        types: [toml]
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: gitleaks
+        entry: gitleaks protect --verbose --redact --staged
+        language: system
+        pass_filenames: false
