@@ -10,6 +10,7 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | `npm` | `~/.npmrc` (`allow-scripts=9router`) |
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
 | `omp` | `~/.omp/agent/{config,models}.yml` (theme: dark-catppuccin, symbolPreset: nerd; 9Router provider, key via `$NINE_ROUTER_API_KEY` in untracked `~/.omp/.env`) |
+| `9router` | `~/.config/systemd/user/9router.service` (local gateway on fnm-managed node via `default` alias; enable with `systemctl --user enable --now 9router`) |
 
 `omp`: only `agent/{config,models}.yml` versioned; named profiles, `agent.db`/`models.db`, session state excluded.
 
@@ -23,7 +24,7 @@ stow -t ~ -D <pkg>      # unstow one package
 ```
 
 Fresh machine: `git clone <url> ~/dotfiles && cd ~/dotfiles && ./install.sh`.
-Requires `stow` + `oh-my-zsh` (zsh package assumes `$HOME/.oh-my-zsh`).
+Requires `stow` + `oh-my-zsh` (zsh package assumes `$HOME/.oh-my-zsh`) + `fnm` (Node.js installed via fnm; the 9router unit runs off the `default` alias).
 
 ## Deliberately excluded
 
@@ -32,4 +33,3 @@ Requires `stow` + `oh-my-zsh` (zsh package assumes `$HOME/.oh-my-zsh`).
 - Binaries: `~/.local/bin/{herdr,omp,uv,uvx}` — reinstall per machine, don't version 27–267 MB blobs
 - `~/.config/helix/runtime/grammars/` — build artifacts; rebuild with `hx --grammar build`
 - `~/.oh-my-zsh/`, `~/.zshrc.pre-oh-my-zsh` (installer backup), `.zcompdump*` (regenerated)
-- `systemd/user/9router.service` — path pins a specific fnm node version; revisit when stable
