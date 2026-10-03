@@ -21,6 +21,7 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 stow -t ~ <pkg>         # single package, e.g. stow -t ~ helix
 stow -t ~ -D <pkg>      # unstow one package
 ./install.sh --adopt    # pull live $HOME files back into repo, then review with git diff
+prek install            # one-time: enable git hooks (lints + gitleaks run on every commit)
 ```
 
 Fresh machine: `git clone <url> ~/dotfiles && cd ~/dotfiles && ./install.sh`.
