@@ -1,0 +1,7 @@
+setupVersion: 2
+symbolPreset: nerd
+defaultThinkingLevel: auto
+theme:
+  dark: dark-catppuccin
+tui:
+  titleState: true

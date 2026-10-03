@@ -9,6 +9,9 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | `helix` | `~/.config/helix/{config,languages}.toml` (theme: tokyonight) |
 | `npm` | `~/.npmrc` (`allow-scripts=9router`) |
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
+| `omp` | `~/.omp/agent/{config,models}.yml` (theme: dark-catppuccin, symbolPreset: nerd; 9Router provider, key via `$NINE_ROUTER_API_KEY` in untracked `~/.omp/.env`) |
+
+`omp`: only `agent/{config,models}.yml` versioned; named profiles, `agent.db`/`models.db`, session state excluded.
 
 ## Usage
 
@@ -24,7 +27,7 @@ Requires `stow` + `oh-my-zsh` (zsh package assumes `$HOME/.oh-my-zsh`).
 
 ## Deliberately excluded
 
-- Secrets: `~/.config/9router/env` (dashboard password), `~/.config/opencode/service.json`
+- Secrets: `~/.config/9router/env` (dashboard password), `~/.omp/.env` (9Router API key), `~/.config/opencode/service.json`
 - Machine state: herdr logs/socks, go telemetry, ubuntu-insights consent, empty compose dir
 - Binaries: `~/.local/bin/{herdr,omp,uv,uvx}` — reinstall per machine, don't version 27–267 MB blobs
 - `~/.config/helix/runtime/grammars/` — build artifacts; rebuild with `hx --grammar build`
