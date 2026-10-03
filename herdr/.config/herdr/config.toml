@@ -1,0 +1,8 @@
+onboarding = false
+
+[theme]
+# Built-in dark themes: tokyo-night, catppuccin, dracula, nord,
+#   gruvbox, one-dark, kanagawa, rose-pine, vesper
+# Recommended: tokyo-night — high-contrast dark blue, easy on eyes,
+#   matches most terminal + helix dark themes.
+name = "tokyo-night"
