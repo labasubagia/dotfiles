@@ -17,8 +17,8 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 ## Usage
 
 ```sh
-./install.sh            # (re)stow all packages into $HOME
-stow -t ~ <pkg>         # single package, e.g. stow -t ~ helix
+./install.sh            # (re)stow all packages into $HOME (with --no-folding)
+stow -t ~ <pkg>         # single package, e.g. stow -t ~ helix (.stowrc enforces --no-folding)
 stow -t ~ -D <pkg>      # unstow one package
 ./install.sh --adopt    # pull live $HOME files back into repo, then review with git diff
 prek install            # one-time: enable git hooks (lints + gitleaks run on every commit)
