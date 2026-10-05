@@ -35,3 +35,7 @@ jobs:
         # Local gitleaks hook uses `protect --staged`, which sees nothing in a
         # clean CI checkout — detect over full history is the real backstop.
         run: gitleaks detect --verbose --redact
+      - name: Test stow packages
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq stow
+          ./install.sh

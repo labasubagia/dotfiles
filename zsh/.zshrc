@@ -118,3 +118,7 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="$FNM_PATH:$PATH"
   eval "$(fnm env --shell zsh)"
 fi
+
+
+# Added by Antigravity CLI installer
+export PATH="$HOME/.local/bin:$PATH"
