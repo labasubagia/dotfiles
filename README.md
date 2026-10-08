@@ -9,10 +9,10 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | `helix` | `~/.config/helix/{config,languages}.toml` (theme: tokyonight) |
 | `npm` | `~/.npmrc` (`allow-scripts=9router`) |
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
-| `omp` | `~/.omp/agent/{config,models}.yml` (theme: dark-catppuccin, symbolPreset: nerd; 9Router provider, key via `$NINE_ROUTER_API_KEY` in untracked `~/.omp/.env`) |
+| `omp` | `~/.omp/agent/{config,keybindings,models}.yml` (theme: dark-catppuccin, symbolPreset: nerd; 9Router provider, key via `$NINE_ROUTER_API_KEY` in untracked `~/.omp/.env`; Ctrl+L redraw) |
 | `9router` | `~/.config/systemd/user/9router.service` (local gateway on fnm-managed node via `default` alias; enable with `systemctl --user enable --now 9router`) |
 
-`omp`: only `agent/{config,models}.yml` versioned; named profiles, `agent.db`/`models.db`, session state excluded.
+`omp`: only `agent/{config,keybindings,models}.yml` versioned; named profiles, `agent.db`/`models.db`, session state excluded.
 
 ## Usage
 

@@ -1,0 +1,8 @@
+# Ctrl+L clears/redraws the screen (shell muscle memory).
+# Upstream binds Ctrl+L to app.live.toggle (live voice mode), which opens the
+# default speaker on press and fails on machines without ALSA/PulseAudio libs:
+# "Failed to open the default speaker: no Linux playback backend available".
+# Rebind display reset to Ctrl+L (keeping Alt+L) and unbind live voice;
+# voice mode is still available explicitly via /live.
+app.display.reset: ["alt+l", "ctrl+l"]
+app.live.toggle: []
