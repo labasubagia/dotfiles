@@ -2,3 +2,10 @@ theme = "tokyonight"
 
 [editor.file-picker]
 hidden = false
+
+[editor.whitespace]
+render = "all"
+
+[editor.whitespace.characters]
+space = "·"
+tab = "→"
