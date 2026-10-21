@@ -1,0 +1,4 @@
+# Force Helix to show all variations of environment and config files
+!.env*
+!config.toml
+!secrets.json

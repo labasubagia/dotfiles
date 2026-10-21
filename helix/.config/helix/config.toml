@@ -1,7 +1,9 @@
 theme = "tokyonight"
 
 [editor.file-picker]
-hidden = false
+hidden = true
+git-ignore = true
+ignore = true
 
 [editor.whitespace]
 render = "all"
