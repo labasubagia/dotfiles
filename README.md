@@ -7,12 +7,12 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 |---|---|
 | `zsh` | `~/.zshrc` (oh-my-zsh + autosuggestions/highlighting + fnm) |
 | `helix` | `~/.config/helix/{config,languages}.toml` (theme: tokyonight) |
-| `npm` | `~/.npmrc` (`ignore-scripts=true` + `allow-scripts=9router`) |
+| `npm` | `~/.npmrc` (`ignore-scripts=true`) |
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
-| `omp` | `~/.omp/agent/{config,keybindings}.yml` (theme: dark-catppuccin, symbolPreset: nerd; Ctrl+L redraw) — 9Router wiring is NOT versioned: apply it with `npx 9router connect http://127.0.0.1:20128 --tools omp` so 9router manages `~/.omp/agent/models.yml` natively |
-| `9router` | `~/.config/systemd/user/9router.service` (sandboxed user unit: `ProtectSystem=strict`, `PrivateTmp`, kernel/namespace limits, `MemoryMax=512M`+`CPUQuota=50%`; writable `$HOME` so dashboard tool-config features work; state in `~/.9router`) + `~/.config/9router/env.example` (copy to untracked `~/.config/9router/env`) |
+| `omp` | `~/.omp/agent/{config,keybindings}.yml` (theme: dark-catppuccin, symbolPreset: nerd; Ctrl+L redraw) |
+| `9router` | `~/.config/systemd/user/9router.service` (sandboxed local gateway, state in `~/.9router`) + `~/.config/9router/env.example` |
 
-`omp`: only `agent/{config,keybindings}.yml` versioned; `models.yml` is tool-managed (9router can rewrite it with keys), named profiles, `agent.db`/`models.db`, session state excluded.
+`omp`: only `agent/{config,keybindings}.yml` versioned; named profiles, `agent.db`/`models.db`, session state and `models.yml` (tool-managed by 9router) excluded.
 
 ## Usage
 
@@ -29,7 +29,7 @@ Requires `stow` + `oh-my-zsh` (zsh package assumes `$HOME/.oh-my-zsh`) + `fnm` (
 
 ## Deliberately excluded
 
-- Secrets: `~/.config/9router/env` (template: `9router/.config/9router/env.example`), `~/.omp/.env` (9Router API key), `~/.config/opencode/service.json`, anything 9router writes into `~/.omp/agent/models.yml`
+- Secrets: `~/.config/9router/env` (template: `env.example` in the 9router package), `~/.omp/.env`, `~/.config/opencode/service.json`
 - Machine state: herdr logs/socks, go telemetry, ubuntu-insights consent, empty compose dir
 - Binaries: `~/.local/bin/{herdr,omp,uv,uvx}` — reinstall per machine, don't version 27–267 MB blobs
 - `~/.config/helix/runtime/grammars/` — build artifacts; rebuild with `hx --grammar build`
