@@ -2,7 +2,7 @@
 Description=9Router AI gateway (local only)
 After=network-online.target
 Wants=network-online.target
-Documentation=https://github.com/deco-cx/9router
+Documentation=https://github.com/decolua/9router
 StartLimitIntervalSec=60
 StartLimitBurst=3
 
@@ -18,7 +18,7 @@ RestartSec=5
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
-ReadWritePaths=-%h/.9router %h/.config/9router %h/.cache -%h/.local/share
+ReadWritePaths=-%h/.9router -%h/.npm %h/.config/9router %h/.cache -%h/.local/share
 NoNewPrivileges=yes
 ProtectKernelTunables=yes
 ProtectKernelModules=yes
