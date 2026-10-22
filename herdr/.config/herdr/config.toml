@@ -6,3 +6,10 @@ onboarding = false
 # Recommended: tokyo-night — high-contrast dark blue, easy on eyes,
 #   matches most terminal + helix dark themes.
 name = "tokyo-night"
+
+[ui]
+# Native cursor: pass DECSCUSR shape changes (Helix insert=bar, select=underline).
+# Drawn cursor (WSL default) always renders a block.
+# Tradeoff: native cursor may flicker/jump during heavy output (ConPTY/WSL repaint).
+# If annoying: host_cursor = "drawn"  (cursor stays block, no flicker).
+host_cursor = "native"
