@@ -5,3 +5,5 @@ theme:
   dark: dark-catppuccin
 tui:
   titleState: true
+modelRoles:
+  default: 9router/default-combo

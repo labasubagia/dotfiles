@@ -7,22 +7,31 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
     env:
       # Keep in sync with .pre-commit-config.yaml (local hooks expect these on PATH).
       TAPLO_VERSION: 0.10.0
       GITLEAKS_VERSION: 8.30.1
+      TAPLO_SHA256: dad2faf6377d2daa4f4fabf459fe7ccfb98a5448f0d4bca8270ca9acb0409bfe
+      GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
     steps:
       - uses: actions/checkout@v7.0.1
         with:
-          fetch-depth: 0 # full history: gitleaks detect scans past commits too
+          fetch-depth: 0  # full history: gitleaks detect scans past commits too
+          persist-credentials: false
       - uses: astral-sh/setup-uv@v10.2.0
-      - name: Install taplo and gitleaks
+      - name: Install taplo and gitleaks (verified)
         run: |
+          set -euo pipefail
           curl -sL -o /tmp/taplo.gz "https://github.com/tamasfe/taplo/releases/download/${TAPLO_VERSION}/taplo-linux-x86_64.gz"
           gunzip -f /tmp/taplo.gz
+          echo "${TAPLO_SHA256}  /tmp/taplo" | sha256sum -c -
           chmod +x /tmp/taplo
           sudo mv /tmp/taplo /usr/local/bin/taplo
           curl -sL -o /tmp/gitleaks.tar.gz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  /tmp/gitleaks.tar.gz" | sha256sum -c -
           tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
           chmod +x /tmp/gitleaks
           sudo mv /tmp/gitleaks /usr/local/bin/gitleaks

@@ -2,14 +2,36 @@
 Description=9Router AI gateway (local only)
 After=network-online.target
 Wants=network-online.target
+Documentation=https://github.com/deco-cx/9router
+StartLimitIntervalSec=60
+StartLimitBurst=3
 
 [Service]
 Type=simple
-EnvironmentFile=%h/.config/9router/env
+EnvironmentFile=-%h/.config/9router/env
 Environment=PATH=%h/.local/share/fnm/aliases/default/bin:/usr/local/bin:/usr/bin:/bin
 ExecStart=%h/.local/share/fnm/aliases/default/bin/9router --host 127.0.0.1 --no-browser --skip-update
-Restart=always
-RestartSec=3
+Restart=on-failure
+RestartSec=5
+
+# Sandboxing
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.config/9router %h/.cache -%h/.local/share
+NoNewPrivileges=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+MemoryMax=512M
+CPUQuota=50%
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=9router
 
 [Install]
 WantedBy=default.target

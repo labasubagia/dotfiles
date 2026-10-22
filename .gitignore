@@ -1,4 +1,35 @@
+# Editor / OS noise
 *~
 *.swp
 *.swo
 .DS_Store
+
+# Secrets — never commit live credentials
+.env
+.env.*
+!.env.example
+secrets.json
+*.pem
+*.key
+
+# Python caches
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build artifacts
+target/
+dist/
+build/
+*.log
+
+# Local overrides
+*.local
