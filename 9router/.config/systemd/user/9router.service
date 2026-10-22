@@ -16,19 +16,21 @@ RestartSec=5
 
 # Sandboxing
 #
-# ProtectHome=read-only (deliberate trade-off):
-#   All 9router state lives under %h/.9router and is allowed above.
-#   Known limitation: dashboard features that write OTHER tools' configs
+# Writable home (deliberate trade-off):
+#   9router's dashboard features write OTHER tools' configs under $HOME
 #   (~/.claude/config.json, ~/.codex/config.toml, ~/.openclaw/openclaw.json,
-#   Cursor OAuth auto-import, ...) will fail, because $HOME stays read-only.
-#   For tool wiring use the CLI instead (runs unsandboxed in your shell):
-#     npx 9router connect http://127.0.0.1:20128
-# If you ever want full dashboard-config features back (writable home),
-# simply delete the ProtectHome=read-only line below; keep
-# ProtectSystem=strict.
+#   Cursor OAuth auto-import, ...). ProtectHome=read-only silently broke
+#   those, so we allow a writable home via ProtectSystem=strict alone.
+#   Trade-off accepted: the gateway process can modify user files, but it
+#   cannot touch system dirs / the OS (ProtectSystem=strict), and the
+#   server only listens on 127.0.0.1. The ReadWritePaths entries below
+#   stay listed explicitly because ProtectSystem=strict would otherwise
+#   make that $HOME state read-only (they also document intent).
+#   If you ever want the tighter sandbox again, add back:
+#     ProtectHome=read-only
+#   and wire tools via 'npx 9router connect http://127.0.0.1:20128'.
 PrivateTmp=true
 ProtectSystem=strict
-ProtectHome=read-only
 ReadWritePaths=-%h/.9router -%h/.npm %h/.config/9router %h/.cache -%h/.local/share
 NoNewPrivileges=yes
 ProtectKernelTunables=yes
