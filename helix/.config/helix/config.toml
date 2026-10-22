@@ -1,13 +1,67 @@
 theme = "tokyonight"
 
+# ── Core UX ──────────────────────────────────────────────
+[editor]
+mouse = true
+true-color = true
+cursorline = true
+scrolloff = 5
+line-number = "relative"
+bufferline = "multiple"
+auto-completion = true
+auto-format = true
+auto-pairs = true
+trim-trailing-whitespace = true
+insert-final-newline = true
+atomic-save = true
+
+# ── Visual mode indicators ───────────────────────────────
+color-modes = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
+# ── LSP UX ───────────────────────────────────────────────
+[editor.lsp]
+display-inlay-hints = true
+display-signature-help-docs = true
+auto-signature-help = true
+snippets = true
+
+# ── File picker ──────────────────────────────────────────
 [editor.file-picker]
 hidden = false
 git-ignore = true
 ignore = true
 
+# ── Whitespace ───────────────────────────────────────────
 [editor.whitespace]
 render = "all"
 
 [editor.whitespace.characters]
 space = "·"
 tab = "→"
+newline = "⏎"
+
+# ── Indent guides ────────────────────────────────────────
+[editor.indent-guides]
+render = true
+character = "│"
+
+# ── Safe keybindings (do not override defaults) ──────────
+[keys.normal]
+"C-s" = ":w"
+
+[keys.insert]
+"C-s" = ":w"
+
+[keys.select]
+"C-s" = ":w"
+
+[keys.normal.space]
+"w" = ":w"
+"x" = ":x"
+"q" = ":q"
+"Q" = ":qa!"
