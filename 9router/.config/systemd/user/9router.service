@@ -15,6 +15,17 @@ Restart=on-failure
 RestartSec=5
 
 # Sandboxing
+#
+# ProtectHome=read-only (deliberate trade-off):
+#   All 9router state lives under %h/.9router and is allowed above.
+#   Known limitation: dashboard features that write OTHER tools' configs
+#   (~/.claude/config.json, ~/.codex/config.toml, ~/.openclaw/openclaw.json,
+#   Cursor OAuth auto-import, ...) will fail, because $HOME stays read-only.
+#   For tool wiring use the CLI instead (runs unsandboxed in your shell):
+#     npx 9router connect http://127.0.0.1:20128
+# If you ever want full dashboard-config features back (writable home),
+# simply delete the ProtectHome=read-only line below; keep
+# ProtectSystem=strict.
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
