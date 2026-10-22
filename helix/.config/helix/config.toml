@@ -20,7 +20,7 @@ atomic-save = true
 enable = true
 
 # ── Visual mode indicators ───────────────────────────────
-
+color-modes = true
 [editor.cursor-shape]
 normal = "block"
 insert = "bar"
