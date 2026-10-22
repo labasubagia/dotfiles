@@ -15,8 +15,11 @@ trim-trailing-whitespace = true
 insert-final-newline = true
 atomic-save = true
 
+# Soft wrap for prose
+[editor.soft-wrap]
+enable = true
+
 # ── Visual mode indicators ───────────────────────────────
-color-modes = true
 
 [editor.cursor-shape]
 normal = "block"
