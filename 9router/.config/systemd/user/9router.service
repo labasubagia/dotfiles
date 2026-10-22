@@ -15,20 +15,6 @@ Restart=on-failure
 RestartSec=5
 
 # Sandboxing
-#
-# Writable home (deliberate trade-off):
-#   9router's dashboard features write OTHER tools' configs under $HOME
-#   (~/.claude/config.json, ~/.codex/config.toml, ~/.openclaw/openclaw.json,
-#   Cursor OAuth auto-import, ...). ProtectHome=read-only silently broke
-#   those, so we allow a writable home via ProtectSystem=strict alone.
-#   Trade-off accepted: the gateway process can modify user files, but it
-#   cannot touch system dirs / the OS (ProtectSystem=strict), and the
-#   server only listens on 127.0.0.1. The ReadWritePaths entries below
-#   stay listed explicitly because ProtectSystem=strict would otherwise
-#   make that $HOME state read-only (they also document intent).
-#   If you ever want the tighter sandbox again, add back:
-#     ProtectHome=read-only
-#   and wire tools via 'npx 9router connect http://127.0.0.1:20128'.
 PrivateTmp=true
 ProtectSystem=strict
 ReadWritePaths=-%h/.9router -%h/.npm %h/.config/9router %h/.cache -%h/.local/share

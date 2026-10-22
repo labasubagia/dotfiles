@@ -11,10 +11,9 @@ ExecStart=%h/.local/bin/headroom proxy --port 8787
 Restart=on-failure
 RestartSec=5
 
-# Sandboxing (mirrors 9router; headroom listens on 127.0.0.1:8787 only)
+# Sandboxing (listens on 127.0.0.1:8787 only)
 PrivateTmp=true
 ProtectSystem=strict
-# headroom stores state in ~/.headroom; also may use cache/local-share via uv
 ReadWritePaths=-%h/.headroom -%h/.cache -%h/.local/share
 NoNewPrivileges=yes
 ProtectKernelTunables=yes

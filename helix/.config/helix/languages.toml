@@ -1,16 +1,2 @@
-use-grammars = { only = [
-  "rust",
-  "python",
-  "javascript",
-  "typescript",
-  "tsx",
-  "bash",
-  "go",
-  "json",
-  "toml",
-  "yaml",
-  "html",
-  "css",
-  "lua",
-  "markdown",
-] }
+# Use all built-in grammars (default).
+# Rebuild with: hx --grammar build

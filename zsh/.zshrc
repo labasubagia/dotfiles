@@ -131,15 +131,23 @@ mkdir -p "$(dirname "$ZSH_COMPDUMP")"
 autoload -Uz compinit
 compinit -d "$ZSH_COMPDUMP"
 
-# Secure umask: group/other cannot read new files
-umask 077
+# Secure umask: group can read, other cannot
+umask 027
 
 # PATH: user bins first, then system
 export PATH="$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
-# fnm
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
+# fnm (interactive shells only)
+if [[ $- == *i* ]] && [ -d "$HOME/.local/share/fnm" ]; then
   eval "$(fnm env --shell zsh)"
 fi
+
+# Modern CLI aliases (guarded)
+command -v eza >/dev/null && alias ls='eza --group-directories-first' && alias ll='eza -l --git --group-directories-first' && alias la='eza -la --git --group-directories-first'
+command -v bat >/dev/null && alias cat='bat --paging=never' && alias catn='bat'
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+command -v fzf >/dev/null && source <(fzf --zsh)
+
+# Directory navigation
+setopt AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS
+bindkey '^[[Z' reverse-menu-complete  # Shift-Tab
