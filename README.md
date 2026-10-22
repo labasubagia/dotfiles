@@ -11,6 +11,7 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
 | `omp` | `~/.omp/agent/{config,keybindings}.yml` (theme: dark-catppuccin, symbolPreset: nerd; Ctrl+L redraw) |
 | `9router` | `~/.config/systemd/user/9router.service` (sandboxed local gateway, state in `~/.9router`) + `~/.config/9router/env.example` |
+| `headroom` | `~/.config/systemd/user/headroom.service` (AI proxy on port 8787) |
 
 `omp`: only `agent/{config,keybindings}.yml` versioned; named profiles, `agent.db`/`models.db`, session state and `models.yml` (tool-managed by 9router) excluded.
 

@@ -3,7 +3,7 @@
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-PACKAGES=(zsh helix npm herdr omp 9router)
+PACKAGES=(zsh helix npm herdr omp 9router headroom)
 
 usage() {
   echo "usage: $0 [--adopt | --dry-run]" >&2
