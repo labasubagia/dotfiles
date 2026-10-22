@@ -17,16 +17,16 @@ ZSH_THEME="robbyrussell"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
+zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+# zstyle ':omz:update' mode reminder  # just remind you when it's time
 
 # Uncomment the following line to change the frequency the auto-updater is run (in days).
 # zstyle ':omz:update' frequency 13
@@ -35,7 +35,7 @@ ZSH_THEME="robbyrussell"
 # zstyle ':omz:update' cooldown 10
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -55,7 +55,7 @@ ZSH_THEME="robbyrussell"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -63,7 +63,7 @@ ZSH_THEME="robbyrussell"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -112,13 +112,34 @@ source $HOME/.local/bin/env
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# History hardening
+setopt HIST_IGNORE_SPACE      # don't store commands prefixed with space
+setopt HIST_REDUCE_BLANKS     # remove superfluous blanks
+setopt HIST_VERIFY            # show history expansion before executing
+setopt HIST_FIND_NO_DUPS      # skip dupes when searching history
+setopt SHARE_HISTORY          # share history across sessions
+setopt INC_APPEND_HISTORY     # append incrementally
+setopt EXTENDED_HISTORY       # record timestamps
+HISTSIZE=50000
+SAVEHIST=50000
+HISTFILE="$HOME/.cache/zsh/history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+# Completion cache
+ZSH_COMPDUMP="$HOME/.cache/zsh/zcompdump"
+mkdir -p "$(dirname "$ZSH_COMPDUMP")"
+autoload -Uz compinit
+compinit -d "$ZSH_COMPDUMP"
+
+# Secure umask: group/other cannot read new files
+umask 077
+
+# PATH: user bins first, then system
+export PATH="$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
+
 # fnm
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="$FNM_PATH:$PATH"
   eval "$(fnm env --shell zsh)"
 fi
-
-
-# Added by Antigravity CLI installer
-export PATH="$HOME/.local/bin:$PATH"
