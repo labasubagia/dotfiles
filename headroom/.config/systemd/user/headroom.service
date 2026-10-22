@@ -1,0 +1,34 @@
+[Unit]
+Description=Headroom AI Proxy on port 8787
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/headroom proxy --port 8787
+Restart=on-failure
+RestartSec=5
+
+# Sandboxing (mirrors 9router; headroom listens on 127.0.0.1:8787 only)
+PrivateTmp=true
+ProtectSystem=strict
+# headroom stores state in ~/.headroom; also may use cache/local-share via uv
+ReadWritePaths=-%h/.headroom -%h/.cache -%h/.local/share
+NoNewPrivileges=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+MemoryMax=512M
+CPUQuota=50%
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=headroom
+
+[Install]
+WantedBy=default.target
