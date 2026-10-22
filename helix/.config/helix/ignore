@@ -1,4 +1,20 @@
-# Force Helix to show all variations of environment and config files
+# Unignore gitignored config files
 !.env*
 !config.toml
 !secrets.json
+
+# Explicitly ignore common deps (even if not in .gitignore)
+.venv/
+node_modules/
+target/
+dist/
+build/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage/
+.mypy_cache/
+.ruff_cache/
+vendor/
+*.egg-info/
+pip-wheel-metadata/
