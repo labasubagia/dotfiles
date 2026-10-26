@@ -143,6 +143,8 @@ if [[ $- == *i* ]] && [ -d "$HOME/.local/share/fnm" ]; then
 fi
 
 # Modern CLI aliases (guarded)
+# eza on black bg: remap default blue (dir, date, git-modified) and Default-fg (files, other user/group, punctuation) to bright readable colors
+export EZA_COLORS="di=36;1:fi=37:da=96:gm=33:un=37:gn=37:xx=37:gi=2"
 command -v eza >/dev/null && alias ls='eza --group-directories-first' && alias ll='eza -l --git --group-directories-first' && alias la='eza -la --git --group-directories-first'
 command -v bat >/dev/null && alias cat='bat --paging=never' && alias catn='bat'
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
