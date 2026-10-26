@@ -11,7 +11,28 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
 | `omp` | `~/.omp/agent/{config,keybindings}.yml` (theme: dark-catppuccin, symbolPreset: nerd; Ctrl+L redraw) |
 | `9router` | `~/.config/systemd/user/9router.service` (sandboxed local gateway, state in `~/.9router`) + `~/.config/9router/env.example` |
-| `headroom` | `~/.config/systemd/user/headroom.service` (AI proxy on port 8787) |
+| `lazygit` | `~/.config/lazygit/config.yml` (theme: tokyonight night; git diff pager: delta) |
+| `git` | `~/.gitconfig` (delta pager, tokyonight diff theme) |
+
+## Required dependencies
+
+Core tooling: [Git](https://git-scm.com/), [GNU Stow](https://www.gnu.org/software/stow/), [Python 3](https://www.python.org/) (pre-commit hooks).
+
+| package | official |
+|---|---|
+| `zsh` | [zsh](https://www.zsh.org/) · [oh-my-zsh](https://ohmyz.sh/) · [fnm](https://github.com/Schniz/fnm) |
+| `helix` | [helix-editor](https://helix-editor.com/) |
+| `npm` | [Node.js / npm](https://nodejs.org/) via [fnm](https://github.com/Schniz/fnm) |
+| `herdr` | [herdr](https://herdr.dev/) |
+| `omp` | [omp](https://omp.sh/) |
+| `9router` | [9Router](https://9router.com/) |
+| `headroom` | [headroom](https://github.com/headroomlabs-ai/headroom) |
+| `lazygit` | [lazygit](https://github.com/jesseduffield/lazygit) |
+| `git` | [delta](https://github.com/dandavison/delta) (+ git) |
+
+Optional, auto-detected by `~/.zshrc`: [eza](https://github.com/eza-community/eza), [bat](https://github.com/sharkdp/bat), [fzf](https://github.com/junegunn/fzf).
+
+Binaries not versioned in this repo (see *Deliberately excluded*): `herdr`, `omp`, `headroom`, `delta`, `uv`, `uvx` — install per machine. After installing, run `systemctl --user enable --now 9router headroom`.
 
 `omp`: only `agent/{config,keybindings}.yml` versioned; named profiles, `agent.db`/`models.db`, session state and `models.yml` (tool-managed by 9router) excluded.
 

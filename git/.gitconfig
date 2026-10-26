@@ -1,0 +1,30 @@
+[user]
+	name = Laba Subagia
+	email = labasubagia22@gmail.com
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictstyle = zdiff3
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = TwoDark
+	minus-style = "syntax #37222c"
+	minus-emph-style = "syntax #713137"
+	plus-style = "syntax #20303b"
+	plus-emph-style = "syntax #2c5a47"
+	zero-style = syntax
+	line-numbers-minus-style = "#f7768e"
+	line-numbers-plus-style = "#9ece6a"
+	line-numbers-zero-style = "#737aa2"
+	line-numbers-left-style = "#737aa2"
+	line-numbers-right-style = "#737aa2"
+	file-style = "#7aa2f7 bold"
+	file-decoration-style = "#3b4261 ul"
+	hunk-header-style = "#7dcfff bold"
+	hunk-header-decoration-style = "#3b4261 box"
+	hunk-header-line-number-style = "#bb9af7"
+	blame-palette = "#1a1b26 #16161e #292e42 #414868"
