@@ -85,7 +85,6 @@ bindkey '^ ' autosuggest-accept
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-source $HOME/.local/bin/env
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8

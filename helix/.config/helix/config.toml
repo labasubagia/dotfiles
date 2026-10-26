@@ -18,7 +18,6 @@ color-modes = true
 
 # Soft wrap for prose
 
-# Soft wrap for prose
 [editor.soft-wrap]
 enable = true
 
