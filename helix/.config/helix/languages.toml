@@ -1,2 +1,14 @@
 # Use all built-in grammars (default).
 # Rebuild with: hx --grammar build
+
+[[language]]
+name = "rust"
+scope = "source.rust"
+injection-regex = "rust"
+file-types = ["rs"]
+comment-tokens = "//"
+language-servers = ["rust-analyzer"]
+formatter = { command = "rustfmt", args = ["--edition", "2021"] }
+
+[language-server.rust-analyzer]
+command = "rust-analyzer"
