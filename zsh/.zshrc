@@ -134,7 +134,7 @@ compinit -d "$ZSH_COMPDUMP"
 umask 027
 
 # PATH: user bins first, then system
-export PATH="$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
+export PATH="$HOME/go/bin:$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
 # fnm (interactive shells only)
 if [[ $- == *i* ]] && [ -d "$HOME/.local/share/fnm" ]; then

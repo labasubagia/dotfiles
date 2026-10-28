@@ -1,14 +1,19 @@
 # Use all built-in grammars (default).
 # Rebuild with: hx --grammar build
+# Per-language overrides: only keys NOT inherited from the built-in defaults.
 
 [[language]]
 name = "rust"
-scope = "source.rust"
-injection-regex = "rust"
-file-types = ["rs"]
-comment-tokens = "//"
 language-servers = ["rust-analyzer"]
 formatter = { command = "rustfmt", args = ["--edition", "2021"] }
 
 [language-server.rust-analyzer]
 command = "rust-analyzer"
+
+[[language]]
+name = "go"
+language-servers = ["gopls"]
+formatter = { command = "gofmt" }
+
+[language-server.gopls]
+command = "gopls"
