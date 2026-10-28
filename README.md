@@ -13,6 +13,7 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | `9router` | `~/.config/systemd/user/9router.service` (sandboxed local gateway, state in `~/.9router`) + `~/.config/9router/env.example` |
 | `lazygit` | `~/.config/lazygit/config.yml` (theme: tokyonight night; git diff pager: delta) |
 | `git` | `~/.gitconfig` (delta pager, tokyonight diff theme) |
+| `tmux` | `~/.tmux.conf` (C-b prefix, base-index 1, mouse, vi copy-mode, vim pane nav) |
 
 ## Required dependencies
 
@@ -29,6 +30,7 @@ Core tooling: [Git](https://git-scm.com/), [GNU Stow](https://www.gnu.org/softwa
 | `headroom` | [headroom](https://github.com/headroomlabs-ai/headroom) |
 | `lazygit` | [lazygit](https://github.com/jesseduffield/lazygit) |
 | `git` | [delta](https://github.com/dandavison/delta) (+ git) |
+| `tmux` | [tmux](https://github.com/tmux/tmux) |
 
 Optional, auto-detected by `~/.zshrc`: [eza](https://github.com/eza-community/eza), [bat](https://github.com/sharkdp/bat), [fzf](https://github.com/junegunn/fzf).
 

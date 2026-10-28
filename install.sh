@@ -3,7 +3,7 @@
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-ALL_PACKAGES=(zsh helix npm herdr omp 9router headroom lazygit git)
+ALL_PACKAGES=(zsh helix npm herdr omp 9router headroom lazygit git tmux)
 PACKAGES=("${ALL_PACKAGES[@]}")
 ADOPT=false
 DRY_RUN=false
