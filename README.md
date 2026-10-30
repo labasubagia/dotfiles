@@ -9,8 +9,9 @@ One directory per stow package; layout inside each mirrors `$HOME`.
 | `helix` | `~/.config/helix/{config,languages}.toml` (theme: tokyonight) |
 | `npm` | `~/.npmrc` (`ignore-scripts=true`) |
 | `herdr` | `~/.config/herdr/config.toml` (theme: tokyo-night) |
-| `omp` | `~/.omp/agent/{config,keybindings}.yml` (theme: dark-catppuccin, symbolPreset: nerd; Ctrl+L redraw) |
+| `omp` | `~/.omp/agent/{config,keybindings}.yml` (theme: dark-tokyo-night, symbolPreset: nerd; Ctrl+L redraw) |
 | `9router` | `~/.config/systemd/user/9router.service` (sandboxed local gateway, state in `~/.9router`) + `~/.config/9router/env.example` |
+| `headroom` | `~/.config/systemd/user/headroom.service` (sandboxed AI proxy on 127.0.0.1:8787) |
 | `lazygit` | `~/.config/lazygit/config.yml` (theme: tokyonight night; git diff pager: delta) |
 | `git` | `~/.gitconfig` (delta pager, tokyonight diff theme) |
 | `tmux` | `~/.tmux.conf` (C-b prefix, base-index 1, mouse, vi copy-mode, vim pane nav) |
@@ -36,7 +37,7 @@ Optional, auto-detected by `~/.zshrc`: [eza](https://github.com/eza-community/ez
 
 Binaries not versioned in this repo (see *Deliberately excluded*): `herdr`, `omp`, `headroom`, `delta`, `uv`, `uvx` — install per machine. After installing, run `systemctl --user enable --now 9router headroom`.
 
-`omp`: only `agent/{config,keybindings}.yml` versioned; named profiles, `agent.db`/`models.db`, session state and `models.yml` (tool-managed by 9router) excluded.
+`omp`: only `agent/{config,keybindings}.yml` and `agent/skills/` versioned; named profiles, `agent.db`/`models.db`, session state and `models.yml` (tool-managed by 9router) excluded.
 
 ## Usage
 

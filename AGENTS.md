@@ -15,7 +15,7 @@ Each package folder maps to a path in `$HOME`. A quick orientation:
 - `install.sh` — applies (or removes) the symlinks for all packages.
 - `README.md` — the friendly overview: what each package does, required dependencies, setup steps.
 - `AGENTS.md` — this file.
-- `zsh/`, `helix/`, `npm/`, `herdr/`, `omp/`, `9router/`, `headroom/`, `lazygit/`, `git/` — one folder per package, mirroring `$HOME`.
+- `zsh/`, `helix/`, `npm/`, `herdr/`, `omp/`, `9router/`, `headroom/`, `lazygit/`, `git/`, `tmux/` — one folder per package, mirroring `$HOME`.
 - `.pre-commit-config.yaml` — the checks that run on every commit.
 
 For the exact package list and what each installs, see `README.md`. Don't duplicate that detail here; it lives and is maintained in the README.

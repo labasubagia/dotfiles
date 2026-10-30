@@ -2,7 +2,7 @@ setupVersion: 2
 symbolPreset: nerd
 defaultThinkingLevel: auto
 theme:
-  dark: dark-catppuccin
+  dark: dark-tokyo-night
 tui:
   titleState: true
 modelRoles:
