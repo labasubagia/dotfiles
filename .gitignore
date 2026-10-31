@@ -33,3 +33,6 @@ build/
 
 # Local overrides
 *.local
+
+# graphify — generated knowledge-graph output (regenerable via `graphify .`)
+graphify-out/
